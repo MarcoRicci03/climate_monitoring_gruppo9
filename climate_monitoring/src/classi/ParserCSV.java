@@ -18,8 +18,8 @@ import java.util.ArrayList;
  */
 public class ParserCSV {
 
-    public static ArrayList<JLuogo> creaLista(Path nomeFile) throws FileNotFoundException, IOException {
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(nomeFile, StandardCharsets.UTF_8);
+    public static ArrayList<JLuogo> creaLista() throws FileNotFoundException, IOException {
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/utenti.csv"), StandardCharsets.UTF_8);
         ArrayList<JLuogo> l = new ArrayList<>();
         for (String s : list) {
             String[] elements = s.split(";");
@@ -39,5 +39,24 @@ public class ParserCSV {
             return elements[3].equals(username) && elements[5].equals(pass);
         }
         return false;
+    }
+
+    public static boolean registraUtente(String nome, String cognome, String pass, String dataN, String paeseN, String secondoNome, String sesso) throws IOException {
+        String username = nome.substring(0, 1) + "_" + cognome;
+        Integer cont = 1;
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/utenti.csv"), StandardCharsets.UTF_8);
+        for (String s : list) {
+            String[] elements = s.split(";");
+            if (elements[3].contains(username)) {
+                cont++;
+            }
+        }
+        username += cont.toString();
+
+        System.out.println(username);
+        //salvo i dati sul file
+        String mail = username + "@mail.com";
+        
+
     }
 }

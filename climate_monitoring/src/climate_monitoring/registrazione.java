@@ -4,21 +4,19 @@
  */
 package climate_monitoring;
 
-import javax.swing.JFrame;
+import engine.Person;
 
 /**
  *
  * @author marco
  */
-public class homepage extends javax.swing.JFrame {
+public class registrazione extends javax.swing.JFrame {
 
     /**
-     * Creates new form homepage
+     * Creates new form registrazione
      */
-    public homepage() {
+    public registrazione() {
         initComponents();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
     }
 
     /**
@@ -30,15 +28,14 @@ public class homepage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnAccedi = new javax.swing.JButton();
+        txtRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(60, 400));
 
-        btnAccedi.setText("Accedi");
-        btnAccedi.addActionListener(new java.awt.event.ActionListener() {
+        txtRegister.setText("Registrati");
+        txtRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAccediActionPerformed(evt);
+                txtRegisterActionPerformed(evt);
             }
         });
 
@@ -46,28 +43,29 @@ public class homepage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(724, Short.MAX_VALUE)
-                .addComponent(btnAccedi)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(148, 148, 148)
+                .addComponent(txtRegister)
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAccedi)
-                .addContainerGap(371, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(170, Short.MAX_VALUE)
+                .addComponent(txtRegister)
+                .addGap(107, 107, 107))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
-        //Apro la pagina di login
-        login l = new login();
-        l.setVisible(true);
-        this.hide();
-    }//GEN-LAST:event_btnAccediActionPerformed
+    private void txtRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegisterActionPerformed
+        // TODO add your handling code here:
+        Person p = new Person();
+        p.setName(txtNome.getText());
+        p.setSurname(txtCognome.getText());
+        
+    }//GEN-LAST:event_txtRegisterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,25 +84,25 @@ public class homepage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(registrazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(registrazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(registrazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(registrazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new homepage().setVisible(true);
+                new registrazione().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAccedi;
+    private javax.swing.JButton txtRegister;
     // End of variables declaration//GEN-END:variables
 }
