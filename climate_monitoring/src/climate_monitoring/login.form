@@ -32,11 +32,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnRegistrati" pref="131" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnAccedi" pref="131" max="32767" attributes="0"/>
-                      <Component id="txtPass" max="32767" attributes="0"/>
-                      <Component id="txtUsername" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="btnAccedi" pref="131" max="32767" attributes="0"/>
+                  <Component id="txtPass" max="32767" attributes="0"/>
+                  <Component id="txtUsername" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="91" max="32767" attributes="0"/>
           </Group>
@@ -101,6 +99,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrati"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistratiActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

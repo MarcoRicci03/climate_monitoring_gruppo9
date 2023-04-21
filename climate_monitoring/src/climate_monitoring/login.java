@@ -64,6 +64,11 @@ public class login extends javax.swing.JFrame {
         });
 
         btnRegistrati.setText("Registrati");
+        btnRegistrati.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistratiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,10 +82,9 @@ public class login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnRegistrati, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                        .addComponent(txtPass)
-                        .addComponent(txtUsername)))
+                    .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                    .addComponent(txtPass)
+                    .addComponent(txtUsername))
                 .addContainerGap(91, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -120,6 +124,12 @@ public class login extends javax.swing.JFrame {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAccediActionPerformed
+
+    private void btnRegistratiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistratiActionPerformed
+        registrazione r = new registrazione();
+        r.show();
+        this.hide();
+    }//GEN-LAST:event_btnRegistratiActionPerformed
 
     /**
      * @param args the command line arguments

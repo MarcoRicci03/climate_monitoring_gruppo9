@@ -41,7 +41,7 @@ public class ParserCSV {
         return false;
     }
 
-    public static boolean registraUtente(String nome, String cognome, String pass, String dataN, String paeseN, String secondoNome, String sesso) throws IOException {
+    public static boolean registraUtente(String nome, String cognome, String pass, String cf) throws IOException {
         String username = nome.substring(0, 1) + "_" + cognome;
         Integer cont = 1;
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/utenti.csv"), StandardCharsets.UTF_8);
