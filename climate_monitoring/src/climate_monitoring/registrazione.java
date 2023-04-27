@@ -4,11 +4,13 @@
  */
 package climate_monitoring;
 
+import classi.JLuogo;
 import classi.ParserCSV;
 import engine.Engine;
 import engine.Person;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,11 +21,22 @@ import javax.swing.JOptionPane;
  */
 public class registrazione extends javax.swing.JFrame {
 
+    private ArrayList<JLuogo> al;
+
     /**
      * Creates new form registrazione
      */
     public registrazione() {
         initComponents();
+        try {
+            al = ParserCSV.creaLista();
+            for (int i = 0; i < al.size(); i++) {
+                cmbStazione.addItem(al.get(i).getNome());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(registrazione.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -51,8 +64,8 @@ public class registrazione extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtLuogoNascita = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        btnSelezionaStazione = new javax.swing.JButton();
         lblStazione = new javax.swing.JLabel();
+        cmbStazione = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,10 +108,9 @@ public class registrazione extends javax.swing.JFrame {
 
         jLabel8.setText("Stazione meteorologica:");
 
-        btnSelezionaStazione.setText("Seleziona");
-        btnSelezionaStazione.addActionListener(new java.awt.event.ActionListener() {
+        cmbStazione.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelezionaStazioneActionPerformed(evt);
+                cmbStazioneActionPerformed(evt);
             }
         });
 
@@ -120,7 +132,7 @@ public class registrazione extends javax.swing.JFrame {
                         .addComponent(txtPassConferma)
                         .addComponent(txtCognome)
                         .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegistrazione)
                     .addGroup(layout.createSequentialGroup()
@@ -137,9 +149,9 @@ public class registrazione extends javax.swing.JFrame {
                         .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSelezionaStazione)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(56, 56, 56))
         );
@@ -169,8 +181,8 @@ public class registrazione extends javax.swing.JFrame {
                     .addComponent(txtPassConferma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel8)
-                    .addComponent(btnSelezionaStazione)
-                    .addComponent(lblStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbStazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addComponent(btnRegistrazione)
                 .addGap(57, 57, 57))
@@ -181,8 +193,8 @@ public class registrazione extends javax.swing.JFrame {
 
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
-        if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !txtDataDiNascita.getText().isEmpty() && 
-                !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
+        if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !txtDataDiNascita.getText().isEmpty()
+                && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
 
             if (txtPass.getText().equals(txtPassConferma.getText())) {
                 Person p = new Person();
@@ -202,7 +214,7 @@ public class registrazione extends javax.swing.JFrame {
                     return;
                 }
                 try {
-                    ParserCSV.registraUtente(p.getName(), p.getSurname(), txtPass.getText(), e.getCode());
+                    ParserCSV.registraUtente(p.getName(), p.getSurname(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex()).getGeoname_id());
                 } catch (IOException ex) {
                     Logger.getLogger(registrazione.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -223,9 +235,10 @@ public class registrazione extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCognomeActionPerformed
 
-    private void btnSelezionaStazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelezionaStazioneActionPerformed
-        
-    }//GEN-LAST:event_btnSelezionaStazioneActionPerformed
+    private void cmbStazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStazioneActionPerformed
+        // TODO add your handling code here:
+        //System.out.println(al.get(cmbStazione.getSelectedIndex()));
+    }//GEN-LAST:event_cmbStazioneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,8 +277,8 @@ public class registrazione extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrazione;
-    private javax.swing.JButton btnSelezionaStazione;
     private javax.swing.JComboBox<String> cmbSesso;
+    private javax.swing.JComboBox<String> cmbStazione;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

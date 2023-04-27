@@ -31,7 +31,23 @@ public class JLuogo {
 
     @Override
     public String toString() {
-        return "JLuogo{" + "geoname_id=" + geoname_id + ", nome=" + nome + ", country_code=" + country_code + ", coordinate=" + coordinate + '}';
+        return "geoname_id=" + geoname_id + ", nome=" + nome + ", country_code=" + country_code + ", coordinate=" + coordinate;
+    }
+
+    public Integer getGeoname_id() {
+        return geoname_id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCountry_code() {
+        return country_code;
+    }
+
+    public JCoordinate getCoordinate() {
+        return coordinate;
     }
 
 }

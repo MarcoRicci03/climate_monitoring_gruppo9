@@ -34,7 +34,7 @@ public class JCoordinate {
 
     @Override
     public String toString() {
-        return "JCoordinate{" + "lat=" + lat + ", lon=" + lon + '}';
+        return "lat=" + lat + ", lon=" + lon;
     }
 
 }

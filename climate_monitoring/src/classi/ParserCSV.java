@@ -4,13 +4,17 @@
  */
 package classi;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 public class ParserCSV {
 
     public static ArrayList<JLuogo> creaLista() throws FileNotFoundException, IOException {
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/utenti.csv"), StandardCharsets.UTF_8);
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/luoghi.csv"), StandardCharsets.UTF_8);
         ArrayList<JLuogo> l = new ArrayList<>();
         for (String s : list) {
             String[] elements = s.split(";");
@@ -41,22 +45,32 @@ public class ParserCSV {
         return false;
     }
 
-    public static boolean registraUtente(String nome, String cognome, String pass, String cf) throws IOException {
-        String username = nome.substring(0, 1) + "_" + cognome;
-        Integer cont = 1;
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/utenti.csv"), StandardCharsets.UTF_8);
-        for (String s : list) {
-            String[] elements = s.split(";");
-            if (elements[3].contains(username)) {
-                cont++;
+    public static boolean registraUtente(String nome, String cognome, String pass, String cf, Integer id_stazione) {
+        try {
+            String username = nome.substring(0, 1) + "_" + cognome;
+            Integer id = 0;
+            Integer cont = 1;
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/utenti.csv"), StandardCharsets.UTF_8);
+            for (String s : list) {
+                id++;
+                String[] elements = s.split(";");
+                if (elements[3].contains(username)) {
+                    cont++;
+                }
             }
+            username += cont.toString();
+            
+            System.out.println(username);
+            //scrivo su file
+            String mail = username + "@mail.com";
+            FileWriter fileWriter = new FileWriter(new File("dati/utenti.csv"));
+            String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + "\n";
+            fileWriter.append(line.toString());
+            fileWriter.close();
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        username += cont.toString();
-
-        System.out.println(username);
-        //salvo i dati sul file
-        String mail = username + "@mail.com";
-        
-
     }
 }

@@ -40,7 +40,7 @@
                       <Component id="txtPass" min="-2" pref="79" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="93" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnRegistrazione" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -61,9 +61,9 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnSelezionaStazione" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="cmbStazione" min="-2" pref="190" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblStazione" min="-2" pref="121" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -100,8 +100,8 @@
                   <Component id="txtPassConferma" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnSelezionaStazione" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblStazione" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbStazione" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="89" max="32767" attributes="0"/>
               <Component id="btnRegistrazione" min="-2" max="-2" attributes="0"/>
@@ -193,15 +193,20 @@
         <Property name="text" type="java.lang.String" value="Stazione meteorologica:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnSelezionaStazione">
+    <Component class="javax.swing.JLabel" name="lblStazione">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbStazione">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Seleziona"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelezionaStazioneActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbStazioneActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblStazione">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
