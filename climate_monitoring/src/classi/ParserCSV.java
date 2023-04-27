@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -22,22 +21,30 @@ import java.util.logging.Logger;
  */
 public class ParserCSV {
 
+    private static final String fStazioni = "dati/stazioni.csv";
+    private static final String fUtenti = "dati/utenti.csv";
+    private static final String fAreeInteresse = "dati/areedinteresse.csv";
+
     public static ArrayList<JLuogo> creaLista() throws FileNotFoundException, IOException {
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/luoghi.csv"), StandardCharsets.UTF_8);
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
         ArrayList<JLuogo> l = new ArrayList<>();
         for (String s : list) {
             String[] elements = s.split(";");
-            if (s.contains("China")) {
-                int t = 0;
-            }
-            l.add(new JLuogo(Integer.valueOf(elements[0]), elements[2], elements[3], new JCoordinate(Float.valueOf(elements[5].split(",")[0]), Float.valueOf(elements[5].split(",")[1]))));
+            l.add(new JLuogo(Integer.valueOf(elements[0]), elements[1], elements[2], elements[3], new JCoordinate(Float.valueOf(elements[4].split(",")[0]), Float.valueOf(elements[4].split(",")[1]))));
         }
         return l;
     }
 
+    public static boolean creaStazione(String ) {
+        FileWriter fileWriter = new FileWriter(new File(fStazioni));
+        String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + "\n";
+        fileWriter.append(line.toString());
+        fileWriter.close();
+    }
+
     public static boolean esisteUtente(String username, String pass) throws IOException {
         boolean ris = true;
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/utenti.csv"), StandardCharsets.UTF_8);
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
         for (String s : list) {
             String[] elements = s.split(";");
             return elements[3].equals(username) && elements[5].equals(pass);
@@ -50,7 +57,7 @@ public class ParserCSV {
             String username = nome.substring(0, 1) + "_" + cognome;
             Integer id = 0;
             Integer cont = 1;
-            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get("dati/utenti.csv"), StandardCharsets.UTF_8);
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
             for (String s : list) {
                 id++;
                 String[] elements = s.split(";");
@@ -59,11 +66,11 @@ public class ParserCSV {
                 }
             }
             username += cont.toString();
-            
+
             System.out.println(username);
             //scrivo su file
             String mail = username + "@mail.com";
-            FileWriter fileWriter = new FileWriter(new File("dati/utenti.csv"));
+            FileWriter fileWriter = new FileWriter(new File(fUtenti));
             String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + "\n";
             fileWriter.append(line.toString());
             fileWriter.close();
