@@ -4,6 +4,9 @@
  */
 package climate_monitoring;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author marco
@@ -15,6 +18,11 @@ public class luogo extends javax.swing.JFrame {
      */
     public luogo() {
         initComponents();
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int x = (screenSize.width - this.getWidth()) / 2;
+        int y = (screenSize.height - this.getHeight()) / 2;
+        this.setLocation(x, y);
     }
 
     /**

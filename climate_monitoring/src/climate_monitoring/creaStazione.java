@@ -6,6 +6,8 @@ package climate_monitoring;
 
 import classi.ParserCSV;
 import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -27,6 +29,11 @@ public class creaStazione extends javax.swing.JFrame {
     public creaStazione() {
         try {
             initComponents();
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Dimension screenSize = toolkit.getScreenSize();
+            int x = (screenSize.width - this.getWidth()) / 2;
+            int y = (screenSize.height - this.getHeight()) / 2;
+            this.setLocation(x, y);
             ar = ParserCSV.getNazioni();
             for (String[] s : ar) {
                 cmbCodNazione.addItem(s[1]);
@@ -167,12 +174,12 @@ public class creaStazione extends javax.swing.JFrame {
 
     private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
         // TODO add your handling code here:
-        ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex()-1)[0], txtCoordinate.getText());
+        ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText());
     }//GEN-LAST:event_btnAggiungiActionPerformed
 
     private void cmbCodNazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCodNazioneActionPerformed
         // TODO add your handling code here:
-        txtCodNazione.setText(ar.get(cmbCodNazione.getSelectedIndex()-1)[0]);
+        txtCodNazione.setText(ar.get(cmbCodNazione.getSelectedIndex() - 1)[0]);
     }//GEN-LAST:event_cmbCodNazioneActionPerformed
 
     /**

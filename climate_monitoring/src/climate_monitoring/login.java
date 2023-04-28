@@ -5,6 +5,8 @@
 package climate_monitoring;
 
 import classi.ParserCSV;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,11 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int x = (screenSize.width - this.getWidth()) / 2;
+        int y = (screenSize.height - this.getHeight()) / 2;
+        this.setLocation(x, y);
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
@@ -118,7 +125,7 @@ public class login extends javax.swing.JFrame {
     private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
         try {
             //Controllo la correttezza dei dati inseriti
-            if(ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
+            if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
                 admin_panel ap = new admin_panel();
                 ap.setVisible(true);
                 this.hide();

@@ -25,6 +25,7 @@ public class ParserCSV {
     private static final String fUtenti = "dati/utenti.csv";
     private static final String fAreeInteresse = "dati/areedinteresse.csv";
     private static final String fNazioni = "dati/nazioni.csv";
+    private static final String fOperatori = "dati/operatori.csv";
 
     public static ArrayList<JLuogo> creaLista() throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
@@ -77,7 +78,7 @@ public class ParserCSV {
             System.out.println(username);
             //scrivo su file
             String mail = username + "@mail.com";
-            FileWriter fileWriter = new FileWriter(new File(fUtenti));
+            FileWriter fileWriter = new FileWriter(new File(fUtenti), true);
             String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + "\n";
             fileWriter.append(line.toString());
             fileWriter.close();
@@ -97,5 +98,21 @@ public class ParserCSV {
             ar.add(elements);
         }
         return ar;
+    }
+
+    public static boolean checkCodiceOperatore(String codice_operatore) {
+        codice_operatore = codice_operatore.trim();
+        Boolean ret = false;
+        try {
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fOperatori), StandardCharsets.UTF_8);
+            for (String line : list) {
+                if (line.equals(codice_operatore)) {
+                    ret = true;
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
     }
 }

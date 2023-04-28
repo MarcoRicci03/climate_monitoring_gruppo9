@@ -4,6 +4,8 @@
  */
 package climate_monitoring;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 /**
@@ -18,6 +20,11 @@ public class homepage extends javax.swing.JFrame {
     public homepage() {
         initComponents();
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int x = (screenSize.width - this.getWidth()) / 2;
+        int y = (screenSize.height - this.getHeight()) / 2;
+        this.setLocation(x, y);
 
     }
 

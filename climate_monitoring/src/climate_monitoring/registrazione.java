@@ -8,6 +8,8 @@ import classi.JLuogo;
 import classi.ParserCSV;
 import engine.Engine;
 import engine.Person;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +30,11 @@ public class registrazione extends javax.swing.JFrame {
      */
     public registrazione() {
         initComponents();
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int x = (screenSize.width - this.getWidth()) / 2;
+        int y = (screenSize.height - this.getHeight()) / 2;
+        this.setLocation(x, y);
         try {
             al = ParserCSV.creaLista();
             for (int i = 0; i < al.size(); i++) {
@@ -66,6 +73,8 @@ public class registrazione extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         cmbStazione = new javax.swing.JComboBox<>();
         btnCrea = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        txtIdOperatore = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,6 +117,7 @@ public class registrazione extends javax.swing.JFrame {
 
         jLabel8.setText("Stazione meteorologica:");
 
+        cmbStazione.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----" }));
         cmbStazione.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbStazioneActionPerformed(evt);
@@ -120,6 +130,8 @@ public class registrazione extends javax.swing.JFrame {
                 btnCreaActionPerformed(evt);
             }
         });
+
+        jLabel9.setText("Id operatore:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,28 +154,33 @@ public class registrazione extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCrea, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRegistrazione)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDataDiNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbSesso, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCrea, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 12, Short.MAX_VALUE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtDataDiNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtIdOperatore, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cmbSesso, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +190,9 @@ public class registrazione extends javax.swing.JFrame {
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel5)
-                    .addComponent(txtDataDiNascita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDataDiNascita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtIdOperatore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCognome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,32 +222,37 @@ public class registrazione extends javax.swing.JFrame {
 
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
-        if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !txtDataDiNascita.getText().isEmpty()
-                && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
+        if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) {
+            if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !txtDataDiNascita.getText().isEmpty()
+                    && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
 
-            if (txtPass.getText().equals(txtPassConferma.getText())) {
-                Person p = new Person();
-                p.setName(txtNome.getText());
-                p.setSurname(txtCognome.getText());
-                SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
-                String[] dataDiNascita = txtDataDiNascita.getText().split("/");
-                p.setDay(dataDiNascita[0]);
-                p.setMonth(dataDiNascita[1]);
-                p.setYear(dataDiNascita[2]);
-                p.setBornCity(txtLuogoNascita.getText().toUpperCase());
-                p.setSex(cmbSesso.getItemAt(cmbSesso.getSelectedIndex()));
-                Engine e = null;
-                try {
-                    e = new Engine(p);
-                } catch (IOException ex) {
-                    return;
+                if (txtPass.getText().equals(txtPassConferma.getText())) {
+                    Person p = new Person();
+                    p.setName(txtNome.getText());
+                    p.setSurname(txtCognome.getText());
+                    SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
+                    String[] dataDiNascita = txtDataDiNascita.getText().split("/");
+                    p.setDay(dataDiNascita[0]);
+                    p.setMonth(dataDiNascita[1]);
+                    p.setYear(dataDiNascita[2]);
+                    p.setBornCity(txtLuogoNascita.getText().toUpperCase());
+                    p.setSex(cmbSesso.getItemAt(cmbSesso.getSelectedIndex()));
+                    Engine e = null;
+                    try {
+                        e = new Engine(p);
+                    } catch (IOException ex) {
+                        return;
+                    }
+                    ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Le password devono corrispondere", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 }
-                ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex()-1).getGeoname_id());
             } else {
-                JOptionPane.showMessageDialog(null, "Le password devono corrispondere", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Compilare tutti i campi", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Compilare tutti i campi", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
+
         }
 
     }//GEN-LAST:event_btnRegistrazioneActionPerformed
@@ -248,8 +272,13 @@ public class registrazione extends javax.swing.JFrame {
 
     private void btnCreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreaActionPerformed
         // TODO add your handling code here:
-        creaStazione cS = new creaStazione();
-        cS.show();
+        if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) {
+            creaStazione cS = new creaStazione();
+            cS.show();
+        } else {
+            JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnCreaActionPerformed
 
     /**
@@ -300,8 +329,10 @@ public class registrazione extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtCognome;
     private javax.swing.JTextField txtDataDiNascita;
+    private javax.swing.JTextField txtIdOperatore;
     private javax.swing.JTextField txtLuogoNascita;
     private javax.swing.JTextField txtNome;
     private javax.swing.JPasswordField txtPass;
