@@ -115,6 +115,11 @@ public class registrazione extends javax.swing.JFrame {
         });
 
         btnCrea.setText("Crea");
+        btnCrea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,7 +223,7 @@ public class registrazione extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     return;
                 }
-                ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex()).getGeoname_id());
+                ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex()-1).getGeoname_id());
             } else {
                 JOptionPane.showMessageDialog(null, "Le password devono corrispondere", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -240,6 +245,12 @@ public class registrazione extends javax.swing.JFrame {
         // TODO add your handling code here:
         //System.out.println(al.get(cmbStazione.getSelectedIndex()));
     }//GEN-LAST:event_cmbStazioneActionPerformed
+
+    private void btnCreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreaActionPerformed
+        // TODO add your handling code here:
+        creaStazione cS = new creaStazione();
+        cS.show();
+    }//GEN-LAST:event_btnCreaActionPerformed
 
     /**
      * @param args the command line arguments

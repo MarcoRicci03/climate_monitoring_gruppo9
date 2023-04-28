@@ -21,7 +21,7 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
 
@@ -47,6 +47,7 @@ public class login extends javax.swing.JFrame {
         jLabel1.setLabelFor(txtUsername);
         jLabel1.setText("Username:");
 
+        txtUsername.setText("m_ricci1");
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsernameActionPerformed(evt);
@@ -55,6 +56,8 @@ public class login extends javax.swing.JFrame {
 
         jLabel2.setLabelFor(txtPass);
         jLabel2.setText("Password:");
+
+        txtPass.setText("sd");
 
         btnAccedi.setText("Accedi");
         btnAccedi.addActionListener(new java.awt.event.ActionListener() {

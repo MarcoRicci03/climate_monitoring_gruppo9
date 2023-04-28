@@ -24,6 +24,7 @@ public class ParserCSV {
     private static final String fStazioni = "dati/stazioni.csv";
     private static final String fUtenti = "dati/utenti.csv";
     private static final String fAreeInteresse = "dati/areedinteresse.csv";
+    private static final String fNazioni = "dati/nazioni.csv";
 
     public static ArrayList<JLuogo> creaLista() throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
@@ -35,11 +36,17 @@ public class ParserCSV {
         return l;
     }
 
-    public static boolean creaStazione(String ) {
-        FileWriter fileWriter = new FileWriter(new File(fStazioni));
-        String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + "\n";
-        fileWriter.append(line.toString());
-        fileWriter.close();
+    public static boolean creaStazione(String geoname_id, String citta, String cod_nazione, String nazione, String coordinate) {
+        try {
+            FileWriter fileWriter = new FileWriter(new File(fStazioni), true);
+            String line = geoname_id + ";" + citta + ";" + cod_nazione + ";" + nazione + ";" + coordinate + "\n";
+            fileWriter.append(line);
+            fileWriter.close();
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
     public static boolean esisteUtente(String username, String pass) throws IOException {
@@ -79,5 +86,16 @@ public class ParserCSV {
             Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public static ArrayList<String[]> getNazioni() throws IOException {
+        ArrayList<String[]> ar = new ArrayList<String[]>();
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fNazioni), StandardCharsets.UTF_8);
+        int cont = 0;
+        for (String s : list) {
+            String[] elements = s.split(";");
+            ar.add(elements);
+        }
+        return ar;
     }
 }
