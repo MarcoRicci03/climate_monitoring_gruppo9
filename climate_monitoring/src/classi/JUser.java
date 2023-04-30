@@ -36,4 +36,38 @@ public class JUser {
         this.mail = mail;
         this.geoname_id = geoname_id;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getCf() {
+        return cf;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public Integer getGeoname_id() {
+        return geoname_id;
+    }
+    
+    
 }
