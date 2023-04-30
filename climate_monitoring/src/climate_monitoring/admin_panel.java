@@ -5,13 +5,20 @@
 package climate_monitoring;
 
 import classi.JAreaInteresse;
+import classi.JPrevisioni;
 import classi.JUser;
 import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -39,10 +46,12 @@ public class admin_panel extends javax.swing.JFrame {
         user=userLoggato;
 
         ArrayList<JAreaInteresse> list = ParserCSV.getAreeInteresse(user.getGeoname_id());
-        for (JAreaInteresse a : list) {
-            v.add(a.toStringList());
+        if(!list.isEmpty()){
+            for (JAreaInteresse a : list) {
+                v.add(a.toStringList());
+            }
+            listAree.setListData(v);
         }
-        listAree.setListData(v);
     }
 
     /**
@@ -64,6 +73,8 @@ public class admin_panel extends javax.swing.JFrame {
         listAree = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         txtAreaSelezionata = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTabellaPrevisioni = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -123,6 +134,27 @@ public class admin_panel extends javax.swing.JFrame {
 
         txtAreaSelezionata.setEditable(false);
 
+        jTabellaPrevisioni.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Data di rilevazione ", "Id centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTabellaPrevisioni);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -130,11 +162,15 @@ public class admin_panel extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAreaSelezionata, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(479, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAreaSelezionata, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,8 +181,9 @@ public class admin_panel extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtAreaSelezionata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
 
@@ -184,12 +221,26 @@ public class admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAggiungiAreaActionPerformed
 
     private void listAreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listAreeMouseClicked
-        // TODO add your handling code here:
-        String[] data = listAree.getSelectedValue().split(" ", 2);
-        
-        
-        
-        txtAreaSelezionata.setText(data[1]);
+        try {
+            // TODO add your handling code here:
+            String[] data = listAree.getSelectedValue().split(" ", 2);
+            int idAreaInteresse=Integer.parseInt(data[0]);
+            txtAreaSelezionata.setText(data[1]);
+            
+            ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioni();
+            List<String[]> rows=ParserCSV.creaListaPrevisioniFromCSV(list);
+            DefaultTableModel model=new DefaultTableModel(new String[]{"Data di rilevazione","Id centro","Vento","Umidità","Pressione","Temperatura","Precipitazione","Altitudine Ghiacciai","Massa Ghiacciai"
+},0);
+            
+            if(!list.isEmpty()){
+                for (int i=0;i<list.size();i++) {
+                    model.addRow(rows.get(i));
+                }
+                jTabellaPrevisioni.setModel((TableModel) model);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_listAreeMouseClicked
 
     /**
@@ -235,6 +286,8 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTabellaPrevisioni;
     private javax.swing.JList<String> listAree;
     private javax.swing.JTextField txtAreaSelezionata;
     private javax.swing.JTextField txtNomeArea;
