@@ -55,7 +55,9 @@ public class ParserCSV {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
         for (String s : list) {
             String[] elements = s.split(";");
-            return elements[3].equals(username) && elements[5].equals(pass);
+            ris=elements[3].equals(username) && elements[5].equals(pass);
+            if (ris==true)
+                return true;
         }
         return false;
     }
