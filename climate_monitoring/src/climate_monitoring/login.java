@@ -18,20 +18,23 @@ import java.util.logging.Logger;
  *
  * @author marco
  */
-public class login extends javax.swing.JFrame implements WindowListener{
+public class login extends javax.swing.JFrame implements WindowListener {
+
+    JUser utenteLoggato = null;
 
     /**
      * Creates new form login
      */
     public login() {
         initComponents();
+        nascondiOggettiPannelSinistro();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -43,18 +46,41 @@ public class login extends javax.swing.JFrame implements WindowListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtUsername = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtPass = new javax.swing.JPasswordField();
-        btnAccedi = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         btnRegistrati = new javax.swing.JButton();
+        btnAccedi = new javax.swing.JButton();
+        txtPass = new javax.swing.JPasswordField();
+        txtUsername = new javax.swing.JTextField();
+        labelUser = new javax.swing.JLabel();
+        labelPasswd = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        labelIcona = new javax.swing.JLabel();
+        labelUserLoggato = new javax.swing.JLabel();
+        btnAggiungiStazione = new javax.swing.JButton();
+        btnGestionePrevisioni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(706, 413));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setLabelFor(txtUsername);
-        jLabel1.setText("Username:");
+        btnRegistrati.setText("Registrati");
+        btnRegistrati.setPreferredSize(new java.awt.Dimension(79, 28));
+        btnRegistrati.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistratiActionPerformed(evt);
+            }
+        });
+
+        btnAccedi.setText("Accedi");
+        btnAccedi.setPreferredSize(new java.awt.Dimension(72, 28));
+        btnAccedi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccediActionPerformed(evt);
+            }
+        });
+
+        txtPass.setText("asd");
+        txtPass.setPreferredSize(new java.awt.Dimension(64, 28));
 
         txtUsername.setText("m_ricci1");
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
@@ -63,59 +89,108 @@ public class login extends javax.swing.JFrame implements WindowListener{
             }
         });
 
-        jLabel2.setLabelFor(txtPass);
-        jLabel2.setText("Password:");
+        labelUser.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        labelUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelUser.setLabelFor(txtUsername);
+        labelUser.setText("Username:");
 
-        txtPass.setText("asd");
+        labelPasswd.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        labelPasswd.setLabelFor(txtPass);
+        labelPasswd.setText("Password:");
 
-        btnAccedi.setText("Accedi");
-        btnAccedi.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelPasswd)
+                            .addComponent(labelUser)
+                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 2, Short.MAX_VALUE))
+                    .addComponent(btnRegistrati, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(labelUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelPasswd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAccedi, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRegistrati, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 353, 410));
+
+        labelIcona.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelIcona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/user.png"))); // NOI18N
+        labelIcona.setPreferredSize(new java.awt.Dimension(80, 80));
+
+        labelUserLoggato.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        labelUserLoggato.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelUserLoggato.setLabelFor(txtUsername);
+
+        btnAggiungiStazione.setText("Aggiungi stazione");
+        btnAggiungiStazione.setPreferredSize(new java.awt.Dimension(72, 28));
+        btnAggiungiStazione.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAccediActionPerformed(evt);
+                btnAggiungiStazioneActionPerformed(evt);
             }
         });
 
-        btnRegistrati.setText("Registrati");
-        btnRegistrati.addActionListener(new java.awt.event.ActionListener() {
+        btnGestionePrevisioni.setText("Gestione Previsioni");
+        btnGestionePrevisioni.setPreferredSize(new java.awt.Dimension(72, 28));
+        btnGestionePrevisioni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistratiActionPerformed(evt);
+                btnGestionePrevisioniActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnRegistrati, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                    .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                    .addComponent(txtPass)
-                    .addComponent(txtUsername))
-                .addContainerGap(91, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(labelIcona, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelUserLoggato, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 63, Short.MAX_VALUE))
+                    .addComponent(btnAggiungiStazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(86, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAccedi)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelIcona, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(labelUserLoggato, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegistrati)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addComponent(btnAggiungiStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(268, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 353, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -128,7 +203,7 @@ public class login extends javax.swing.JFrame implements WindowListener{
         try {
             //Controllo la correttezza dei dati inseriti
             if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
-                JUser utenteLoggato=ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
+                utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
                 admin_panel ap = new admin_panel(utenteLoggato);
                 ap.addWindowListener(this);
                 ap.setVisible(true);
@@ -145,6 +220,46 @@ public class login extends javax.swing.JFrame implements WindowListener{
         r.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_btnRegistratiActionPerformed
+
+    private void btnAggiungiStazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiStazioneActionPerformed
+        // TODO add your handling code here:
+        creaStazione cp = new creaStazione();
+        cp.addWindowListener(this);
+        cp.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btnAggiungiStazioneActionPerformed
+
+    private void btnGestionePrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionePrevisioniActionPerformed
+        // TODO add your handling code here:
+        admin_panel ap = new admin_panel(utenteLoggato);
+        ap.addWindowListener(this);
+        ap.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btnGestionePrevisioniActionPerformed
+
+    private void nascondiOggettiPannelDestro() {
+        labelPasswd.setVisible(false);
+        labelUser.setVisible(false);
+        txtPass.setVisible(false);
+        txtUsername.setVisible(false);
+        btnAccedi.setVisible(false);
+        btnRegistrati.setVisible(false);
+    }
+
+    public void mostraOggettiPannelSinistro() {
+        labelIcona.setVisible(true);
+        labelUserLoggato.setText(utenteLoggato.getUsername());
+        labelUserLoggato.setVisible(true);
+        btnAggiungiStazione.setVisible(true);
+        btnGestionePrevisioni.setVisible(true);
+    }
+
+    public void nascondiOggettiPannelSinistro() {
+        labelIcona.setVisible(false);
+        labelUserLoggato.setVisible(false);
+        btnAggiungiStazione.setVisible(false);
+        btnGestionePrevisioni.setVisible(false);
+    }
 
     /**
      * @param args the command line arguments
@@ -183,9 +298,15 @@ public class login extends javax.swing.JFrame implements WindowListener{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccedi;
+    private javax.swing.JButton btnAggiungiStazione;
+    private javax.swing.JButton btnGestionePrevisioni;
     private javax.swing.JButton btnRegistrati;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelIcona;
+    private javax.swing.JLabel labelPasswd;
+    private javax.swing.JLabel labelUser;
+    private javax.swing.JLabel labelUserLoggato;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
@@ -197,6 +318,10 @@ public class login extends javax.swing.JFrame implements WindowListener{
     @Override
     public void windowClosing(WindowEvent e) {
         setVisible(true);
+        if (utenteLoggato != null) {
+            nascondiOggettiPannelDestro();
+            mostraOggettiPannelSinistro();
+        }
     }
 
     @Override
