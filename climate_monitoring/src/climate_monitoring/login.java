@@ -64,7 +64,7 @@ public class login extends javax.swing.JFrame {
         jLabel2.setLabelFor(txtPass);
         jLabel2.setText("Password:");
 
-        txtPass.setText("sd");
+        txtPass.setText("asd");
 
         btnAccedi.setText("Accedi");
         btnAccedi.addActionListener(new java.awt.event.ActionListener() {

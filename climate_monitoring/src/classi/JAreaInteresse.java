@@ -18,7 +18,8 @@ public class JAreaInteresse {
         nome = "";
     }
 
-    public JAreaInteresse(Integer geoname_id, String nome) {
+    public JAreaInteresse(Integer id_area, Integer geoname_id, String nome) {
+        this.id_area = id_area;
         this.geoname_id = geoname_id;
         this.nome = nome;
     }
@@ -26,6 +27,10 @@ public class JAreaInteresse {
     @Override
     public String toString() {
         return "geoname_id=" + geoname_id + ", nome=" + nome;
+    }
+    
+    public String toStringList(){
+        return id_area + " " + nome;
     }
     
     

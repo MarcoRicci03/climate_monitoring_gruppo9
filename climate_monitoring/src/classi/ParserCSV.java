@@ -55,9 +55,10 @@ public class ParserCSV {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
         for (String s : list) {
             String[] elements = s.split(";");
-            ris=elements[3].equals(username) && elements[5].equals(pass);
-            if (ris==true)
+            ris = elements[3].equals(username) && elements[5].equals(pass);
+            if (ris == true) {
                 return true;
+            }
         }
         return false;
     }
@@ -116,5 +117,41 @@ public class ParserCSV {
             Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
+    }
+
+    public static ArrayList<JAreaInteresse> getAreeInteresse(Integer geoname_id) {
+        ArrayList<JAreaInteresse> ret = new ArrayList<JAreaInteresse>();
+        try {
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
+            for (String s : list) {
+                String[] elements = s.split(";");
+                if (Integer.parseInt(elements[2]) == geoname_id) {
+                    ret.add(new JAreaInteresse(Integer.parseInt(elements[0]), Integer.parseInt(elements[2]), elements[1]));
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }
+
+    public static Integer aggiungiAreaInteresse(Integer geoname_id, String nome) {
+        try {
+            Integer id = 1;
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
+            for (String s : list) {
+                id++;
+            }
+
+            FileWriter fileWriter = new FileWriter(new File(fAreeInteresse), true);
+            String line = id + ";" + nome + ";" + geoname_id + "\n";
+            fileWriter.append(line);
+            fileWriter.close();
+            return id;
+
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
     }
 }
