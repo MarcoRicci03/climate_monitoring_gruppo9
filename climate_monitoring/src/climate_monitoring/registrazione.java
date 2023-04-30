@@ -76,7 +76,7 @@ public class registrazione extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtIdOperatore = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnRegistrazione.setText("Registrati");
         btnRegistrazione.addActionListener(new java.awt.event.ActionListener() {

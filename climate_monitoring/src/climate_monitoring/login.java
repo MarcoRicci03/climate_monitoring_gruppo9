@@ -7,16 +7,17 @@ package climate_monitoring;
 import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 
 /**
  *
  * @author marco
  */
-public class login extends javax.swing.JFrame {
+public class login extends javax.swing.JFrame implements WindowListener{
 
     /**
      * Creates new form login
@@ -48,7 +49,7 @@ public class login extends javax.swing.JFrame {
         btnAccedi = new javax.swing.JButton();
         btnRegistrati = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setLabelFor(txtUsername);
@@ -127,8 +128,9 @@ public class login extends javax.swing.JFrame {
             //Controllo la correttezza dei dati inseriti
             if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
                 admin_panel ap = new admin_panel();
+                ap.addWindowListener(this);
                 ap.setVisible(true);
-                this.hide();
+                setVisible(false);
             }
         } catch (IOException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
@@ -137,8 +139,9 @@ public class login extends javax.swing.JFrame {
 
     private void btnRegistratiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistratiActionPerformed
         registrazione r = new registrazione();
-        r.show();
-        this.hide();
+        r.addWindowListener(this);
+        r.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btnRegistratiActionPerformed
 
     /**
@@ -184,4 +187,33 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        setVisible(true);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
 }

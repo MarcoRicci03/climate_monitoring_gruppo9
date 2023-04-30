@@ -6,13 +6,14 @@ package climate_monitoring;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.JFrame;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 /**
  *
  * @author marco
  */
-public class homepage extends javax.swing.JFrame {
+public class homepage extends javax.swing.JFrame implements WindowListener{
 
     /**
      * Creates new form homepage
@@ -105,8 +106,9 @@ public class homepage extends javax.swing.JFrame {
     private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
         //Apro la pagina di login
         login l = new login();
+        l.addWindowListener(this);
         l.setVisible(true);
-        this.hide();
+        setVisible(false);
     }//GEN-LAST:event_btnAccediActionPerformed
 
     /**
@@ -138,6 +140,7 @@ public class homepage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new homepage().setVisible(true);
             }
@@ -150,4 +153,34 @@ public class homepage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtCerca;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        setVisible(true);
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
+
 }
