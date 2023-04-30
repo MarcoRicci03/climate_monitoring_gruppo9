@@ -14,6 +14,17 @@ public class JUser {
 
     public JUser() {
     }
+    public JUser(String [] elementi){
+        this.id = elementi[0];
+        this.nome = elementi[1];
+        this.cognome = elementi[2];
+        this.username = elementi[3];
+        this.mail = elementi[4];
+        this.password = elementi[5];
+        this.cf = elementi[6];
+        this.geoname_id = Integer.parseInt(elementi[7]);
+        
+    }
 
     public JUser(String username, String nome, String cognome, String id, String password, String cf, String mail, Integer station) {
         this.username = username;
@@ -24,5 +35,5 @@ public class JUser {
         this.cf = cf;
         this.mail = mail;
         this.geoname_id = geoname_id;
-    }   
+    }
 }

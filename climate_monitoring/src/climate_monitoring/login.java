@@ -4,6 +4,7 @@
  */
 package climate_monitoring;
 
+import classi.JUser;
 import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -127,6 +128,7 @@ public class login extends javax.swing.JFrame implements WindowListener{
         try {
             //Controllo la correttezza dei dati inseriti
             if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
+                JUser utenteLoggato=ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
                 admin_panel ap = new admin_panel();
                 ap.addWindowListener(this);
                 ap.setVisible(true);
