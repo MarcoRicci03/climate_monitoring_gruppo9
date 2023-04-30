@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,6 +28,7 @@ public class ParserCSV {
     private static final String fAreeInteresse = "dati/areedinteresse.csv";
     private static final String fNazioni = "dati/nazioni.csv";
     private static final String fOperatori = "dati/operatori.csv";
+    private static final String fPrevisioni = "dati/previsioni.csv";
 
     public static ArrayList<JLuogo> creaLista() throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
@@ -167,5 +170,26 @@ public class ParserCSV {
             }       
         }
         return null;
+    }
+    
+    public static ArrayList<JPrevisioni> creaListaPrevisioni() throws FileNotFoundException, IOException {
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
+        ArrayList<JPrevisioni> l = new ArrayList<>();
+        for (String s : list) {
+            String[] elements = s.split(";");
+            Date data=new Date(elements[0]);
+            l.add(new JPrevisioni(data,Integer.parseInt(elements[1]),Integer.parseInt(elements[2]),elements[3],Integer.parseInt(elements[4]),Integer.parseInt(elements[5]),Integer.parseInt(elements[6]),Integer.parseInt(elements[7]),Integer.parseInt(elements[8]),Integer.parseInt(elements[9]),Integer.parseInt(elements[10])));
+        }
+        return l;
+    }
+    public static List<String[]> creaListaPrevisioniFromCSV(ArrayList<JPrevisioni> lista){
+        ArrayList<JPrevisioni> list =lista;
+        List<String[]> listaPrev=new ArrayList<>();
+        for (JPrevisioni prev : list){
+            String[] elements=prev.toString().split(",");
+            listaPrev.add(elements);
+        }
+        return listaPrev;
+        
     }
 }
