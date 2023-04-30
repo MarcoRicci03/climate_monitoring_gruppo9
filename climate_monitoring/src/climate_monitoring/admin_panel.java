@@ -5,6 +5,7 @@
 package climate_monitoring;
 
 import classi.JAreaInteresse;
+import classi.JUser;
 import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -18,25 +19,26 @@ import javax.swing.DefaultListModel;
  */
 public class admin_panel extends javax.swing.JFrame {
 
+    private static JUser user;
     private String username;
     private Integer geoname_id;
     private Vector v = new Vector();
 
     /**
      * Creates new form admin_panel
+     * @param userLoggato
      */
-    public admin_panel() {
+    public admin_panel(JUser userLoggato) {
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
+        
+        user=userLoggato;
 
-        this.username = username;
-        this.geoname_id = 3178229;
-
-        ArrayList<JAreaInteresse> list = ParserCSV.getAreeInteresse(geoname_id);
+        ArrayList<JAreaInteresse> list = ParserCSV.getAreeInteresse(user.getGeoname_id());
         for (JAreaInteresse a : list) {
             v.add(a.toStringList());
         }
@@ -220,7 +222,7 @@ public class admin_panel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new admin_panel().setVisible(true);
+                new admin_panel(user).setVisible(true);
             }
         });
     }
