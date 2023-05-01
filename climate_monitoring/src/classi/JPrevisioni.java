@@ -5,8 +5,12 @@
 package classi;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,6 +57,27 @@ public class JPrevisioni {
         this.aGhiacciai = aGhiacciai;
         this.mGhiacciai = mGhiacciai;
     }
+    
+        public JPrevisioni(String data,int id_centro,int id_area,String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+        try {
+            date = formatter.parse(data);
+        } catch (ParseException ex) {
+            Logger.getLogger(JPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.data = date;
+        this.id_centro=id_centro;
+        this.id_area = id_area;
+        this.username=username;
+        this.vVento = vVento;
+        this.pUmidita = pUmidita;
+        this.pressione = pressione;
+        this.temperatura = temperatura;
+        this.precipitazioni=precipitazioni;
+        this.aGhiacciai = aGhiacciai;
+        this.mGhiacciai = mGhiacciai;
+    }
 
     @Override
     public String toString() {
@@ -60,5 +85,9 @@ public class JPrevisioni {
         return df.format(data)+","+id_centro+","+vVento+","+pUmidita+","+pressione+","+temperatura+","+precipitazioni+","+aGhiacciai+","+mGhiacciai;
     }
     
+    public String toCSV(){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(data)+";"+id_centro+";"+id_area+";"+username+";"+vVento+";"+pUmidita+";"+pressione+";"+temperatura+";"+precipitazioni+";"+aGhiacciai+";"+mGhiacciai;
+    }
 
 }

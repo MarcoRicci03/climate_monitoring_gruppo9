@@ -196,4 +196,24 @@ public class ParserCSV {
         return listaPrev;
 
     }
+    
+        public static Integer aggiungiPrevisione(JPrevisioni previsione) {
+        try {
+            Integer id = 1;
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
+            for (String s : list) {
+                id++;
+            }
+
+            FileWriter fileWriter = new FileWriter(new File(fPrevisioni), true);
+            String line = previsione.toCSV()+"\n";
+            fileWriter.append(line);
+            fileWriter.close();
+            return id;
+
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
 }

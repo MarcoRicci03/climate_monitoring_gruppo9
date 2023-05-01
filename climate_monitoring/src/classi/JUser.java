@@ -11,6 +11,7 @@ package classi;
 public class JUser {
     private String username, nome, cognome, id, password, cf, mail;
     private Integer geoname_id;
+    private int id_areaSelezionata;
 
     public JUser() {
     }
@@ -67,6 +68,14 @@ public class JUser {
 
     public Integer getGeoname_id() {
         return geoname_id;
+    }
+
+    public int getId_areaSelezionata() {
+        return id_areaSelezionata;
+    }
+
+    public void setId_areaSelezionata(int id_areaSelezionata) {
+        this.id_areaSelezionata = id_areaSelezionata;
     }
     
     
