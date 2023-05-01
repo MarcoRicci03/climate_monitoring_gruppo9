@@ -157,8 +157,9 @@ public class ParserCSV {
             return -1;
         }
     }
+
     ///Restituisce oggetto User con tutte le info
-    public static JUser creaUtenteLoggato(String username, String pass) throws IOException{
+    public static JUser creaUtenteLoggato(String username, String pass) throws IOException {
         boolean ris = true;
         JUser user;
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
@@ -166,30 +167,33 @@ public class ParserCSV {
             String[] elements = s.split(";");
             ris = elements[3].equals(username) && elements[5].equals(pass);
             if (ris == true) {
-                return user=new JUser(elements);
-            }       
+                return user = new JUser(elements);
+            }
         }
         return null;
     }
-    
-    public static ArrayList<JPrevisioni> creaListaPrevisioni() throws FileNotFoundException, IOException {
+
+    public static ArrayList<JPrevisioni> creaListaPrevisioni(Integer id_area) throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
         ArrayList<JPrevisioni> l = new ArrayList<>();
         for (String s : list) {
             String[] elements = s.split(";");
-            Date data=new Date(elements[0]);
-            l.add(new JPrevisioni(data,Integer.parseInt(elements[1]),Integer.parseInt(elements[2]),elements[3],Integer.parseInt(elements[4]),Integer.parseInt(elements[5]),Integer.parseInt(elements[6]),Integer.parseInt(elements[7]),Integer.parseInt(elements[8]),Integer.parseInt(elements[9]),Integer.parseInt(elements[10])));
+            if (Integer.parseInt(elements[2]) == id_area) {
+                Date data = new Date(elements[0]);
+                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10])));
+            }
         }
         return l;
     }
-    public static List<String[]> creaListaPrevisioniFromCSV(ArrayList<JPrevisioni> lista){
-        ArrayList<JPrevisioni> list =lista;
-        List<String[]> listaPrev=new ArrayList<>();
-        for (JPrevisioni prev : list){
-            String[] elements=prev.toString().split(",");
+
+    public static List<String[]> creaListaPrevisioniFromCSV(ArrayList<JPrevisioni> lista) {
+        ArrayList<JPrevisioni> list = lista;
+        List<String[]> listaPrev = new ArrayList<>();
+        for (JPrevisioni prev : list) {
+            String[] elements = prev.toString().split(",");
             listaPrev.add(elements);
         }
         return listaPrev;
-        
+
     }
 }
