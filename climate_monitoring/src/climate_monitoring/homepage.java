@@ -14,10 +14,6 @@ import java.awt.event.WindowListener;
  * @author marco
  */
 public class homepage extends javax.swing.JFrame implements WindowListener{
-
-    /**
-     * Creates new form homepage
-     */
     public homepage() {
         initComponents();
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -28,6 +24,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
         this.setLocation(x, y);
 
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

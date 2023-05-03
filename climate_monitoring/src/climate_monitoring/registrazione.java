@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -65,7 +66,6 @@ public class registrazione extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtPassConferma = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
-        txtDataDiNascita = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cmbSesso = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -75,6 +75,7 @@ public class registrazione extends javax.swing.JFrame {
         btnCrea = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         txtIdOperatore = new javax.swing.JTextField();
+        datePickerDataNascita = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -106,8 +107,6 @@ public class registrazione extends javax.swing.JFrame {
         jLabel4.setText("Conferma password:");
 
         jLabel5.setText("Data di nascita:");
-
-        txtDataDiNascita.setText("gg/mm/yyyy");
 
         jLabel6.setText("Sesso:");
 
@@ -159,40 +158,38 @@ public class registrazione extends javax.swing.JFrame {
                         .addComponent(cmbStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCrea, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 12, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRegistrazione)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtDataDiNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtIdOperatore, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cmbSesso, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(datePickerDataNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbSesso, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtIdOperatore, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(74, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel5)
-                    .addComponent(txtDataDiNascita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtIdOperatore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel5))
+                    .addComponent(datePickerDataNascita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCognome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,7 +201,9 @@ public class registrazione extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtIdOperatore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassConferma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,18 +222,17 @@ public class registrazione extends javax.swing.JFrame {
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
         if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) {
-            if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !txtDataDiNascita.getText().isEmpty()
+            if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !datePickerDataNascita.getDate().toString().isEmpty()
                     && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
 
                 if (txtPass.getText().equals(txtPassConferma.getText())) {
                     Person p = new Person();
                     p.setName(txtNome.getText());
                     p.setSurname(txtCognome.getText());
-                    SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
-                    String[] dataDiNascita = txtDataDiNascita.getText().split("/");
-                    p.setDay(dataDiNascita[0]);
-                    p.setMonth(dataDiNascita[1]);
-                    p.setYear(dataDiNascita[2]);
+                    Date d = datePickerDataNascita.getDate();
+                    p.setDay(String.valueOf(d.getDay()));
+                    p.setMonth(String.valueOf(datePickerDataNascita.getDate().getMonth()));
+                    p.setYear(String.valueOf(datePickerDataNascita.getDate().getYear()));
                     p.setBornCity(txtLuogoNascita.getText().toUpperCase());
                     p.setSex(cmbSesso.getItemAt(cmbSesso.getSelectedIndex()));
                     Engine e = null;
@@ -243,7 +241,10 @@ public class registrazione extends javax.swing.JFrame {
                     } catch (IOException ex) {
                         return;
                     }
-                    ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id());
+                    System.out.println(p.getDay() + p.getMonth() + p.getYear());
+//                    if (!ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) {
+//                        JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+//                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Le password devono corrispondere", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -321,6 +322,7 @@ public class registrazione extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrazione;
     private javax.swing.JComboBox<String> cmbSesso;
     private javax.swing.JComboBox<String> cmbStazione;
+    private com.toedter.calendar.JDateChooser datePickerDataNascita;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -331,7 +333,6 @@ public class registrazione extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtCognome;
-    private javax.swing.JTextField txtDataDiNascita;
     private javax.swing.JTextField txtIdOperatore;
     private javax.swing.JTextField txtLuogoNascita;
     private javax.swing.JTextField txtNome;

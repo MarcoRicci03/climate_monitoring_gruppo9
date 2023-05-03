@@ -66,29 +66,40 @@ public class ParserCSV {
         return false;
     }
 
-    public static boolean registraUtente(String nome, String cognome, String pass, String cf, Integer id_stazione) {
+    public static boolean registraUtente(String nome, String cognome, String pass, String cf, Integer id_stazione, String codiceOperatore) {
         try {
-            String username = nome.substring(0, 1) + "_" + cognome;
-            Integer id = 0;
-            Integer cont = 1;
+            boolean ris = false;
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
-            for (String s : list) {
-                id++;
-                String[] elements = s.split(";");
-                if (elements[3].contains(username)) {
-                    cont++;
-                }
+            String s1;
+            for (int i = 0; i < list.size() && !ris; i++) {
+                s1 = list.get(i);
+                String[] elements = s1.split(";");
+                ris = elements[8].equals(codiceOperatore);
             }
-            username += cont.toString();
+            if (!ris) {
+                String username = nome.substring(0, 1) + "_" + cognome;
+                Integer id = 0;
+                Integer cont = 1;
+                for (String s : list) {
+                    id++;
+                    String[] elements = s.split(";");
+                    if (elements[3].contains(username)) {
+                        cont++;
+                    }
+                }
+                username += cont.toString();
 
-            System.out.println(username);
-            //scrivo su file
-            String mail = username + "@mail.com";
-            FileWriter fileWriter = new FileWriter(new File(fUtenti), true);
-            String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + "\n";
-            fileWriter.append(line.toString());
-            fileWriter.close();
-            return true;
+                System.out.println(username);
+                //scrivo su file
+                String mail = username + "@mail.com";
+                FileWriter fileWriter = new FileWriter(new File(fUtenti), true);
+                String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + "\n";
+                fileWriter.append(line.toString());
+                fileWriter.close();
+                return true;
+            } else {
+                return false;
+            }
         } catch (IOException ex) {
             Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -196,8 +207,8 @@ public class ParserCSV {
         return listaPrev;
 
     }
-    
-        public static Integer aggiungiPrevisione(JPrevisioni previsione) {
+
+    public static Integer aggiungiPrevisione(JPrevisioni previsione) {
         try {
             Integer id = 1;
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
@@ -206,7 +217,7 @@ public class ParserCSV {
             }
 
             FileWriter fileWriter = new FileWriter(new File(fPrevisioni), true);
-            String line = previsione.toCSV()+"\n";
+            String line = previsione.toCSV() + "\n";
             fileWriter.append(line);
             fileWriter.close();
             return id;
