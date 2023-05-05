@@ -11,9 +11,9 @@ import engine.Person;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,20 +31,18 @@ public class registrazione extends javax.swing.JFrame {
      */
     public registrazione() {
         initComponents();
+        //posizione centrata della finestra all'avvio
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
-        try {
-            al = ParserCSV.creaLista();
-            for (int i = 0; i < al.size(); i++) {
-                cmbStazione.addItem(al.get(i).getNome());
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(registrazione.class.getName()).log(Level.SEVERE, null, ex);
+        //creazione della lista di tutte le stazioni metereologiche salvate sul file stazioni.csv, inserite poi
+        //nel combobox per la selezione
+        al = ParserCSV.creaLista();
+        for (int i = 0; i < al.size(); i++) {
+            cmbStazione.addItem(al.get(i).getNome());
         }
-
     }
 
     /**
@@ -86,18 +84,6 @@ public class registrazione extends javax.swing.JFrame {
             }
         });
 
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
-            }
-        });
-
-        txtCognome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCognomeActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Nome:");
 
         jLabel2.setText("Cognome:");
@@ -117,11 +103,6 @@ public class registrazione extends javax.swing.JFrame {
         jLabel8.setText("Stazione meteorologica:");
 
         cmbStazione.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----" }));
-        cmbStazione.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbStazioneActionPerformed(evt);
-            }
-        });
 
         btnCrea.setText("Crea");
         btnCrea.addActionListener(new java.awt.event.ActionListener() {
@@ -221,18 +202,19 @@ public class registrazione extends javax.swing.JFrame {
 
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
-        if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) {
+        if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) { //controllo esistenza e correttezza del codice operatore
+            //controlli per verificare che tutti i campi siano stati compilati
             if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !datePickerDataNascita.getDate().toString().isEmpty()
                     && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
-
                 if (txtPass.getText().equals(txtPassConferma.getText())) {
+                    //crezione oggetto persona per il codice fiscale
                     Person p = new Person();
                     p.setName(txtNome.getText());
                     p.setSurname(txtCognome.getText());
-                    Date d = datePickerDataNascita.getDate();
-                    p.setDay(String.valueOf(d.getDay()));
-                    p.setMonth(String.valueOf(datePickerDataNascita.getDate().getMonth()));
-                    p.setYear(String.valueOf(datePickerDataNascita.getDate().getYear()));
+                    LocalDate ld = datePickerDataNascita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    p.setDay(String.valueOf(ld.getDayOfMonth()));
+                    p.setMonth(String.valueOf(ld.getMonthValue()));
+                    p.setYear(String.valueOf(ld.getYear()));
                     p.setBornCity(txtLuogoNascita.getText().toUpperCase());
                     p.setSex(cmbSesso.getItemAt(cmbSesso.getSelectedIndex()));
                     Engine e = null;
@@ -241,10 +223,11 @@ public class registrazione extends javax.swing.JFrame {
                     } catch (IOException ex) {
                         return;
                     }
-                    System.out.println(p.getDay() + p.getMonth() + p.getYear());
-//                    if (!ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) {
-//                        JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
-//                    }
+                    //registrazione dell'utente solamente se non esiste altro utente con codice operatore uguali
+                    if (!ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) {
+                        //finestra di errore in caso di un utente già registrato
+                        JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Le password devono corrispondere", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -253,33 +236,18 @@ public class registrazione extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
-
         }
-
     }//GEN-LAST:event_btnRegistrazioneActionPerformed
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
-
-    private void txtCognomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCognomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCognomeActionPerformed
-
-    private void cmbStazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStazioneActionPerformed
-        // TODO add your handling code here:
-        //System.out.println(al.get(cmbStazione.getSelectedIndex()));
-    }//GEN-LAST:event_cmbStazioneActionPerformed
-
     private void btnCreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreaActionPerformed
-        // TODO add your handling code here:
+        //controllo esistenza codice operatore
         if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) {
+            //apro la finestra per la creazione di una nuova stazione
             creaStazione cS = new creaStazione();
             cS.show();
         } else {
             JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
-
     }//GEN-LAST:event_btnCreaActionPerformed
 
     /**

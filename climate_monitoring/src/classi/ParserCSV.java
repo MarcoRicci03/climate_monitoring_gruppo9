@@ -30,12 +30,16 @@ public class ParserCSV {
     private static final String fOperatori = "dati/operatori.csv";
     private static final String fPrevisioni = "dati/previsioni.csv";
 
-    public static ArrayList<JLuogo> creaLista() throws FileNotFoundException, IOException {
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
+    public static ArrayList<JLuogo> creaLista() {
         ArrayList<JLuogo> l = new ArrayList<>();
-        for (String s : list) {
-            String[] elements = s.split(";");
-            l.add(new JLuogo(Integer.valueOf(elements[0]), elements[1], elements[2], elements[3], new JCoordinate(Float.valueOf(elements[4].split(",")[0]), Float.valueOf(elements[4].split(",")[1]))));
+        try {
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
+            for (String s : list) {
+                String[] elements = s.split(";");
+                l.add(new JLuogo(Integer.valueOf(elements[0]), elements[1], elements[2], elements[3], new JCoordinate(Float.valueOf(elements[4].split(",")[0]), Float.valueOf(elements[4].split(",")[1]))));
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
         }
         return l;
     }
