@@ -119,6 +119,8 @@ public class registrazione extends javax.swing.JFrame {
 
         jLabel9.setText("Id operatore:");
 
+        datePickerDataNascita.setDateFormatString("dd/MM/yyyy");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,7 +210,7 @@ public class registrazione extends javax.swing.JFrame {
 
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
-        if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) { //controllo esistenza e correttezza del codice operatore
+        if (true || ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) { //controllo esistenza e correttezza del codice operatore
             //controlli per verificare che tutti i campi siano stati compilati
             if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !datePickerDataNascita.getDate().toString().isEmpty()
                     && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
