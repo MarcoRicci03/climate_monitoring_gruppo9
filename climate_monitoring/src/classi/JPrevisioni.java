@@ -39,26 +39,26 @@ public class JPrevisioni {
         this.temperatura = 0;
         this.aGhiacciai = 0;
         this.mGhiacciai = 0;
-        this.id_centro=0;
-        this.username="";
-        this.precipitazioni=0;
+        this.id_centro = 0;
+        this.username = "";
+        this.precipitazioni = 0;
     }
 
-    public JPrevisioni(Date data,int id_centro,int id_area,String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
+    public JPrevisioni(Date data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
         this.data = data;
-        this.id_centro=id_centro;
+        this.id_centro = id_centro;
         this.id_area = id_area;
-        this.username=username;
+        this.username = username;
         this.vVento = vVento;
         this.pUmidita = pUmidita;
         this.pressione = pressione;
         this.temperatura = temperatura;
-        this.precipitazioni=precipitazioni;
+        this.precipitazioni = precipitazioni;
         this.aGhiacciai = aGhiacciai;
         this.mGhiacciai = mGhiacciai;
     }
-    
-        public JPrevisioni(String data,int id_centro,int id_area,String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
+
+    public JPrevisioni(String data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
         try {
@@ -67,14 +67,14 @@ public class JPrevisioni {
             Logger.getLogger(JPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.data = date;
-        this.id_centro=id_centro;
+        this.id_centro = id_centro;
         this.id_area = id_area;
-        this.username=username;
+        this.username = username;
         this.vVento = vVento;
         this.pUmidita = pUmidita;
         this.pressione = pressione;
         this.temperatura = temperatura;
-        this.precipitazioni=precipitazioni;
+        this.precipitazioni = precipitazioni;
         this.aGhiacciai = aGhiacciai;
         this.mGhiacciai = mGhiacciai;
     }
@@ -82,12 +82,12 @@ public class JPrevisioni {
     @Override
     public String toString() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return df.format(data)+","+id_centro+","+vVento+","+pUmidita+","+pressione+","+temperatura+","+precipitazioni+","+aGhiacciai+","+mGhiacciai;
+        return df.format(data) + "," + id_centro + "," + vVento + "," + pUmidita + "," + pressione + "," + temperatura + "," + precipitazioni + "," + aGhiacciai + "," + mGhiacciai;
     }
-    
-    public String toCSV(){
+
+    public String toCSV() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return df.format(data)+";"+id_centro+";"+id_area+";"+username+";"+vVento+";"+pUmidita+";"+pressione+";"+temperatura+";"+precipitazioni+";"+aGhiacciai+";"+mGhiacciai;
+        return df.format(data) + ";" + id_centro + ";" + id_area + ";" + username + ";" + vVento + ";" + pUmidita + ";" + pressione + ";" + temperatura + ";" + precipitazioni + ";" + aGhiacciai + ";" + mGhiacciai;
     }
 
 }

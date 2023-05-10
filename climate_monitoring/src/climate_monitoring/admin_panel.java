@@ -11,11 +11,18 @@ import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -50,6 +57,7 @@ public class admin_panel extends javax.swing.JFrame {
             }
             listAree.setListData(v);
         }
+        datePickerData.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
     }
 
     /**
@@ -74,7 +82,6 @@ public class admin_panel extends javax.swing.JFrame {
         jTabellaPrevisioni = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        txtDataDiRilevazione = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtIdCentro = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -92,6 +99,7 @@ public class admin_panel extends javax.swing.JFrame {
         cmbMassaGhiacciai = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         btnAggiungiPrevisioni = new javax.swing.JButton();
+        datePickerData = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtAreaPrevisioneSelezionata = new javax.swing.JTextField();
@@ -202,8 +210,6 @@ public class admin_panel extends javax.swing.JFrame {
 
         jLabel5.setText("Data di rilevazione:");
 
-        txtDataDiRilevazione.setText("gg/mm/aaaa");
-
         jLabel6.setText("Id centro:");
 
         txtIdCentro.setEditable(false);
@@ -243,33 +249,35 @@ public class admin_panel extends javax.swing.JFrame {
             }
         });
 
+        datePickerData.setDateFormatString("dd/MM/yyyy");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbPressione, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtIdCentro)
-                            .addComponent(txtDataDiRilevazione, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(datePickerData, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(txtIdCentro))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
+                                .addGap(29, 29, 29)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cmbVento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGap(45, 45, 45)
+                                .addGap(19, 19, 19)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cmbUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -278,7 +286,7 @@ public class admin_panel extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(jLabel12)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cmbPrecipitazioni, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbTemperatura, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,7 +296,7 @@ public class admin_panel extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbMassaGhiacciai, 0, 50, Short.MAX_VALUE)
+                        .addComponent(cmbMassaGhiacciai, 0, 49, Short.MAX_VALUE)
                         .addGap(134, 134, 134))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnAggiungiPrevisioni)
@@ -314,11 +322,12 @@ public class admin_panel extends javax.swing.JFrame {
                             .addComponent(cmbGhiacciai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAggiungiPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtDataDiRilevazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(cmbVento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel7)
+                                .addComponent(cmbVento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(datePickerData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -336,6 +345,8 @@ public class admin_panel extends javax.swing.JFrame {
         jLabel4.setText("Aggiungi previsione per ");
 
         jLabel1.setText("Aggiungi area d'interesse");
+
+        txtAreaPrevisioneSelezionata.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -418,18 +429,24 @@ public class admin_panel extends javax.swing.JFrame {
 
     private void btnAggiungiPrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiPrevisioniActionPerformed
         // TODO add your handling code here:
-        int valVento, valUmidita, valPressione,valTemperatura,valPrecipitazioni,valGhiacciai,valMassaGhiaccia;
-        String txtData=txtDataDiRilevazione.getText();
-        int id=Integer.parseInt(txtIdCentro.getText());
-        valVento=Integer.parseInt(cmbVento.getItemAt(cmbVento.getSelectedIndex()));
-        valUmidita=Integer.parseInt(cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex()));
-        valPressione=Integer.parseInt(cmbPressione.getItemAt(cmbPressione.getSelectedIndex()));
-        valTemperatura=Integer.parseInt(cmbTemperatura.getItemAt(cmbTemperatura.getSelectedIndex()));
-        valPrecipitazioni=Integer.parseInt(cmbPrecipitazioni.getItemAt(cmbPrecipitazioni.getSelectedIndex()));
-        valGhiacciai=Integer.parseInt(cmbGhiacciai.getItemAt(cmbGhiacciai.getSelectedIndex()));
-        valMassaGhiaccia=Integer.parseInt(cmbMassaGhiacciai.getItemAt(cmbMassaGhiacciai.getSelectedIndex()));
-        JPrevisioni previsione=new JPrevisioni(txtData, id, user.getId_areaSelezionata(), user.getUsername(),valVento,valUmidita,valPressione,valTemperatura,valPrecipitazioni,valGhiacciai,valMassaGhiaccia);
-        ParserCSV.aggiungiPrevisione(previsione);
+        if (!txtAreaSelezionata.getText().isEmpty()) {
+            int valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia;
+            LocalDate ld = datePickerData.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String txtData = ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            System.out.println(txtData);
+            int id = Integer.parseInt(txtIdCentro.getText());
+            valVento = Integer.parseInt(cmbVento.getItemAt(cmbVento.getSelectedIndex()));
+            valUmidita = Integer.parseInt(cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex()));
+            valPressione = Integer.parseInt(cmbPressione.getItemAt(cmbPressione.getSelectedIndex()));
+            valTemperatura = Integer.parseInt(cmbTemperatura.getItemAt(cmbTemperatura.getSelectedIndex()));
+            valPrecipitazioni = Integer.parseInt(cmbPrecipitazioni.getItemAt(cmbPrecipitazioni.getSelectedIndex()));
+            valGhiacciai = Integer.parseInt(cmbGhiacciai.getItemAt(cmbGhiacciai.getSelectedIndex()));
+            valMassaGhiaccia = Integer.parseInt(cmbMassaGhiacciai.getItemAt(cmbMassaGhiacciai.getSelectedIndex()));
+            JPrevisioni previsione = new JPrevisioni(txtData, id, user.getId_areaSelezionata(), user.getUsername(), valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia);
+            ParserCSV.aggiungiPrevisione(previsione);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleziona un'area d'interesse.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnAggiungiPrevisioniActionPerformed
 
     /**
@@ -477,6 +494,7 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbTemperatura;
     private javax.swing.JComboBox<String> cmbUmidita;
     private javax.swing.JComboBox<String> cmbVento;
+    private com.toedter.calendar.JDateChooser datePickerData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -499,7 +517,6 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JList<String> listAree;
     private javax.swing.JTextField txtAreaPrevisioneSelezionata;
     private javax.swing.JTextField txtAreaSelezionata;
-    private javax.swing.JTextField txtDataDiRilevazione;
     private javax.swing.JTextField txtIdCentro;
     private javax.swing.JTextField txtNomeArea;
     // End of variables declaration//GEN-END:variables

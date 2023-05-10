@@ -260,6 +260,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -267,24 +272,19 @@
                           <Component id="cmbPressione" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="datePickerData" pref="130" max="32767" attributes="0"/>
                               <Component id="txtIdCentro" max="32767" attributes="0"/>
-                              <Component id="txtDataDiRilevazione" pref="96" max="32767" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="cmbVento" min="-2" pref="50" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="cmbUmidita" min="-2" pref="50" max="-2" attributes="0"/>
@@ -298,7 +298,7 @@
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <EmptySpace pref="13" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="cmbPrecipitazioni" min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="cmbTemperatura" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
@@ -309,7 +309,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="cmbMassaGhiacciai" pref="50" max="32767" attributes="0"/>
+                          <Component id="cmbMassaGhiacciai" pref="49" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -344,11 +344,13 @@
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtDataDiRilevazione" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbVento" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cmbVento" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="datePickerData" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -374,11 +376,6 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="text" type="java.lang.String" value="Data di rilevazione:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtDataDiRilevazione">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="gg/mm/aaaa"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
@@ -546,6 +543,11 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAggiungiPrevisioniActionPerformed"/>
           </Events>
         </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="datePickerData">
+          <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -559,6 +561,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtAreaPrevisioneSelezionata">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

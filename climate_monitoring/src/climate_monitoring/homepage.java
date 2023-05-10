@@ -4,6 +4,7 @@
  */
 package climate_monitoring;
 
+import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -50,6 +51,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
         });
 
         btnCerca.setText("Cerca");
+        btnCerca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCercaActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -107,6 +113,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
         l.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_btnAccediActionPerformed
+
+    private void btnCercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCercaActionPerformed
+        // TODO add your handling code here:
+        ParserCSV.cercaPerArea("Cant");
+    }//GEN-LAST:event_btnCercaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -231,4 +231,22 @@ public class ParserCSV {
             return -1;
         }
     }
+
+    public static ArrayList<JAreaInteresse> cercaPerArea(String citta) {
+        try {
+            ArrayList<JAreaInteresse> aL = new ArrayList<>();
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
+            for (String s : list) {
+                String[] elements = s.split(";");
+                if (elements[1].toLowerCase().contains(citta.toLowerCase())) {
+                    aL.add(new JAreaInteresse(Integer.parseInt(elements[0]), Integer.parseInt(elements[2]), elements[1]));
+                }
+            }
+
+            return aL;
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
