@@ -4,17 +4,24 @@
  */
 package climate_monitoring;
 
+import classi.JAreaInteresse;
+import classi.JPrevisioni;
 import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author marco
  */
-public class homepage extends javax.swing.JFrame implements WindowListener{
+public class homepage extends javax.swing.JFrame implements WindowListener {
+
     public homepage() {
         initComponents();
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -25,7 +32,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
         this.setLocation(x, y);
 
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,6 +46,8 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
         txtCerca = new javax.swing.JTextField();
         btnCerca = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableRisultati = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,15 +67,34 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        tableRisultati.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Nome", "Tipo"
+            }
+        ));
+        jScrollPane1.setViewportView(tableRisultati);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 337, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -75,31 +102,30 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(230, 230, 230)
-                .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCerca)
-                .addGap(230, 230, 230))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAccedi))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 188, Short.MAX_VALUE)
+                .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCerca)
+                .addGap(155, 155, 155))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAccedi)
-                .addGap(77, 77, 77)
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(txtCerca))
-                .addGap(21, 21, 21)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -116,7 +142,22 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
 
     private void btnCercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCercaActionPerformed
         // TODO add your handling code here:
-        ParserCSV.cercaPerArea("Cant");
+        ArrayList<JAreaInteresse> aai = ParserCSV.cercaPerArea("Cant");
+
+        List<String[]> al = new ArrayList<>();
+        for (JAreaInteresse prev : aai) {
+            String[] elements = prev.toString().split(",");
+            al.add(elements);
+        }
+
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Nome", "Tipo"}, 0);
+
+        if (!aai.isEmpty()) {
+            for (int i = 0; i < aai.size(); i++) {
+                model.addRow(al.get(i));
+            }
+        }
+        tableRisultati.setModel((TableModel) model);
     }//GEN-LAST:event_btnCercaActionPerformed
 
     /**
@@ -159,6 +200,8 @@ public class homepage extends javax.swing.JFrame implements WindowListener{
     private javax.swing.JButton btnAccedi;
     private javax.swing.JButton btnCerca;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableRisultati;
     private javax.swing.JTextField txtCerca;
     // End of variables declaration//GEN-END:variables
 

@@ -410,14 +410,21 @@ public class admin_panel extends javax.swing.JFrame {
             txtAreaSelezionata.setText(data[1]);
             txtAreaPrevisioneSelezionata.setText(data[1]);
             txtIdCentro.setText(String.valueOf(user.getGeoname_id()));
+            
             ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioni(idAreaInteresse);
-            List<String[]> rows = ParserCSV.creaListaPrevisioniFromCSV(list);
+
+            List<String[]> listaPrev = new ArrayList<>();
+            for (JPrevisioni prev : list) {
+                String[] elements = prev.toString().split(",");
+                listaPrev.add(elements);
+            }
+
             DefaultTableModel model = new DefaultTableModel(new String[]{"Data di rilevazione", "Id centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"
             }, 0);
 
             if (!list.isEmpty()) {
                 for (int i = 0; i < list.size(); i++) {
-                    model.addRow(rows.get(i));
+                    model.addRow(listaPrev.get(i));
                 }
             }
             jTabellaPrevisioni.setModel((TableModel) model);
