@@ -119,7 +119,7 @@ public class login extends javax.swing.JFrame implements WindowListener {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(labelUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -131,10 +131,10 @@ public class login extends javax.swing.JFrame implements WindowListener {
                 .addComponent(btnAccedi, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegistrati, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 353, 410));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 353, 240));
 
         labelIcona.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelIcona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/user.png"))); // NOI18N
@@ -195,32 +195,6 @@ public class login extends javax.swing.JFrame implements WindowListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
-    private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
-        try {
-            //Controllo la correttezza dei dati inseriti
-            if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
-                utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
-                admin_panel ap = new admin_panel(utenteLoggato);
-                ap.addWindowListener(this);
-                ap.setVisible(true);
-                setVisible(false);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnAccediActionPerformed
-
-    private void btnRegistratiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistratiActionPerformed
-        registrazione r = new registrazione();
-        r.addWindowListener(this);
-        r.setVisible(true);
-        setVisible(false);
-    }//GEN-LAST:event_btnRegistratiActionPerformed
-
     private void btnAggiungiStazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiStazioneActionPerformed
         // TODO add your handling code here:
         creaStazione cp = new creaStazione();
@@ -236,6 +210,34 @@ public class login extends javax.swing.JFrame implements WindowListener {
         ap.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_btnGestionePrevisioniActionPerformed
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
+
+    private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
+        try {
+            //Controllo la correttezza dei dati inseriti
+            if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
+                utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
+                mostraOggettiPannelSinistro();
+                nascondiOggettiPannelDestro();
+                //admin_panel ap = new admin_panel(utenteLoggato);
+                //ap.addWindowListener(this);
+                //ap.setVisible(true);
+                //setVisible(false);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAccediActionPerformed
+
+    private void btnRegistratiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistratiActionPerformed
+        registrazione r = new registrazione();
+        r.addWindowListener(this);
+        r.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btnRegistratiActionPerformed
 
     private void nascondiOggettiPannelDestro() {
         labelPasswd.setVisible(false);

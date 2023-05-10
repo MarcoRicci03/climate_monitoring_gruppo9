@@ -24,7 +24,8 @@ import javax.swing.JOptionPane;
  */
 public class registrazione extends javax.swing.JFrame {
 
-    private ArrayList<JLuogo> al;
+    public ArrayList<JLuogo> al;
+    static JLuogo luogoNuovo;
 
     /**
      * Creates new form registrazione
@@ -103,6 +104,11 @@ public class registrazione extends javax.swing.JFrame {
         jLabel8.setText("Stazione meteorologica:");
 
         cmbStazione.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----" }));
+        cmbStazione.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cmbStazioneMousePressed(evt);
+            }
+        });
 
         btnCrea.setText("Crea");
         btnCrea.addActionListener(new java.awt.event.ActionListener() {
@@ -249,6 +255,15 @@ public class registrazione extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnCreaActionPerformed
+
+    private void cmbStazioneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbStazioneMousePressed
+        // TODO add your handling code here:
+        if (luogoNuovo != null) {
+            //aggiorno lista e combobox
+            al.add(luogoNuovo);
+            cmbStazione.addItem(luogoNuovo.getNome());
+        }
+    }//GEN-LAST:event_cmbStazioneMousePressed
 
     /**
      * @param args the command line arguments

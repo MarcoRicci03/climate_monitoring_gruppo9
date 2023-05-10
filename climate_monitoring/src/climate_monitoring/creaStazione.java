@@ -4,6 +4,8 @@
  */
 package climate_monitoring;
 
+import classi.JCoordinate;
+import classi.JLuogo;
 import classi.ParserCSV;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -14,6 +16,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.w3c.dom.css.CSSValue;
 
 /**
  *
@@ -66,6 +69,11 @@ public class creaStazione extends javax.swing.JFrame {
         cmbCodNazione = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("geoname_id: ");
 
@@ -174,13 +182,19 @@ public class creaStazione extends javax.swing.JFrame {
 
     private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
         // TODO add your handling code here:
+        JLuogo l = new JLuogo(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));       
         ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText());
+        registrazione.luogoNuovo = l;
     }//GEN-LAST:event_btnAggiungiActionPerformed
 
     private void cmbCodNazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCodNazioneActionPerformed
         // TODO add your handling code here:
         txtCodNazione.setText(ar.get(cmbCodNazione.getSelectedIndex() - 1)[0]);
     }//GEN-LAST:event_cmbCodNazioneActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
