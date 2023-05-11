@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -31,6 +32,23 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
+        
+        
+        
+
+        Object[] prova = {"Nome", "Tipo", new JButton("testo")};
+
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Nome", "Tipo", "Visualizza"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };
+
+        model.addRow(prova);
+        tableRisultati.setModel((TableModel) model);
+
 
     }
 
@@ -68,6 +86,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        tableRisultati.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableRisultatiMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableRisultati);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -159,7 +182,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             }
         }
         if (!al.isEmpty()) {
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Nome", "Tipo"}, 0) {
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Nome", "Tipo", "Visualizza"}, 0) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     //all cells false
@@ -175,6 +198,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
         }
     }//GEN-LAST:event_btnCercaActionPerformed
+
+    private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_tableRisultatiMouseClicked
 
     /**
      * @param args the command line arguments
