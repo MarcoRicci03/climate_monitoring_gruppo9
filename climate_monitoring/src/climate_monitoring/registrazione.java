@@ -40,7 +40,7 @@ public class registrazione extends javax.swing.JFrame {
         this.setLocation(x, y);
         //creazione della lista di tutte le stazioni metereologiche salvate sul file stazioni.csv, inserite poi
         //nel combobox per la selezione
-        al = ParserCSV.creaLista();
+        al = ParserCSV.creaListaStazioni();
         for (int i = 0; i < al.size(); i++) {
             cmbStazione.addItem(al.get(i).getNome());
         }

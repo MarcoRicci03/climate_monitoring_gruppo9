@@ -26,7 +26,7 @@ public class JAreaInteresse {
 
     @Override
     public String toString() {
-        return "geoname_id=" + geoname_id + ", nome=" + nome;
+        return geoname_id + "," + nome;
     }
     
     public String toStringList(){

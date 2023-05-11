@@ -30,13 +30,12 @@ public class ParserCSV {
     private static final String fOperatori = "dati/operatori.csv";
     private static final String fPrevisioni = "dati/previsioni.csv";
 
-    public static ArrayList<JLuogo> creaLista() {
+    public static ArrayList<JLuogo> creaListaStazioni() {
         ArrayList<JLuogo> l = new ArrayList<>();
         try {
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
             for (String s : list) {
-                String[] elements = s.split(";");
-                l.add(new JLuogo(Integer.valueOf(elements[0]), elements[1], elements[2], elements[3], new JCoordinate(Float.valueOf(elements[4].split(",")[0]), Float.valueOf(elements[4].split(",")[1]))));
+                l.add(new JLuogo(s));
             }
         } catch (IOException ex) {
             Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
@@ -232,6 +231,29 @@ public class ParserCSV {
                 }
             }
 
+            return aL;
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public static ArrayList<JLuogo> cercaPerStazione(String citta, JCoordinate coordinate, Integer scartoDistanza) {
+        try {
+            ArrayList<JLuogo> aL = new ArrayList<>();
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
+            for (String s : list) {
+                JLuogo l = new JLuogo(s);
+                if (citta != null) {
+                    if (l.getNome().toLowerCase().contains(citta.toLowerCase())) {
+                        aL.add(new JLuogo(s));
+                    }
+                } else if (coordinate != null) {
+                    if (l.getCoordinate().distanzaDa(coordinate) < scartoDistanza) {
+                        aL.add(new JLuogo(s));
+                    }
+                }
+            }
             return aL;
         } catch (IOException ex) {
             Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
