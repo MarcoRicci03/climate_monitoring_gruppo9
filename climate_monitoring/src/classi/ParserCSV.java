@@ -151,6 +151,19 @@ public class ParserCSV {
         }
         return ret;
     }
+    public static ArrayList<JAreaInteresse> getAllAreeInteresse() {
+        ArrayList<JAreaInteresse> ret = new ArrayList<JAreaInteresse>();
+        try {
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
+            for (String s : list) {
+                String[] elements = s.split(";");
+                ret.add(new JAreaInteresse(Integer.parseInt(elements[0]), Integer.parseInt(elements[2]), elements[1]));                
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }
 
     public static Integer aggiungiAreaInteresse(Integer geoname_id, String nome) {
         try {

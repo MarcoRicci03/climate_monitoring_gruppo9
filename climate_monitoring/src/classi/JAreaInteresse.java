@@ -18,6 +18,10 @@ public class JAreaInteresse {
         nome = "";
     }
 
+    public Integer getId_area(){
+        return id_area;
+    }
+    
     public JAreaInteresse(Integer id_area, Integer geoname_id, String nome) {
         this.id_area = id_area;
         this.geoname_id = geoname_id;

@@ -22,13 +22,13 @@ public class JPrevisioni {
     private Integer id_centro;
     private Date data;
     private String username;
-    private Integer vVento; //Velocità del vento (km/h), suddivisa in fasce
-    private Integer pUmidita; //% di Umidità, suddivisa in fasce
-    private Integer pressione; //In hPa, suddivisa in fasce
-    private Integer temperatura; //In °C, suddivisa in fasce
+    private Integer vVento;         // Velocità del vento (km/h), suddivisa in fasce
+    private Integer pUmidita;       // % di Umidità, suddivisa in fasce
+    private Integer pressione;      // In hPa, suddivisa in fasce
+    private Integer temperatura;    // In °C, suddivisa in fasce
     private Integer precipitazioni;
-    private Integer aGhiacciai; //Altitudine dei ghiacciai in m, suddivisa in fasce
-    private Integer mGhiacciai; //Massa dei ghiacciai in kg, suddivisisa in fasce
+    private Integer aGhiacciai;     // Altitudine dei ghiacciai in m, suddivisa in fasce
+    private Integer mGhiacciai;     // Massa dei ghiacciai in kg, suddivisisa in fasce
 
     public JPrevisioni() {
         this.id_area = 0;

@@ -24,6 +24,46 @@ import javax.swing.table.TableModel;
  */
 public class homepage extends javax.swing.JFrame implements WindowListener {
 
+    /**
+     * Questa funzione disegna la tabella attraverso la lista passata come parametro.
+     */
+    public boolean drawTable( List<String[]> al ){
+        if (!al.isEmpty()) {
+            
+            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Tipo", "Visualizza"}, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
+
+            for (int i = 0; i < al.size(); i++) {
+                model.addRow(al.get(i));
+                System.out.println(al.get(i)[0]);
+            }
+            tableRisultati.setModel((TableModel) model);
+            return true;
+            
+        }else
+            return false;
+    }
+    
+    /**
+     * Questa funzione inizializza la tabella caricando in una lista le aree di interesse
+     * leggendo il file "dati/areedinteresse.csv"
+     * 
+     */
+    public void initTable(){
+        List<String[]> al = new ArrayList<>();
+        ArrayList<JAreaInteresse> listaAree = ParserCSV.getAllAreeInteresse();
+        for (JAreaInteresse area : listaAree) {
+            String[] elements = { String.valueOf( area.getId_area() ), area.toString().split(",")[1], "Area Interesse"};
+            al.add(elements);
+        }
+        drawTable( al );
+    }
+    
     public homepage() {
         initComponents();
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -33,23 +73,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
         
+        initTable();    // inizializzo la tabella
         
-        
-
-        Object[] prova = {"Nome", "Tipo", new JButton("testo")};
-
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Nome", "Tipo", "Visualizza"}, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                //all cells false
-                return false;
-            }
-        };
-
-        model.addRow(prova);
-        tableRisultati.setModel((TableModel) model);
-
-
+        tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0));
+//        tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0);
     }
 
     /**
@@ -67,6 +94,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableRisultati = new javax.swing.JTable();
+        btnRicarica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +138,13 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 .addContainerGap())
         );
 
+        btnRicarica.setText("Ricarica");
+        btnRicarica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRicaricaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,10 +154,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnRicarica)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAccedi))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCerca)
@@ -133,7 +168,9 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAccedi)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAccedi)
+                    .addComponent(btnRicarica))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -181,27 +218,31 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 al.add(elements);
             }
         }
-        if (!al.isEmpty()) {
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Nome", "Tipo", "Visualizza"}, 0) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    //all cells false
-                    return false;
-                }
-            };
-
-            for (int i = 0; i < al.size(); i++) {
-                model.addRow(al.get(i));
-                System.out.println(al.get(i)[0]);
-            }
-            tableRisultati.setModel((TableModel) model);
-
-        }
+        
+        
+        drawTable(al);
     }//GEN-LAST:event_btnCercaActionPerformed
+
+    private void btnRicaricaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRicaricaActionPerformed
+        // TODO add your handling code here:
+        initTable();
+        txtCerca.setText("");
+    }//GEN-LAST:event_btnRicaricaActionPerformed
 
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
         // TODO add your handling code here:
+        
+        
 
+        int id = Integer.parseInt( tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0).toString() );
+
+        mostraPrevisioni mpFinestra = new mostraPrevisioni();
+        mpFinestra.addWindowListener(this);
+        mpFinestra.setVisible(true);
+        setVisible(false);
+        
+        mpFinestra.id = id;
+        
     }//GEN-LAST:event_tableRisultatiMouseClicked
 
     /**
@@ -243,6 +284,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccedi;
     private javax.swing.JButton btnCerca;
+    private javax.swing.JButton btnRicarica;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableRisultati;

@@ -9,12 +9,13 @@ package climate_monitoring;
  * @author marco
  */
 public class mostraPrevisioni extends javax.swing.JFrame {
-
+    int id;
     /**
      * Creates new form mostraPrevisioni
      */
     public mostraPrevisioni() {
         initComponents();
+        System.out.println("id: " + id);
     }
 
     /**
