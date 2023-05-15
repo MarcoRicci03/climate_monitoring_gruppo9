@@ -14,8 +14,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 /**
@@ -25,12 +25,13 @@ import javax.swing.table.TableModel;
 public class homepage extends javax.swing.JFrame implements WindowListener {
 
     /**
-     * Questa funzione disegna la tabella attraverso la lista passata come parametro.
+     * Questa funzione disegna la tabella attraverso la lista passata come
+     * parametro.
      */
-    public boolean drawTable( List<String[]> al ){
+    public boolean drawTable(List<String[]> al) {
         if (!al.isEmpty()) {
-            
-            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Tipo", "Visualizza"}, 0) {
+
+            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Tipo"}, 0) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     //all cells false
@@ -43,27 +44,30 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 System.out.println(al.get(i)[0]);
             }
             tableRisultati.setModel((TableModel) model);
+            TableColumn col = tableRisultati.getColumnModel().getColumn(0);
+            col.setMinWidth(0);
+            col.setMaxWidth(0);
+            col.setPreferredWidth(0);
             return true;
-            
-        }else
+        } else {
             return false;
+        }
     }
-    
+
     /**
-     * Questa funzione inizializza la tabella caricando in una lista le aree di interesse
-     * leggendo il file "dati/areedinteresse.csv"
-     * 
+     * Questa funzione inizializza la tabella caricando in una lista le aree di
+     * interesse leggendo il file "dati/areedinteresse.csv"
+     *
      */
-    public void initTable(){
+    public void initTable() {
         List<String[]> al = new ArrayList<>();
         ArrayList<JAreaInteresse> listaAree = ParserCSV.getAllAreeInteresse();
         for (JAreaInteresse area : listaAree) {
-            String[] elements = { String.valueOf( area.getId_area() ), area.toString().split(",")[1], "Area Interesse"};
+            String[] elements = {String.valueOf(area.getId_area()), area.toString().split(",")[1], "Area Interesse"};
             al.add(elements);
         }
-        drawTable( al );
     }
-    
+
     public homepage() {
         initComponents();
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -72,10 +76,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
-        
+
         initTable();    // inizializzo la tabella
-        
-        tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0));
+
+        //tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0)); da capire se tenere o togliere
 //        tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0);
     }
 
@@ -139,11 +143,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         );
 
         btnRicarica.setText("Ricarica");
-        btnRicarica.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRicaricaActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,11 +156,12 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                         .addComponent(btnRicarica)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAccedi))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCerca)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -171,11 +171,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAccedi)
                     .addComponent(btnRicarica))
-                .addGap(44, 44, 44)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(72, 72, 72)
+                .addGap(73, 73, 73)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -208,41 +208,30 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             ArrayList<JAreaInteresse> listaAree = ParserCSV.cercaPerArea(testoDaCercare);
 
             for (JAreaInteresse prev : listaAree) {
-                String[] elements = {prev.toString().split(",")[1], "Area Interesse"};
+                String[] elements = {prev.getId_area().toString(), prev.toString().split(",")[1], "Area Interesse"};
                 al.add(elements);
             }
 
             ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(testoDaCercare, null, null);
             for (JLuogo l : listStazioni) {
-                String[] elements = {l.getNome(), "Stazione metereologica"};
+                String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
                 al.add(elements);
             }
         }
-        
-        
         drawTable(al);
     }//GEN-LAST:event_btnCercaActionPerformed
 
-    private void btnRicaricaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRicaricaActionPerformed
-        // TODO add your handling code here:
-        initTable();
-        txtCerca.setText("");
-    }//GEN-LAST:event_btnRicaricaActionPerformed
-
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
         // TODO add your handling code here:
-        
-        
-
-        int id = Integer.parseInt( tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0).toString() );
+        int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
 
         mostraPrevisioni mpFinestra = new mostraPrevisioni();
         mpFinestra.addWindowListener(this);
         mpFinestra.setVisible(true);
         setVisible(false);
-        
+
         mpFinestra.id = id;
-        
+
     }//GEN-LAST:event_tableRisultatiMouseClicked
 
     /**
