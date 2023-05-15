@@ -12,8 +12,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -230,18 +233,19 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     }//GEN-LAST:event_btnRicaricaActionPerformed
 
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
-        // TODO add your handling code here:
-        
-        
-
+        mostraPrevisioni mpFinestra;
         int id = Integer.parseInt( tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0).toString() );
-
-        mostraPrevisioni mpFinestra = new mostraPrevisioni();
-        mpFinestra.addWindowListener(this);
-        mpFinestra.setVisible(true);
-        setVisible(false);
+        System.out.println("pre: " + id);
         
-        mpFinestra.id = id;
+        try {    
+            mpFinestra = new mostraPrevisioni( id );
+            mpFinestra.addWindowListener(this);
+            mpFinestra.setVisible(true);
+            setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }//GEN-LAST:event_tableRisultatiMouseClicked
 

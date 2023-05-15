@@ -30,6 +30,50 @@ public class JPrevisioni {
     private Integer aGhiacciai;     // Altitudine dei ghiacciai in m, suddivisa in fasce
     private Integer mGhiacciai;     // Massa dei ghiacciai in kg, suddivisisa in fasce
 
+    public Integer getId_area() {
+        return id_area;
+    }
+
+    public Integer getId_centro() {
+        return id_centro;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Integer getvVento() {
+        return vVento;
+    }
+
+    public Integer getpUmidita() {
+        return pUmidita;
+    }
+
+    public Integer getPressione() {
+        return pressione;
+    }
+
+    public Integer getTemperatura() {
+        return temperatura;
+    }
+
+    public Integer getPrecipitazioni() {
+        return precipitazioni;
+    }
+
+    public Integer getaGhiacciai() {
+        return aGhiacciai;
+    }
+
+    public Integer getmGhiacciai() {
+        return mGhiacciai;
+    }
+
     public JPrevisioni() {
         this.id_area = 0;
         this.data = new Date();

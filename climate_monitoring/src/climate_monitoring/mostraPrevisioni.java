@@ -4,18 +4,60 @@
  */
 package climate_monitoring;
 
+import classi.JPrevisioni;
+import classi.ParserCSV;
+import static classi.ParserCSV.creaListaPrevisioni;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author marco
  */
 public class mostraPrevisioni extends javax.swing.JFrame {
-    int id;
+    public static int id;
     /**
      * Creates new form mostraPrevisioni
      */
-    public mostraPrevisioni() {
+    public mostraPrevisioni(int id) throws IOException {
         initComponents();
-        System.out.println("id: " + id);
+        this.id = id;
+        System.out.println("post: " + id);
+        System.out.println("post: " + this.id);
+
+        ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioni(id);
+//        int listSize = list.size();
+//        
+//        int vento = 0, umidita = 0, pressione = 0, temperatura = 0, precipitazioni = 0, altitudineGhiacc = 0, massaGhiacc = 0;
+//        JPrevisioni prev = new JPrevisioni();
+//        for( JPrevisioni previsione : list ){
+//            umidita += previsione.getpUmidita();
+//            pressione += previsione.getPressione();
+//            temperatura += previsione.getTemperatura();
+//            precipitazioni += previsione.getPrecipitazioni();
+//            altitudineGhiacc += previsione.getaGhiacciai();
+//            massaGhiacc += previsione.getmGhiacciai();
+//        }
+//        
+//        umidita /= listSize;
+//        pressione /= listSize;
+//        temperatura /= listSize;
+//        precipitazioni /= listSize;
+//        altitudineGhiacc /= listSize;
+//        massaGhiacc /= listSize;
+//        
+//        
+//        list.clear();
+//        list.add(  )
+        drawTable(list);
+        
+
     }
 
     /**
@@ -30,8 +72,18 @@ public class mostraPrevisioni extends javax.swing.JFrame {
         jCalendar = new com.toedter.calendar.JCalendar();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabellaPrevisioni = new javax.swing.JTable();
+        btnVisualizzaPrevisioni = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblNRilevazioni = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jCalendar.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendarPropertyChange(evt);
+            }
+        });
 
         tabellaPrevisioni.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -61,15 +113,34 @@ public class mostraPrevisioni extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabellaPrevisioni);
 
+        btnVisualizzaPrevisioni.setText("Visualizza le previsioni disponibili!");
+        btnVisualizzaPrevisioni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizzaPrevisioniActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("numero di rilevazioni: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblNRilevazioni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnVisualizzaPrevisioni, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -79,13 +150,43 @@ public class mostraPrevisioni extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnVisualizzaPrevisioni)
+                        .addGap(23, 23, 23)
                         .addComponent(jCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(lblNRilevazioni, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
+        try {
+            // TODO add your handling code here:
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String strData = sdf.format( jCalendar.getDate() );
+            System.out.println( "strData: " + strData );
+            ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData );
+            drawTable( list );
+        } catch (IOException ex) {
+            Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jCalendarPropertyChange
+
+    private void btnVisualizzaPrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizzaPrevisioniActionPerformed
+        try {
+            // TODO add your handling code here:
+            ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioni(id);
+            drawTable(list);
+        } catch (IOException ex) {
+            Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnVisualizzaPrevisioniActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,14 +218,50 @@ public class mostraPrevisioni extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new mostraPrevisioni().setVisible(true);
+                try {
+                    new mostraPrevisioni(id).setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVisualizzaPrevisioni;
     private com.toedter.calendar.JCalendar jCalendar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblNRilevazioni;
     private javax.swing.JTable tabellaPrevisioni;
     // End of variables declaration//GEN-END:variables
+
+    private void drawTable(ArrayList<JPrevisioni> list) throws IOException {
+        
+        List<String[]> listaPrev = new ArrayList<>();
+            for (JPrevisioni prev : list) {
+                String[] elements = prev.toString().split(",");
+                listaPrev.add(elements);
+            }
+
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Data di rilevazione", "Id centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"
+            }, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
+
+            if (!list.isEmpty()) {
+                for (int i = 0; i < list.size(); i++) {
+                    model.addRow(listaPrev.get(i));
+                }
+            }
+            tabellaPrevisioni.setModel((TableModel) model);   
+            lblNRilevazioni.setText( String.valueOf( list.size() ) );
+            
+    }
 }
