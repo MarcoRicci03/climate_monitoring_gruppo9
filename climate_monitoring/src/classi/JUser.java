@@ -6,15 +6,30 @@ package classi;
 
 /**
  *
- * @author marco
+ * Classe per la creazione e la gestione degli operatori autorizzati
+ * 
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
+
 public class JUser {
     private String username, nome, cognome, id, password, cf, mail;
     private Integer geoname_id;
     private int id_areaSelezionata;
 
     public JUser() {
+        this.id = "";
+        this.nome = "";
+        this.cognome = "";
+        this.username = "";
+        this.mail = "";
+        this.password = "";
+        this.cf = "";
+        this.geoname_id = 0;
     }
+    
     public JUser(String [] elementi){
         this.id = elementi[0];
         this.nome = elementi[1];
