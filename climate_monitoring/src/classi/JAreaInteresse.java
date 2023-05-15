@@ -9,7 +9,10 @@ package classi;
  * stazione metereologica.
  *
  *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class JAreaInteresse {
 
@@ -27,6 +30,9 @@ public class JAreaInteresse {
      */
     private String nome;
 
+    /**
+     * Costruttore che imposta a 0 gli attributi della classe.
+     */
     public JAreaInteresse() {
         geoname_id = 0;
         nome = "";
@@ -59,6 +65,8 @@ public class JAreaInteresse {
 
     /**
      * Metodo per restituire il codice e il nome dell'area.
+     * 
+     * @return Sringa contenente id_area e nome divise da ','.
      */
     @Override
     public String toString() {
@@ -67,6 +75,8 @@ public class JAreaInteresse {
 
     /**
      * Metodo per restituire codice e nome dell'area per comporre una lista.
+     * 
+     * @return Sringa contenente id_area e nome divise da ' '.
      */
     public String toStringList() {
         return id_area + " " + nome;
