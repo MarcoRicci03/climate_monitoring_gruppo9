@@ -12,8 +12,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author marco
+ * Classe per la creazione e la gestione delle previsioni
+ * 
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class JPrevisioni {
 
@@ -119,7 +123,7 @@ public class JPrevisioni {
     }
 
     /**
-     * Metodo che restituisce una stringa contente tutti gli attributi del
+     * Metodo che restituisce una stringa contente tutti gli attributi dell'
      * oggetto separati da una ','. (Esempio
      * dd/mm/yyyy,id_centro,vVento,pUmidita,pressione,temperatura,precipitazioni,aGhiacchiai,mGhiacciai).
      *
@@ -133,8 +137,8 @@ public class JPrevisioni {
     }
 
     /**
-     * Metodo che restituisce una stringa contente tutti gli attributi del
-     * oggetto separati da un ';'. (Esempio
+     * Metodo che restituisce una stringa contente tutti gli attributi dell'oggetto 
+     * separati da un ';'. (Esempio
      * dd/mm/yyyy;id_centro;vVento;pUmidita;pressione;temperatura;precipitazioni;aGhiacchiai;mGhiacciai).
      *
      * @return Ritorna una stringa contente i valori degli attributi dell'
