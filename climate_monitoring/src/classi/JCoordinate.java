@@ -4,7 +4,10 @@ package classi;
  * Classe per la creazione e gestione delle coordinate geografiche.
  *
  *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class JCoordinate {
 
@@ -27,8 +30,11 @@ public class JCoordinate {
     }
 
     /**
-     * Costruttore con parametri che imposta le coordinate del nostro oggetto
-     * ai valori passati tramite parametro con due variabili formato float.
+     * Costruttore con parametri che imposta le coordinate del nostro oggetto ai
+     * valori passati tramite parametro con due variabili formato float.
+     *
+     * @param lat Latitudine in format Float
+     * @param lon Longitudine in formato Float
      */
     public JCoordinate(Float lat, Float lon) {
         this.lat = lat;
@@ -38,6 +44,8 @@ public class JCoordinate {
     /**
      * Costruttore con parametri che imposta a le coordinate del nostro oggetto
      * ai valori passati tramite parametro con una variabile formato stringa.
+     *
+     * @param txt Latitudine e Longitudine in formato stringa divise da una ','.
      */
     public JCoordinate(String txt) {
         String[] v = txt.split(",");
@@ -47,6 +55,8 @@ public class JCoordinate {
 
     /**
      * Metodo che permette di ottenere la latitudine.
+     *
+     * @return Latitudine in formato Float.
      */
     public Float getLat() {
         return lat;
@@ -54,6 +64,8 @@ public class JCoordinate {
 
     /**
      * Metodo che permette di ottenere la longitudine.
+     *
+     * @return Longitudine in formato Float.
      */
     public Float getLon() {
         return lon;
@@ -61,6 +73,8 @@ public class JCoordinate {
 
     /**
      * Metodo che restituisce una stringa con latitudine e longitudine.
+     *
+     * @return Latitudine e Longitudine in una sola stringa.
      */
     @Override
     public String toString() {
@@ -71,6 +85,10 @@ public class JCoordinate {
      * Metodo che permette tramite formula matematica di calcolare la distanza
      * in chilometri tra due coordinate, richiede come parametro le coordinate
      * con le quali calcolare la distanza.
+     *
+     * @param altro Un altro oggetto coordinate, il quale serve per calcolare la
+     * distanza tra i due punti geografici.
+     * @return Distanza in chilometri in formato Double.
      */
     public double distanzaDa(JCoordinate altro) {
         double dLat = Math.toRadians(altro.lat - lat);
@@ -86,6 +104,10 @@ public class JCoordinate {
     /**
      * Metodo statico che permette di verificare se la stringa passata come
      * parametro puó essere trasformata in oggetto JCoordinate.
+     *
+     * @param txt Stringa la quale può eventualmente contenere delle coordinate.
+     * @return 'true' o 'false' in base alla presenza o meno di coordinate nella
+     * stringa.
      */
     public static boolean sonoCoordinate(String txt) {
         if (txt.contains(",")) {
@@ -100,11 +122,9 @@ public class JCoordinate {
             } else {
                 return false;
             }
-
         } else {
             return false;
         }
         return true;
     }
-
 }

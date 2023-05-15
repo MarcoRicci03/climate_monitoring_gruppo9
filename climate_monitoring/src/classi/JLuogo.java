@@ -7,7 +7,10 @@ package classi;
 /**
  * Classe per la creazione e gestione di stazioni metereologiche.
  *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class JLuogo {
 
@@ -47,6 +50,15 @@ public class JLuogo {
     /**
      * Costruttore con parametri che imposta l'oggetto con i valori passati
      * tramite paremetri.
+     *
+     * @param geoname_id Codice identificativo della cittá dove si trova la
+     * stazione metereologica.
+     * @param nome Nome della città dove si trova la stazione metereologica.
+     * @param country_code Codice della nazione dove si trova la stazione
+     * metereologica.
+     * @param country Nome della nazione dove si trova la stazione
+     * metereologica.
+     * @param coordinate Coordinate dove si trova la stazione metereologica.
      */
     public JLuogo(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) {
         this.geoname_id = geoname_id;
@@ -58,6 +70,9 @@ public class JLuogo {
 
     /**
      * Costruttore con parametro che imposta l'oggetto tramite stringa.
+     *
+     * @param fromCSV Stringa contenente tutti i valori degli attributi della
+     * classe separati da un ';'.
      */
     public JLuogo(String fromCSV) {
         String[] elements = fromCSV.split(";");
@@ -70,6 +85,9 @@ public class JLuogo {
 
     /**
      * Metodo per ottenere tutte le informazioni dell'oggetto tramite stringa.
+     *
+     * @return Ritorna una stringa contentente i valori degli attributi separati
+     * da una ','.
      */
     @Override
     public String toString() {
@@ -79,6 +97,8 @@ public class JLuogo {
     /**
      * Metodo per ottenere il codice identificativo della cittá dove si trova la
      * stazione metereologica.
+     *
+     * @return Restituisce il valore in formato Integer del geoname_id.
      */
     public Integer getGeoname_id() {
         return geoname_id;
@@ -87,6 +107,8 @@ public class JLuogo {
     /**
      * Metodo per ottenere il codice identificativo della cittá dove si trova la
      * stazione metereologica.
+     *
+     * @return Restituisce in formato stringa il valore del nome.
      */
     public String getNome() {
         return nome;
@@ -95,6 +117,8 @@ public class JLuogo {
     /**
      * Metodo per ottenere il codice identificativo della cittá dove si trova la
      * stazione metereologica.
+     *
+     * @return Restituisce in formato stringa il valore del country_code.
      */
     public String getCountry_code() {
         return country_code;
@@ -102,6 +126,9 @@ public class JLuogo {
 
     /**
      * Metodo per ottenere le coordinate della stazione metereologica.
+     *
+     * @return Restituisce l'oggetto {@link JCoordinate#JCoordinate()} delle
+     * coordinate.
      */
     public JCoordinate getCoordinate() {
         return coordinate;
