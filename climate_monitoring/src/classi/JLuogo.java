@@ -46,7 +46,7 @@ public class JLuogo {
 
     /**
      * Costruttore con parametri che imposta l'oggetto con i valori passati
-     * tramite paremetri.
+     * tramite paremetri. asd
      */
     public JLuogo(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) {
         this.geoname_id = geoname_id;
