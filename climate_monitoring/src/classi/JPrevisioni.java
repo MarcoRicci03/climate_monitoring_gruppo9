@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 /**
  * Classe per la creazione e la gestione delle previsioni
- * 
+ *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno
@@ -33,46 +33,101 @@ public class JPrevisioni {
     private Integer aGhiacciai;     // Altitudine dei ghiacciai in m, suddivisa in fasce
     private Integer mGhiacciai;     // Massa dei ghiacciai in kg, suddivisisa in fasce
 
+    /**
+     * Metodo che restituisce l'attributo <code> cognome </code>
+     *
+     * @return cognome
+     */
     public Integer getId_area() {
         return id_area;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> Id_centro </code>
+     *
+     * @return Id_centro
+     */
     public Integer getId_centro() {
         return id_centro;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> Data </code>
+     *
+     * @return Data
+     */
     public Date getData() {
         return data;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> Username </code>
+     *
+     * @return Username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> vVento </code>
+     *
+     * @return vVento
+     */
     public Integer getvVento() {
         return vVento;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> pUmidita </code>
+     *
+     * @return pUmidita
+     */
     public Integer getpUmidita() {
         return pUmidita;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> Pressione </code>
+     *
+     * @return Pressione
+     */
     public Integer getPressione() {
         return pressione;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> Temperatura </code>
+     *
+     * @return Temperatura
+     */
     public Integer getTemperatura() {
         return temperatura;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> Precipitazioni </code>
+     *
+     * @return Precipitazioni
+     */
     public Integer getPrecipitazioni() {
         return precipitazioni;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> aGhiacciai </code>
+     *
+     * @return aGhiacciai
+     */
     public Integer getaGhiacciai() {
         return aGhiacciai;
     }
 
+    /**
+     * Metodo che restituisce l'attributo <code> mGhiacciai </code>
+     *
+     * @return mGhiacciai
+     */
     public Integer getmGhiacciai() {
         return mGhiacciai;
     }
@@ -181,8 +236,8 @@ public class JPrevisioni {
     }
 
     /**
-     * Metodo che restituisce una stringa contente tutti gli attributi dell'oggetto 
-     * separati da un ';'. (Esempio
+     * Metodo che restituisce una stringa contente tutti gli attributi
+     * dell'oggetto separati da un ';'. (Esempio
      * dd/mm/yyyy;id_centro;vVento;pUmidita;pressione;temperatura;precipitazioni;aGhiacchiai;mGhiacciai).
      *
      * @return Ritorna una stringa contente i valori degli attributi dell'
