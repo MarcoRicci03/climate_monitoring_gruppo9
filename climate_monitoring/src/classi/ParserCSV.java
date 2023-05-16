@@ -20,18 +20,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Classe per la gestione dei file
  *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class ParserCSV {
 
-    private static final String fStazioni = "dati/stazioni.csv";
+    private static final String fStazioni = "dati/stazioni.csv"; //file che presenta tutte le stazioni metereologiche create 
     private static final String fUtenti = "dati/utenti.csv";
-    private static final String fAreeInteresse = "dati/areedinteresse.csv";
+    private static final String fAreeInteresse = "dati/areedinteresse.csv"; //file che presenta tutte le aree di interesse create 
     private static final String fNazioni = "dati/nazioni.csv";
-    private static final String fOperatori = "dati/operatori.csv";
-    private static final String fPrevisioni = "dati/previsioni.csv";
+    private static final String fOperatori = "dati/operatori.csv"; //file che presenta tutti gli operatori registrati
+    private static final String fPrevisioni = "dati/previsioni.csv"; //file che presenta tutte le previsioni inserite 
 
+    /**
+     *Metodo che restituisce una lista contente tutte le stazioni presenti nel file stazioni.csv
+     * @return lista con tutte le stazioni 
+     */
     public static ArrayList<JLuogo> creaListaStazioni() {
         ArrayList<JLuogo> l = new ArrayList<>();
         try {
@@ -45,6 +53,15 @@ public class ParserCSV {
         return l;
     }
 
+    /**
+     * Metodo che crea una nuova stazione e la salva nel file
+     * @param geoname_id codice che indica 
+     * @param citta indica la citta in cui è presente la stazione
+     * @param cod_nazione codice che riferito alla nazione di cui fa parte la città
+     * @param nazione indica la nazione di cui fa parte la città
+     * @param coordinate indica le coordinate geografiche relative alla città
+     * @return restituisce un valore booleano che concorda con l'esito del metodo
+     */
     public static boolean creaStazione(String geoname_id, String citta, String cod_nazione, String nazione, String coordinate) {
         try {
             FileWriter fileWriter = new FileWriter(new File(fStazioni), true);
@@ -57,6 +74,14 @@ public class ParserCSV {
             return false;
         }
     }
+    
+    /**
+     * Metodo verifica che un utente sia già presente nel file 'utenti.csv' 
+     * @param username indica il nome con cui si è registrato l'operatore
+     * @param pass indica la password con la quale si è registrato l'utente
+     * @return restituisce un valore booleano che concorda con l'esito del metodo
+     * @throws IOException 
+     */
 
     public static boolean esisteUtente(String username, String pass) throws IOException {
         boolean ris = true;
@@ -71,6 +96,21 @@ public class ParserCSV {
         return false;
     }
 
+    /**
+     * Metodo che salva un nuovo utente nel file 'utenti.csv'
+     * 
+     *@param username indica il nome con cui accedere nell'area riservata agli
+     * operatori.
+     * @param nome indica il nome dell'operatore.
+     * @param cognome indica il cognome dell'operatore.
+     * @param pass indica la parola con cui accedere nell'area riservata
+     * agli operatori.
+     * @param cf indica il codice fiscale dell'operatore.
+     * @param id_stazione indica l'id della stazione in cui fa parte l'operatore
+     * @param codiceOperatore idetifica l'operatore
+     * 
+     * @return restituisce un valore booleano che concorda con l'esito del metodo
+     */
     public static boolean registraUtente(String nome, String cognome, String pass, String cf, Integer id_stazione, String codiceOperatore) {
         try {
             boolean ris = false;
@@ -111,6 +151,11 @@ public class ParserCSV {
         }
     }
 
+    /**
+     * Metodo che restituisce la lista di tutte le nazioni presenti nel file 'nazioni.csv'
+     * @return lista di vettori di stringhe
+     * @throws IOException 
+     */
     public static ArrayList<String[]> getNazioni() throws IOException {
         ArrayList<String[]> ar = new ArrayList<String[]>();
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fNazioni), StandardCharsets.UTF_8);
@@ -122,6 +167,11 @@ public class ParserCSV {
         return ar;
     }
 
+    /**
+     * Metodo che
+     * @param codice_operatore identifica l'operatore
+     * @return restituisce un valore booleano che concorda con l'esito del metodo
+     */
     public static boolean checkCodiceOperatore(String codice_operatore) {
         codice_operatore = codice_operatore.trim();
         Boolean ret = false;
@@ -153,13 +203,14 @@ public class ParserCSV {
         }
         return ret;
     }
+
     public static ArrayList<JAreaInteresse> getAllAreeInteresse() {
         ArrayList<JAreaInteresse> ret = new ArrayList<JAreaInteresse>();
         try {
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
             for (String s : list) {
                 String[] elements = s.split(";");
-                ret.add(new JAreaInteresse(Integer.parseInt(elements[0]), Integer.parseInt(elements[2]), elements[1]));                
+                ret.add(new JAreaInteresse(Integer.parseInt(elements[0]), Integer.parseInt(elements[2]), elements[1]));
             }
         } catch (IOException ex) {
             Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
@@ -214,14 +265,14 @@ public class ParserCSV {
         }
         return l;
     }
-    
+
     public static ArrayList<JPrevisioni> creaListaPrevisioniByDate(Integer id_area, String strData) throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
         ArrayList<JPrevisioni> l = new ArrayList<>();
         for (String s : list) {
             String[] elements = s.split(";");
-            
-            if (Integer.parseInt(elements[2]) == id_area && strData.equals( elements[0] ) ) {
+
+            if (Integer.parseInt(elements[2]) == id_area && strData.equals(elements[0])) {
                 String data = elements[0];
                 l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10])));
             }
