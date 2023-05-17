@@ -48,11 +48,13 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 System.out.println(al.get(i)[0]);
             }
             tableRisultati.setModel((TableModel) model);
-            TableColumn col = tableRisultati.getColumnModel().getColumn(0);
-            col.setMinWidth(0);
-            col.setMaxWidth(0);
-            col.setPreferredWidth(0);
+//            TableColumn col = tableRisultati.getColumnModel().getColumn(0);
+//            col.setMinWidth(0);
+//            col.setMaxWidth(0);
+//            col.setPreferredWidth(0);
+            tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0));
             return true;
+
         } else {
             return false;
         }
@@ -70,21 +72,24 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             String[] elements = {String.valueOf(area.getId_area()), area.toString().split(",")[1], "Area Interesse"};
             al.add(elements);
         }
+        
+        drawTable(al);
     }
 
     public homepage() {
         initComponents();
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        initTable();    // inizializzo la tabella
+        
+        
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
 
-        initTable();    // inizializzo la tabella
 
-        //tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0)); da capire se tenere o togliere
-//        tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0);
+        // tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0);
     }
 
     /**
@@ -102,6 +107,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableRisultati = new javax.swing.JTable();
+        btnReload = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,30 +151,40 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 .addContainerGap())
         );
 
+        btnReload.setText("Visualizza città disponibili");
+        btnReload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReloadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnReload)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAccedi))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAccedi)))
+                        .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCerca)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCerca)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAccedi)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAccedi)
+                    .addComponent(btnReload))
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,6 +261,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
     }//GEN-LAST:event_tableRisultatiMouseClicked
 
+    private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
+        // TODO add your handling code here:
+        initTable();
+    }//GEN-LAST:event_btnReloadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -284,6 +305,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccedi;
     private javax.swing.JButton btnCerca;
+    private javax.swing.JButton btnReload;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableRisultati;

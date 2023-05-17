@@ -188,7 +188,7 @@ public class ParserCSV {
         return ret;
     }
 
-    public static ArrayList<JAreaInteresse> getAreeInteresse(Integer geoname_id) {
+    public static ArrayList<JAreaInteresse> getAreeInteresse(int geoname_id) {
         ArrayList<JAreaInteresse> ret = new ArrayList<JAreaInteresse>();
         try {
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
@@ -218,6 +218,20 @@ public class ParserCSV {
         return ret;
     }
 
+    public static String getNomeStazioneByGeonameId( int geoname_id ){
+        try {
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
+            for(var temp : list){
+                String[] elements = temp.split(";");
+                if( Integer.parseInt( elements[2] ) == geoname_id ) return elements[1];
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+    
+    
     public static Integer aggiungiAreaInteresse(Integer geoname_id, String nome) {
         try {
             Integer id = 1;
@@ -265,6 +279,31 @@ public class ParserCSV {
         }
         return l;
     }
+    
+    
+    public static ArrayList<JPrevisioni> creaListaPrevisioniUniqueDate(int id_area) throws FileNotFoundException, IOException {
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
+        ArrayList<JPrevisioni> l = new ArrayList<>();
+        
+        ArrayList<String> v_unique_dates = new ArrayList<>();
+        
+        for (String s : list) {
+            String[] elements = s.split(";");
+            
+            
+            if (Integer.parseInt(elements[2]) == id_area) {
+                String data = elements[0];
+                
+                if(!v_unique_dates.contains(elements[0])){
+                    v_unique_dates.add(elements[0]);
+                    l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10])));
+                }
+            }
+        }
+        return l;
+    }
+    
+    
 
     public static ArrayList<JPrevisioni> creaListaPrevisioniByDate(Integer id_area, String strData) throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
