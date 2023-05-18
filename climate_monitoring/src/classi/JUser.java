@@ -79,7 +79,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> username </code>
+     * Metodo che restituisce l'attributo {@code} username 
      *
      * @return username
      */
@@ -88,7 +88,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> nome </code>
+     * Metodo che restituisce l'attributo {@code} nome 
      *
      * @return nome
      */
@@ -97,7 +97,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> cognome </code>
+     * Metodo che restituisce l'attributo {@code} cognome 
      *
      * @return cognome
      */
@@ -106,7 +106,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> id </code>
+     * Metodo che restituisce l'attributo {@code} id 
      *
      * @return id
      */
@@ -115,7 +115,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> password </code>
+     * Metodo che restituisce l'attributo {@code} password 
      *
      * @return password
      */
@@ -124,7 +124,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> cf (codice fiscale) </code>
+     * Metodo che restituisce l'attributo {@code} cf (codice fiscale) 
      *
      * @return cf (codice fiscale)
      */
@@ -133,7 +133,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> mail </code>
+     * Metodo che restituisce l'attributo {@code} mail 
      *
      * @return mail
      */
@@ -142,7 +142,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> Geonema_id </code>
+     * Metodo che restituisce l'attributo {@code} Geonema_id
      *
      * @return Geonema_id
      */
@@ -151,7 +151,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> Id_areaSelezionata </code>
+     * Metodo che restituisce l'attributo {@code} Id_areaSelezionata 
      *
      * @return Id_areaSelezionata
      */
@@ -160,7 +160,7 @@ public class JUser {
     }
 
     /**
-     * Metodo che imposta un nuovo valore  all'attributo <code> Id_areaSelezionata </code>
+     * Metodo che imposta un nuovo valore  all'attributo {@code} Id_areaSelezionata
      *
      */
     public void setId_areaSelezionata(int id_areaSelezionata) {
