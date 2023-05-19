@@ -289,9 +289,9 @@ public class ParserCSV {
      *
      * @param geoname_id
      * @param nome
-     * @return un valore intero, se l'operazione va a buon fine restituisce l'id
-     * della nuova area oppure restituisce '-1' se l'operazione non va a buon
-     * fine
+     * @return restituisce un valore intero, se l'operazione va a buon fine
+     * restituisce l'id della nuova area oppure restituisce '-1' se l'operazione
+     * non va a buon fine
      */
     public static Integer aggiungiAreaInteresse(Integer geoname_id, String nome) {
         try {
@@ -315,11 +315,13 @@ public class ParserCSV {
 
     ///Restituisce oggetto User con tutte le info
     /**
-     * 
+     * Metodo che genera un utente e lo inserisce nel file 'utenti.csv'
+     * restituendo poi l'oggetto JUser
+     *
      * @param username
      * @param pass
-     * @return
-     * @throws IOException 
+     * @return restituisce un oggetto JUser con tutte le info
+     * @throws IOException
      */
     public static JUser creaUtenteLoggato(String username, String pass) throws IOException {
         boolean ris = true;
@@ -335,6 +337,15 @@ public class ParserCSV {
         return null;
     }
 
+    /**
+     * Metodo che dato un {@code} id_area restituisce tutte le previsioni
+     * relative all'area inserita tramite parametro
+     *
+     * @param id_area codice identificativo di un'area di interesse
+     * @return restituisce una lista di JPrevisioni
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public static ArrayList<JPrevisioni> creaListaPrevisioni(Integer id_area) throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
         ArrayList<JPrevisioni> l = new ArrayList<>();
@@ -348,6 +359,13 @@ public class ParserCSV {
         return l;
     }
 
+    /**
+     *
+     * @param id_area codice identificativo di un'area di interesse
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public static ArrayList<JPrevisioni> creaListaPrevisioniUniqueDate(int id_area) throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
         ArrayList<JPrevisioni> l = new ArrayList<>();
@@ -376,6 +394,18 @@ public class ParserCSV {
         return l;
     }
 
+    /**
+     * Metodo che fornita un'area d'interesse e una data, viene generata una
+     * lista delle preivisioni con relative infornazioni e poi viene restituita
+     * all'utente
+     *
+     * @param id_area codice identificativo di un'area di interesse
+     * @param strData indica la data del giorno di cui si vuole sapere le
+     * previsioni
+     * @return restituisce una lista di JPrevisioni
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public static ArrayList<JPrevisioni> creaListaPrevisioniByDate(Integer id_area, String strData) throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
         ArrayList<JPrevisioni> l = new ArrayList<>();
@@ -390,6 +420,13 @@ public class ParserCSV {
         return l;
     }
 
+    /**
+     * Metodo che aggiunge un previsione al file 'previsioni.csv'
+     *
+     * @param previsione oggetto che indica una previsione metereologica
+     * @return restitusce l'id con cui viene salvata la previsione in caso
+     * l'operazione venga effettuata con successo, altrimenti restituisce -1
+     */
     public static Integer aggiungiPrevisione(JPrevisioni previsione) {
         try {
             Integer id = 1;
@@ -410,6 +447,14 @@ public class ParserCSV {
         }
     }
 
+    /**
+     * Metodo che fornita un'area d'interesse restituscie una lista di JLuogo
+     * che corrispondono ai parametri passati.
+     *
+     * @param citta indica l'area di interesse
+     * @return in caso di coretto funzionamento restituisce una lista di
+     * JAreaInteresse, altrimenti restituisce null
+     */
     public static ArrayList<JAreaInteresse> cercaPerArea(String citta) {
         try {
             ArrayList<JAreaInteresse> aL = new ArrayList<>();
@@ -428,6 +473,17 @@ public class ParserCSV {
         return null;
     }
 
+    /**
+     * Metodo che fornita un'area d'interesse restituscie una lista di JLuogo
+     * che corrispondono ai parametri passati.
+     *
+     * @param citta indica l'area di interesse
+     * @param coordinate indica le coordinate geografiche in cui si vuole
+     * trovare una stazione
+     * @param scartoDistanza indica il raggio di ricerca a partire dalle
+     * coordinate
+     * @return
+     */
     public static ArrayList<JLuogo> cercaPerStazione(String citta, JCoordinate coordinate, Integer scartoDistanza) {
         try {
             ArrayList<JLuogo> aL = new ArrayList<>();
