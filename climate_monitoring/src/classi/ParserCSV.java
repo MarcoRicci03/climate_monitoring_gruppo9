@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -255,9 +256,24 @@ public class ParserCSV {
     public static String getNomeStazioneByGeonameId(int geoname_id) {
         try {
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
-            for (var temp : list) {
+            for (String temp : list) {
                 String[] elements = temp.split(";");
                 if (Integer.parseInt(elements[2]) == geoname_id) {
+                    return elements[1];
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+    
+    public static String getNomeStazioneById(int id) {
+        try {
+            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
+            for (String temp : list) {
+                String[] elements = temp.split(";");
+                if (Integer.parseInt(elements[0]) == id) {
                     return elements[1];
                 }
             }
@@ -336,18 +352,25 @@ public class ParserCSV {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
         ArrayList<JPrevisioni> l = new ArrayList<>();
 
-        ArrayList<String> v_unique_dates = new ArrayList<>();
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        Boolean sent;
         for (String s : list) {
             String[] elements = s.split(";");
-
+            sent = false;
+            
             if (Integer.parseInt(elements[2]) == id_area) {
                 String data = elements[0];
 
-                if (!v_unique_dates.contains(elements[0])) {
-                    v_unique_dates.add(elements[0]);
-                    l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10])));
+                for(JPrevisioni temp : l){
+                    if( data.equals( sdf.format( temp.getData() ) ) ){
+                        sent = true;
+                    }
                 }
+                
+                if(!sent)
+                    l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10])));
+                
             }
         }
         return l;

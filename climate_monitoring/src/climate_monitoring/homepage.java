@@ -48,10 +48,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 System.out.println(al.get(i)[0]);
             }
             tableRisultati.setModel((TableModel) model);
-//            TableColumn col = tableRisultati.getColumnModel().getColumn(0);
-//            col.setMinWidth(0);
-//            col.setMaxWidth(0);
-//            col.setPreferredWidth(0);
+        //    TableColumn col = tableRisultati.getColumnModel().getColumn(0);
+        //    col.setMinWidth(0);
+        //    col.setMaxWidth(0);
+        //    col.setPreferredWidth(0);
             tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0));
             return true;
 
