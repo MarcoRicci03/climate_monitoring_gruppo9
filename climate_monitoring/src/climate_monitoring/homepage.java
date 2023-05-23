@@ -45,14 +45,15 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
             for (int i = 0; i < al.size(); i++) {
                 model.addRow(al.get(i));
-                System.out.println(al.get(i)[0]);
             }
             tableRisultati.setModel((TableModel) model);
             //    TableColumn col = tableRisultati.getColumnModel().getColumn(0);
             //    col.setMinWidth(0);
             //    col.setMaxWidth(0);
             //    col.setPreferredWidth(0);
+
             tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0));
+
             return true;
 
         } else {
@@ -210,9 +211,9 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
         if (JCoordinate.sonoCoordinate(testoDaCercare)) {
             //cerco per coordinate
-            ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 20);
+            ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 50);
             for (JLuogo l : listStazioni) {
-                String[] elements = {l.getNome(), "Stazione metereologica"};
+                String[] elements = {"0", l.getNome(), "Stazione metereologica"};
                 al.add(elements);
             }
         } else if (!testoDaCercare.isBlank() && testoDaCercare != "") {
@@ -237,7 +238,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
         if (id > 100000) {
             infoStazione infoStaz = new infoStazione();
-            
+
         } else {
             try {
                 mostraPrevisioni mpFinestra = new mostraPrevisioni(id);
