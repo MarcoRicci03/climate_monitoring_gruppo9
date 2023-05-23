@@ -48,10 +48,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 System.out.println(al.get(i)[0]);
             }
             tableRisultati.setModel((TableModel) model);
-        //    TableColumn col = tableRisultati.getColumnModel().getColumn(0);
-        //    col.setMinWidth(0);
-        //    col.setMaxWidth(0);
-        //    col.setPreferredWidth(0);
+            //    TableColumn col = tableRisultati.getColumnModel().getColumn(0);
+            //    col.setMinWidth(0);
+            //    col.setMaxWidth(0);
+            //    col.setPreferredWidth(0);
             tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0));
             return true;
 
@@ -72,22 +72,20 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             String[] elements = {String.valueOf(area.getId_area()), area.toString().split(",")[1], "Area Interesse"};
             al.add(elements);
         }
-        
+
         drawTable(al);
     }
 
     public homepage() {
         initComponents();
         initTable();    // inizializzo la tabella
-        
-        
+
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
-
 
         // tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0);
     }
@@ -236,20 +234,21 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     }//GEN-LAST:event_btnCercaActionPerformed
 
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
-        mostraPrevisioni mpFinestra;
-        int id = Integer.parseInt( tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0).toString() );
-        System.out.println("pre: " + id);
-        
-         try {    
-            mpFinestra = new mostraPrevisioni( id );
-            mpFinestra.addWindowListener(this);
-            mpFinestra.setVisible(true);
-            setVisible(false);
-        } catch (IOException ex) {
-            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+        int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
+        if (id > 100000) {
+            infoStazione infoStaz = new infoStazione();
+            
+        } else {
+            try {
+                mostraPrevisioni mpFinestra = new mostraPrevisioni(id);
+                mpFinestra.addWindowListener(this);
+                mpFinestra.setVisible(true);
+                setVisible(false);
+            } catch (IOException ex) {
+                Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
-//        
+
 //        int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
 //
 //        mostraPrevisioni mpFinestra = new mostraPrevisioni();
