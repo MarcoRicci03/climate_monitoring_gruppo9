@@ -195,6 +195,9 @@
               <Dimension value="[80, 80]"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="login_labelIcona"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelUserLoggato">
           <Properties>

@@ -359,6 +359,34 @@ public class ParserCSV {
         return l;
     }
 
+    
+    
+    public static ArrayList<String[]> creaListaPrevisioniToSelect(int id_area) throws FileNotFoundException, IOException {
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
+        ArrayList<String[]> l = new ArrayList<>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        Boolean sent;
+        for (String s : list) {
+            String[] elements = s.split(";");
+            String[] vc = { elements[0], elements[1] };
+            sent = false;
+            
+            if (Integer.parseInt(elements[2]) == id_area) {
+                String data = elements[0];
+
+                
+                
+                if( !sent )
+                    l.add( vc );
+                
+            }
+        }
+        return l;
+    }
+    
+    
     /**
      *
      * @param id_area codice identificativo di un'area di interesse
