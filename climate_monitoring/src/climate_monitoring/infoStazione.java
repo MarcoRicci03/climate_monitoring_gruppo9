@@ -5,9 +5,20 @@
 package climate_monitoring;
 
 import classi.JAreaInteresse;
+import classi.JLuogo;
+import classi.JPrevisioni;
+import classi.ParserCSV;
 import static classi.ParserCSV.getAreeInteresse;
+import static classi.ParserCSV.creaListaStazioni;
 import static climate_monitoring.mostraPrevisioni.id;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -18,10 +29,19 @@ public class infoStazione extends javax.swing.JFrame {
     /**
      * Creates new form infoStazione
      */
+ 
     public infoStazione(int id) {
-        initComponents();
-        ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id);
-        int i = 0;
+        try {
+            initComponents();
+            ArrayList<JAreaInteresse> listaAree = getAreeInteresse(3178229); //id
+            ArrayList<String[]> listInfo = new ArrayList<String[]>();
+            
+            String[] columns = {"Area d'interesse", "geoname"};
+            drawTable(listaAree, columns);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -33,17 +53,39 @@ public class infoStazione extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        InfoTable = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        InfoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(InfoTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 799, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(146, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(144, 144, 144))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 595, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(315, Short.MAX_VALUE))
         );
 
         pack();
@@ -83,7 +125,36 @@ public class infoStazione extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void drawTable(ArrayList<JAreaInteresse> list, String[] columns) throws IOException {
+        
+        List<String[]> listAree = new ArrayList<>();
+            for (JAreaInteresse ai : list) {
+                String[] elements = ai.toStringInfoStazione().split(",");
+                listAree.add(elements);
+            }
+
+            DefaultTableModel model = new DefaultTableModel( columns, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
+
+            if (!list.isEmpty()) {
+                for (int i = 0; i < list.size(); i++) {
+                    model.addRow(listAree.get(i));
+                }
+            }
+            
+            InfoTable.setModel((TableModel) model);   
+            
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable InfoTable;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
 }

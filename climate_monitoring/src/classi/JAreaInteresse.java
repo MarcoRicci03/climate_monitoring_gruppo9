@@ -81,5 +81,14 @@ public class JAreaInteresse {
     public String toStringList() {
         return id_area + " " + nome;
     }
+    
+    /**
+     * Metodo per restiture il nome e il geoname delle aree d'interesse.
+     * 
+     * @return Sringa contenente nome e geoname_id divise da ','.
+     */
+    public String toStringInfoStazione(){
+        return  nome + "," + geoname_id;
+    }
 
 }
