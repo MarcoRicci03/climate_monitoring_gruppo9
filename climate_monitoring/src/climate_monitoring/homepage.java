@@ -237,7 +237,9 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
         int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
         if (id > 100000) {
-            infoStazione infoStaz = new infoStazione();
+            infoStazione infoStaz = new infoStazione(id);
+            infoStaz.setVisible(true);
+            this.setVisible(false);
 
         } else {
             try {

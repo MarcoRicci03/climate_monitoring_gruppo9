@@ -4,6 +4,11 @@
  */
 package climate_monitoring;
 
+import classi.JAreaInteresse;
+import static classi.ParserCSV.getAreeInteresse;
+import static climate_monitoring.mostraPrevisioni.id;
+import java.util.ArrayList;
+
 /**
  *
  * @author marco
@@ -13,8 +18,10 @@ public class infoStazione extends javax.swing.JFrame {
     /**
      * Creates new form infoStazione
      */
-    public infoStazione() {
+    public infoStazione(int id) {
         initComponents();
+        ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id);
+        int i = 0;
     }
 
     /**
@@ -72,7 +79,7 @@ public class infoStazione extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new infoStazione().setVisible(true);
+                new infoStazione(id).setVisible(true);
             }
         });
     }
