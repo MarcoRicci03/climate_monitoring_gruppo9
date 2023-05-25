@@ -10,6 +10,7 @@ import classi.JPrevisioni;
 import classi.ParserCSV;
 import static classi.ParserCSV.getAreeInteresse;
 import static classi.ParserCSV.creaListaStazioni;
+import static classi.ParserCSV.getStazione;
 import static climate_monitoring.mostraPrevisioni.id;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,11 +34,12 @@ public class infoStazione extends javax.swing.JFrame {
     public infoStazione(int id) {
         try {
             initComponents();
-            ArrayList<JAreaInteresse> listaAree = getAreeInteresse(3178229); //id
+            ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id); 
+            JLuogo stazione = getStazione(id);
             ArrayList<String[]> listInfo = new ArrayList<String[]>();
             
-            String[] columns = {"Area d'interesse", "geoname"};
-            drawTable(listaAree, columns);
+            String[] columns = {"Id area","Area d'interesse", "geoname", "coordinate"};
+            drawTable(listaAree, columns, stazione);
             
         } catch (IOException ex) {
             Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,11 +128,14 @@ public class infoStazione extends javax.swing.JFrame {
         });
     }
     
-    private void drawTable(ArrayList<JAreaInteresse> list, String[] columns) throws IOException {
+    private void drawTable(ArrayList<JAreaInteresse> list, String[] columns, JLuogo l) throws IOException {
         
         List<String[]> listAree = new ArrayList<>();
+        
             for (JAreaInteresse ai : list) {
                 String[] elements = ai.toStringInfoStazione().split(",");
+                elements.length
+                l.getCoordinate().toString();
                 listAree.add(elements);
             }
 
@@ -145,6 +150,7 @@ public class infoStazione extends javax.swing.JFrame {
             if (!list.isEmpty()) {
                 for (int i = 0; i < list.size(); i++) {
                     model.addRow(listAree.get(i));
+                    model.
                 }
             }
             

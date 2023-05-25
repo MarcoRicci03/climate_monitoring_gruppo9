@@ -55,6 +55,20 @@ public class ParserCSV {
         }
         return l;
     }
+    /**
+     * Metodo che dato un geoname id restituisce la stazione associata.
+     * 
+     * @param id codice identificativo della stazione.
+     * @return restituisce un JLuogo in caso di successo e null in caso di fallimento.
+     */
+    public static JLuogo getStazione(int id){
+        ArrayList<JLuogo> listaStazioni = creaListaStazioni();
+        for(JLuogo l : listaStazioni){
+            if(l.getGeoname_id() == id)
+                return l;
+        }
+        return null;
+    }
 
     /**
      * Metodo che crea una nuova stazione e la salva nel file
@@ -534,4 +548,6 @@ public class ParserCSV {
         }
         return null;
     }
+    
+ 
 }
