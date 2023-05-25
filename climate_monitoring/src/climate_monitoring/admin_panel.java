@@ -27,8 +27,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- * Classe che crea e gestisce la finestra admin_panel riservata agli operatori registrati
- * 
+ * Classe che crea e gestisce la finestra admin_panel riservata agli operatori
+ * registrati da cui possono inserire una nuova stazione metereologica oppure
+ * visionare ed aggiungere nuove previsioni
+ *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno

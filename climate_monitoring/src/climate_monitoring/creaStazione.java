@@ -19,8 +19,13 @@ import java.util.logging.Logger;
 import org.w3c.dom.css.CSSValue;
 
 /**
+ * Classe che crea e gestisce la finestra creaStazione, da cui si può aggiungere
+ * una nuovo centro metereologico nella lista di quelli già presenti
  *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class creaStazione extends javax.swing.JFrame {
 
@@ -182,7 +187,7 @@ public class creaStazione extends javax.swing.JFrame {
 
     private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
         // TODO add your handling code here:
-        JLuogo l = new JLuogo(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));       
+        JLuogo l = new JLuogo(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
         ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText());
         registrazione.luogoNuovo = l;
     }//GEN-LAST:event_btnAggiungiActionPerformed
