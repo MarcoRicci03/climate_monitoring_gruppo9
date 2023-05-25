@@ -27,8 +27,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- *
- * @author marco
+ * Classe che crea e gestisce la finestra admin_panel riservata agli operatori registrati
+ * 
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class admin_panel extends javax.swing.JFrame {
 
@@ -38,7 +42,7 @@ public class admin_panel extends javax.swing.JFrame {
     /**
      * Creates new form admin_panel
      *
-     * @param userLoggato
+     * @param userLoggato ogetto che indica l'utente che ha compiuto l'accesso
      */
     public admin_panel(JUser userLoggato) {
         initComponents();
