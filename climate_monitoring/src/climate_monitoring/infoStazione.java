@@ -12,6 +12,7 @@ import static classi.ParserCSV.getAreeInteresse;
 import static classi.ParserCSV.creaListaStazioni;
 import static classi.ParserCSV.getStazione;
 import static climate_monitoring.mostraPrevisioni.id;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,17 +31,16 @@ public class infoStazione extends javax.swing.JFrame {
     /**
      * Creates new form infoStazione
      */
- 
     public infoStazione(int id) {
         try {
             initComponents();
-            ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id); 
+            ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id);
             JLuogo stazione = getStazione(id);
             ArrayList<String[]> listInfo = new ArrayList<String[]>();
-            
-            String[] columns = {"Id area","Area d'interesse", "geoname", "coordinate"};
+
+            String[] columns = {"Area d'interesse", "geoname", "Id area", "Latitudine", "Longitudine"};
             drawTable(listaAree, columns, stazione);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -57,6 +57,7 @@ public class infoStazione extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         InfoTable = new javax.swing.JTable();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,27 +72,65 @@ public class infoStazione extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        InfoTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InfoTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(InfoTable);
+
+        btnBack.setText("torna indietro");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(146, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(144, 144, 144))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addGap(21, 21, 21)
+                .addComponent(btnBack)
+                .addGap(71, 71, 71)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(315, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        homepage homePage = new homepage();
+        homePage.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void InfoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoTableMouseClicked
+        // TODO add your handling code here:
+        int id = Integer.parseInt(InfoTable.getModel().getValueAt(InfoTable.getSelectedRow(), 1).toString());
+
+        try {
+            mostraPrevisioni mpFinestra = new mostraPrevisioni(id);
+            mpFinestra.setVisible(true);
+            setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_InfoTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -127,39 +166,40 @@ public class infoStazione extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void drawTable(ArrayList<JAreaInteresse> list, String[] columns, JLuogo l) throws IOException {
-        
+
         List<String[]> listAree = new ArrayList<>();
-        
-            for (JAreaInteresse ai : list) {
-                String[] elements = ai.toStringInfoStazione().split(",");
-                elements.length
-                l.getCoordinate().toString();
-                listAree.add(elements);
-            }
+        Vector v = new Vector();
 
-            DefaultTableModel model = new DefaultTableModel( columns, 0) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    //all cells false
-                    return false;
-                }
-            };
+        for (JAreaInteresse ai : list) {
+            String toParse = ai.toStringInfoStazione() + "," + l.getCoordinate().getLat() + "," + l.getCoordinate().getLon();
+            String[] elements = toParse.split(",");
+            listAree.add(elements);
+        }
 
-            if (!list.isEmpty()) {
-                for (int i = 0; i < list.size(); i++) {
-                    model.addRow(listAree.get(i));
-                    model.
-                }
+        DefaultTableModel model = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
             }
-            
-            InfoTable.setModel((TableModel) model);   
-            
+        };
+
+        if (!listAree.isEmpty()) {
+            for (int i = 0; i < list.size(); i++) {
+                model.addRow(listAree.get(i));
+            }
+        }
+
+        InfoTable.setModel(
+                (TableModel) model);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable InfoTable;
+    private javax.swing.JButton btnBack;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
