@@ -65,7 +65,7 @@ public class JAreaInteresse {
 
     /**
      * Metodo per restituire il codice e il nome dell'area.
-     * 
+     *
      * @return Sringa contenente id_area e nome divise da ','.
      */
     @Override
@@ -75,20 +75,20 @@ public class JAreaInteresse {
 
     /**
      * Metodo per restituire codice e nome dell'area per comporre una lista.
-     * 
+     *
      * @return Sringa contenente id_area e nome divise da ' '.
      */
     public String toStringList() {
         return id_area + " " + nome;
     }
-    
+
     /**
      * Metodo per restiture il nome e il geoname delle aree d'interesse.
-     * 
+     *
      * @return Sringa contenente nome, geoname_id divise e l'id da ','.
      */
-    public String toStringInfoStazione(){
-        return  nome + "," + geoname_id + "," + id_area;
+    public String toStringInfoStazione() {
+        return id_area + "," + nome;
     }
 
 }
