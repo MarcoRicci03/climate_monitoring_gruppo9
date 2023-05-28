@@ -134,4 +134,13 @@ public class JLuogo {
         return coordinate;
     }
 
+    /**
+     * Metodo per la nazione della stazione metereologica.
+     *
+     * @return Restituisce l'oggetto String della nazione.
+     */
+    public String getNazione() {
+        return country;
+    }
+
 }

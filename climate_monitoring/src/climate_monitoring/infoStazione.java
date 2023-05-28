@@ -36,11 +36,16 @@ public class infoStazione extends javax.swing.JFrame {
             initComponents();
             ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id);
             JLuogo stazione = getStazione(id);
+            lblStazione.setText(stazione.getNome());
+            txtGeoname.setText(stazione.getGeoname_id().toString());
+            txtCodiceNazione.setText(stazione.getCountry_code());
+            txtNazione.setText(stazione.getNazione());
+            txtCoordinate.setText(stazione.getCoordinate().getLon().toString() + ", " + stazione.getCoordinate().getLat().toString());
             ArrayList<String[]> listInfo = new ArrayList<String[]>();
-
-            String[] columns = {"Area d'interesse", "geoname", "Id area", "Latitudine", "Longitudine"};
+            
+            String[] columns = {"Id area", "Area d'interesse"};
             drawTable(listaAree, columns, stazione);
-
+            
         } catch (IOException ex) {
             Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,18 +63,27 @@ public class infoStazione extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         InfoTable = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
+        lblStazione = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtGeoname = new javax.swing.JTextField();
+        txtCodiceNazione = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtNazione = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtCoordinate = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         InfoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2"
             }
         ));
         InfoTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,12 +93,31 @@ public class infoStazione extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(InfoTable);
 
-        btnBack.setText("torna indietro");
+        btnBack.setText("Indietro");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
+
+        lblStazione.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblStazione.setText("jLabel1");
+
+        jLabel1.setText("Geoname_id:");
+
+        txtGeoname.setEditable(false);
+
+        txtCodiceNazione.setEditable(false);
+
+        jLabel2.setText("Codice nazione:");
+
+        jLabel3.setText("Nazione:");
+
+        txtNazione.setEditable(false);
+
+        jLabel4.setText("Coordinate:");
+
+        txtCoordinate.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,20 +126,58 @@ public class infoStazione extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(lblStazione))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCoordinate, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(txtNazione)
+                            .addComponent(txtCodiceNazione)
+                            .addComponent(txtGeoname))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addComponent(btnBack)
-                .addGap(71, 71, 71)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblStazione)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtGeoname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCodiceNazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtNazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCoordinate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -122,7 +193,7 @@ public class infoStazione extends javax.swing.JFrame {
     private void InfoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoTableMouseClicked
         // TODO add your handling code here:
         int id = Integer.parseInt(InfoTable.getModel().getValueAt(InfoTable.getSelectedRow(), 1).toString());
-
+        
         try {
             mostraPrevisioni mpFinestra = new mostraPrevisioni(id);
             mpFinestra.setVisible(true);
@@ -166,18 +237,18 @@ public class infoStazione extends javax.swing.JFrame {
             }
         });
     }
-
+    
     private void drawTable(ArrayList<JAreaInteresse> list, String[] columns, JLuogo l) throws IOException {
-
+        
         List<String[]> listAree = new ArrayList<>();
         Vector v = new Vector();
-
+        
         for (JAreaInteresse ai : list) {
-            String toParse = ai.toStringInfoStazione() + "," + l.getCoordinate().getLat() + "," + l.getCoordinate().getLon();
+            String toParse = ai.toStringInfoStazione();
             String[] elements = toParse.split(",");
             listAree.add(elements);
         }
-
+        
         DefaultTableModel model = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -185,22 +256,31 @@ public class infoStazione extends javax.swing.JFrame {
                 return false;
             }
         };
-
+        
         if (!listAree.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 model.addRow(listAree.get(i));
             }
         }
-
+        
         InfoTable.setModel(
                 (TableModel) model);
-
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable InfoTable;
     private javax.swing.JButton btnBack;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblStazione;
+    private javax.swing.JTextField txtCodiceNazione;
+    private javax.swing.JTextField txtCoordinate;
+    private javax.swing.JTextField txtGeoname;
+    private javax.swing.JTextField txtNazione;
     // End of variables declaration//GEN-END:variables
 
 }

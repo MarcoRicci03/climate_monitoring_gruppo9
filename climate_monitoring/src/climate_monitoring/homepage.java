@@ -238,6 +238,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
         if (id > 100000) {
             infoStazione infoStaz = new infoStazione(id);
+            infoStaz.addWindowListener(this);
             infoStaz.setVisible(true);
             this.setVisible(false);
 
