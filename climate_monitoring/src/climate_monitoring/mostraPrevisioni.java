@@ -9,6 +9,8 @@ import classi.ParserCSV;
 import static classi.ParserCSV.creaListaPrevisioni;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +28,7 @@ import javax.swing.table.TableModel;
  *
  * @author marco
  */
-public class mostraPrevisioni extends javax.swing.JFrame {
+public class mostraPrevisioni extends javax.swing.JFrame implements WindowListener{
     public static int id;
     /**
      * Creates new form mostraPrevisioni
@@ -90,7 +92,12 @@ public class mostraPrevisioni extends javax.swing.JFrame {
         lblTitle = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jCalendar.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -215,6 +222,10 @@ public class mostraPrevisioni extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -337,6 +348,41 @@ public class mostraPrevisioni extends javax.swing.JFrame {
             );
         }
         return list;
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        setVisible(true);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 
     
