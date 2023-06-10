@@ -60,11 +60,12 @@ public class login extends javax.swing.JFrame implements WindowListener {
         btnGestionePrevisioni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(706, 413));
-        setMinimumSize(new java.awt.Dimension(706, 413));
-        setPreferredSize(new java.awt.Dimension(706, 413));
+        setBackground(new java.awt.Color(40, 54, 24));
+        setMaximumSize(new java.awt.Dimension(361, 260));
+        setMinimumSize(new java.awt.Dimension(361, 260));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnRegistrati.setBackground(new java.awt.Color(96, 108, 56));
         btnRegistrati.setText("Registrati");
         btnRegistrati.setPreferredSize(new java.awt.Dimension(79, 28));
         btnRegistrati.addActionListener(new java.awt.event.ActionListener() {
@@ -73,6 +74,7 @@ public class login extends javax.swing.JFrame implements WindowListener {
             }
         });
 
+        btnAccedi.setBackground(new java.awt.Color(96, 108, 56));
         btnAccedi.setText("Accedi");
         btnAccedi.setPreferredSize(new java.awt.Dimension(72, 28));
         btnAccedi.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +98,7 @@ public class login extends javax.swing.JFrame implements WindowListener {
         });
 
         labelPasswd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelPasswd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/passwd.png"))); // NOI18N
+        labelPasswd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/passwd_.png"))); // NOI18N
         labelPasswd.setToolTipText("");
         labelPasswd.setPreferredSize(new java.awt.Dimension(80, 80));
 
