@@ -54,7 +54,6 @@ public class login extends javax.swing.JFrame implements WindowListener {
         labelPasswd = new javax.swing.JLabel();
         labelUser = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        labelIcona = new javax.swing.JLabel();
         labelUserLoggato = new javax.swing.JLabel();
         btnAggiungiStazione = new javax.swing.JButton();
         btnGestionePrevisioni = new javax.swing.JButton();
@@ -63,9 +62,21 @@ public class login extends javax.swing.JFrame implements WindowListener {
         setBackground(new java.awt.Color(40, 54, 24));
         setMaximumSize(new java.awt.Dimension(361, 260));
         setMinimumSize(new java.awt.Dimension(361, 260));
+        setResizable(false);
+        addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                formComponentAdded(evt);
+            }
+            public void componentRemoved(java.awt.event.ContainerEvent evt) {
+                formComponentRemoved(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(96, 108, 56));
+
         btnRegistrati.setBackground(new java.awt.Color(96, 108, 56));
+        btnRegistrati.setForeground(new java.awt.Color(254, 250, 224));
         btnRegistrati.setText("Registrati");
         btnRegistrati.setPreferredSize(new java.awt.Dimension(79, 28));
         btnRegistrati.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +86,7 @@ public class login extends javax.swing.JFrame implements WindowListener {
         });
 
         btnAccedi.setBackground(new java.awt.Color(96, 108, 56));
+        btnAccedi.setForeground(new java.awt.Color(254, 250, 224));
         btnAccedi.setText("Accedi");
         btnAccedi.setPreferredSize(new java.awt.Dimension(72, 28));
         btnAccedi.addActionListener(new java.awt.event.ActionListener() {
@@ -83,13 +95,17 @@ public class login extends javax.swing.JFrame implements WindowListener {
             }
         });
 
+        txtPass.setBackground(new java.awt.Color(96, 108, 56));
+        txtPass.setForeground(new java.awt.Color(254, 250, 224));
         txtPass.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtPass.setText("asd");
         txtPass.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        txtUsername.setBackground(new java.awt.Color(96, 108, 56));
+        txtUsername.setForeground(new java.awt.Color(254, 250, 224));
         txtUsername.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtUsername.setText("m_ricci1");
-        txtUsername.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        txtUsername.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         txtUsername.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,14 +161,16 @@ public class login extends javax.swing.JFrame implements WindowListener {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 260));
 
-        labelIcona.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelIcona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/user.png"))); // NOI18N
-        labelIcona.setPreferredSize(new java.awt.Dimension(80, 80));
+        jPanel2.setBackground(new java.awt.Color(96, 108, 56));
 
         labelUserLoggato.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        labelUserLoggato.setForeground(new java.awt.Color(254, 250, 224));
         labelUserLoggato.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelUserLoggato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/user.png"))); // NOI18N
         labelUserLoggato.setLabelFor(txtUsername);
 
+        btnAggiungiStazione.setBackground(new java.awt.Color(96, 108, 56));
+        btnAggiungiStazione.setForeground(new java.awt.Color(254, 250, 224));
         btnAggiungiStazione.setText("Aggiungi stazione");
         btnAggiungiStazione.setPreferredSize(new java.awt.Dimension(72, 28));
         btnAggiungiStazione.addActionListener(new java.awt.event.ActionListener() {
@@ -161,6 +179,8 @@ public class login extends javax.swing.JFrame implements WindowListener {
             }
         });
 
+        btnGestionePrevisioni.setBackground(new java.awt.Color(96, 108, 56));
+        btnGestionePrevisioni.setForeground(new java.awt.Color(254, 250, 224));
         btnGestionePrevisioni.setText("Gestione Previsioni");
         btnGestionePrevisioni.setPreferredSize(new java.awt.Dimension(72, 28));
         btnGestionePrevisioni.addActionListener(new java.awt.event.ActionListener() {
@@ -175,22 +195,19 @@ public class login extends javax.swing.JFrame implements WindowListener {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(labelIcona, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelUserLoggato, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                        .addComponent(labelUserLoggato, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 11, Short.MAX_VALUE))
                     .addComponent(btnAggiungiStazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelIcona, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(labelUserLoggato, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+                .addComponent(labelUserLoggato, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -198,7 +215,7 @@ public class login extends javax.swing.JFrame implements WindowListener {
                 .addContainerGap(92, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 260));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 260));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -247,6 +264,14 @@ public class login extends javax.swing.JFrame implements WindowListener {
         setVisible(false);
     }//GEN-LAST:event_btnRegistratiActionPerformed
 
+    private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formComponentAdded
+
+    private void formComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentRemoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formComponentRemoved
+
     private void nascondiOggettiPannelDestro() {
         jPanel1.setVisible(false);
         labelPasswd.setVisible(false);
@@ -259,7 +284,6 @@ public class login extends javax.swing.JFrame implements WindowListener {
 
     public void mostraOggettiPannelSinistro() {
         jPanel2.setVisible(true);
-        labelIcona.setVisible(true);
         labelUserLoggato.setText(utenteLoggato.getUsername());
         labelUserLoggato.setVisible(true);
         btnAggiungiStazione.setVisible(true);
@@ -268,7 +292,6 @@ public class login extends javax.swing.JFrame implements WindowListener {
 
     public void nascondiOggettiPannelSinistro() {
         jPanel2.setVisible(false);
-        labelIcona.setVisible(false);
         labelUserLoggato.setVisible(false);
         btnAggiungiStazione.setVisible(false);
         btnGestionePrevisioni.setVisible(false);
@@ -316,7 +339,6 @@ public class login extends javax.swing.JFrame implements WindowListener {
     private javax.swing.JButton btnRegistrati;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel labelIcona;
     private javax.swing.JLabel labelPasswd;
     private javax.swing.JLabel labelUser;
     private javax.swing.JLabel labelUserLoggato;
