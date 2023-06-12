@@ -12,7 +12,11 @@ import static classi.ParserCSV.getAreeInteresse;
 import static classi.ParserCSV.creaListaStazioni;
 import static classi.ParserCSV.getStazione;
 import static climate_monitoring.mostraPrevisioni.id;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.event.WindowStateListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,7 @@ import javax.swing.table.TableModel;
  *
  * @author marco
  */
-public class infoStazione extends javax.swing.JFrame {
+public class infoStazione extends javax.swing.JFrame implements WindowListener {
 
     /**
      * Creates new form infoStazione
@@ -34,6 +38,11 @@ public class infoStazione extends javax.swing.JFrame {
     public infoStazione(int id) {
         try {
             initComponents();
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Dimension screenSize = toolkit.getScreenSize();
+            int x = (screenSize.width - this.getWidth()) / 2;
+            int y = (screenSize.height - this.getHeight()) / 2;
+            this.setLocation(x, y);
             ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id);
             JLuogo stazione = getStazione(id);
             lblStazione.setText(stazione.getNome());
@@ -42,10 +51,10 @@ public class infoStazione extends javax.swing.JFrame {
             txtNazione.setText(stazione.getNazione());
             txtCoordinate.setText(stazione.getCoordinate().getLon().toString() + ", " + stazione.getCoordinate().getLat().toString());
             ArrayList<String[]> listInfo = new ArrayList<String[]>();
-            
+
             String[] columns = {"Id area", "Area d'interesse"};
             drawTable(listaAree, columns, stazione);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,6 +84,11 @@ public class infoStazione extends javax.swing.JFrame {
         txtCoordinate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(177, 212, 224));
 
@@ -222,20 +236,28 @@ public class infoStazione extends javax.swing.JFrame {
         homepage homePage = new homepage();
         homePage.setVisible(true);
         setVisible(false);
+//        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void InfoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoTableMouseClicked
         // TODO add your handling code here:
         int id = Integer.parseInt(InfoTable.getModel().getValueAt(InfoTable.getSelectedRow(), 0).toString());
-        
+
         try {
             mostraPrevisioni mpFinestra = new mostraPrevisioni(id);
+            mpFinestra.addWindowListener(this);
             mpFinestra.setVisible(true);
             setVisible(false);
         } catch (IOException ex) {
             Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_InfoTableMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        windowClosed(evt);
+
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -271,18 +293,18 @@ public class infoStazione extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void drawTable(ArrayList<JAreaInteresse> list, String[] columns, JLuogo l) throws IOException {
-        
+
         List<String[]> listAree = new ArrayList<>();
         Vector v = new Vector();
-        
+
         for (JAreaInteresse ai : list) {
             String toParse = ai.toStringInfoStazione();
             String[] elements = toParse.split(",");
             listAree.add(elements);
         }
-        
+
         DefaultTableModel model = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -290,16 +312,16 @@ public class infoStazione extends javax.swing.JFrame {
                 return false;
             }
         };
-        
+
         if (!listAree.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 model.addRow(listAree.get(i));
             }
         }
-        
+
         InfoTable.setModel(
                 (TableModel) model);
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -317,5 +339,40 @@ public class infoStazione extends javax.swing.JFrame {
     private javax.swing.JTextField txtGeoname;
     private javax.swing.JTextField txtNazione;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        setVisible(true);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

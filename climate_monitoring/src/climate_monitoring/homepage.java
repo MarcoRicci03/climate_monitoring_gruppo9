@@ -282,7 +282,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             infoStazione infoStaz = new infoStazione(id);
             infoStaz.addWindowListener(this);
             infoStaz.setVisible(true);
-            this.setVisible(false);
+            setVisible(false);
 
         } else {
             try {
