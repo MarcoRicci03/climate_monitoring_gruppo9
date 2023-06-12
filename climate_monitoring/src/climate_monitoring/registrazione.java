@@ -57,16 +57,16 @@ public class registrazione extends javax.swing.JFrame {
         btnRegistrazione = new javax.swing.JButton();
         txtNome = new javax.swing.JTextField();
         txtCognome = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        labelTxt = new javax.swing.JLabel();
+        labelCognome = new javax.swing.JLabel();
+        labelPassword = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
+        labelPasswordConferma = new javax.swing.JLabel();
         txtPassConferma = new javax.swing.JPasswordField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        dataDiNascita = new javax.swing.JLabel();
+        labelSesso = new javax.swing.JLabel();
         cmbSesso = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
+        labelLuogoNascita = new javax.swing.JLabel();
         txtLuogoNascita = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cmbStazione = new javax.swing.JComboBox<>();
@@ -79,10 +79,10 @@ public class registrazione extends javax.swing.JFrame {
         setBackground(new java.awt.Color(96, 108, 56));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(96, 108, 56));
+        jPanel1.setBackground(new java.awt.Color(177, 212, 224));
 
-        btnRegistrazione.setBackground(new java.awt.Color(96, 108, 56));
-        btnRegistrazione.setForeground(new java.awt.Color(254, 250, 224));
+        btnRegistrazione.setBackground(new java.awt.Color(177, 212, 224));
+        btnRegistrazione.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         btnRegistrazione.setText("Registrati");
         btnRegistrazione.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,9 +90,8 @@ public class registrazione extends javax.swing.JFrame {
             }
         });
 
-        txtNome.setBackground(new java.awt.Color(96, 108, 56));
-        txtNome.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        txtNome.setForeground(new java.awt.Color(254, 250, 224));
+        txtNome.setBackground(new java.awt.Color(177, 212, 224));
+        txtNome.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         txtNome.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,56 +99,45 @@ public class registrazione extends javax.swing.JFrame {
             }
         });
 
-        txtCognome.setBackground(new java.awt.Color(96, 108, 56));
-        txtCognome.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        txtCognome.setForeground(new java.awt.Color(254, 250, 224));
+        txtCognome.setBackground(new java.awt.Color(177, 212, 224));
+        txtCognome.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         txtCognome.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(254, 250, 224));
-        jLabel1.setText("Nome:");
+        labelTxt.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        labelTxt.setText("Nome:");
 
-        jLabel2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(254, 250, 224));
-        jLabel2.setText("Cognome:");
+        labelCognome.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        labelCognome.setText("Cognome:");
 
-        jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(254, 250, 224));
-        jLabel3.setText("Password:");
+        labelPassword.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        labelPassword.setText("Password:");
 
-        txtPass.setBackground(new java.awt.Color(96, 108, 56));
-        txtPass.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        txtPass.setForeground(new java.awt.Color(254, 250, 224));
+        txtPass.setBackground(new java.awt.Color(177, 212, 224));
+        txtPass.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         txtPass.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel4.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(254, 250, 224));
-        jLabel4.setText("Conferma password:");
+        labelPasswordConferma.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        labelPasswordConferma.setText("Conferma password:");
 
-        txtPassConferma.setBackground(new java.awt.Color(96, 108, 56));
-        txtPassConferma.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        txtPassConferma.setForeground(new java.awt.Color(254, 250, 224));
+        txtPassConferma.setBackground(new java.awt.Color(177, 212, 224));
+        txtPassConferma.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         txtPassConferma.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel5.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(254, 250, 224));
-        jLabel5.setText("Data di nascita:");
+        dataDiNascita.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        dataDiNascita.setText("Data di nascita:");
 
-        jLabel6.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(254, 250, 224));
-        jLabel6.setText("Sesso:");
+        labelSesso.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        labelSesso.setText("Sesso:");
 
-        cmbSesso.setBackground(new java.awt.Color(96, 108, 56));
-        cmbSesso.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        cmbSesso.setForeground(new java.awt.Color(254, 250, 224));
+        cmbSesso.setBackground(new java.awt.Color(177, 212, 224));
+        cmbSesso.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         cmbSesso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
 
-        jLabel7.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(254, 250, 224));
-        jLabel7.setText("Luogo di nascita:");
+        labelLuogoNascita.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        labelLuogoNascita.setText("Luogo di nascita:");
 
-        txtLuogoNascita.setBackground(new java.awt.Color(96, 108, 56));
-        txtLuogoNascita.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        txtLuogoNascita.setBackground(new java.awt.Color(177, 212, 224));
+        txtLuogoNascita.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         txtLuogoNascita.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         txtLuogoNascita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,13 +145,11 @@ public class registrazione extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(254, 250, 224));
+        jLabel8.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         jLabel8.setText("Stazione meteorologica:");
 
-        cmbStazione.setBackground(new java.awt.Color(96, 108, 56));
-        cmbStazione.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        cmbStazione.setForeground(new java.awt.Color(254, 250, 224));
+        cmbStazione.setBackground(new java.awt.Color(177, 212, 224));
+        cmbStazione.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         cmbStazione.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----" }));
         cmbStazione.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -171,9 +157,8 @@ public class registrazione extends javax.swing.JFrame {
             }
         });
 
-        btnCrea.setBackground(new java.awt.Color(96, 108, 56));
-        btnCrea.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        btnCrea.setForeground(new java.awt.Color(254, 250, 224));
+        btnCrea.setBackground(new java.awt.Color(177, 212, 224));
+        btnCrea.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         btnCrea.setText("Crea");
         btnCrea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,16 +166,14 @@ public class registrazione extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(254, 250, 224));
+        jLabel9.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         jLabel9.setText("Id operatore:");
 
-        txtIdOperatore.setBackground(new java.awt.Color(96, 108, 56));
-        txtIdOperatore.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        txtIdOperatore.setBackground(new java.awt.Color(177, 212, 224));
+        txtIdOperatore.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         txtIdOperatore.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        datePickerDataNascita.setBackground(new java.awt.Color(96, 108, 56));
-        datePickerDataNascita.setForeground(new java.awt.Color(254, 250, 224));
+        datePickerDataNascita.setBackground(new java.awt.Color(177, 212, 224));
         datePickerDataNascita.setDateFormatString("dd/MM/yyyy");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -202,15 +185,15 @@ public class registrazione extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelCognome, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPasswordConferma, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dataDiNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelSesso, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,32 +218,32 @@ public class registrazione extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelCognome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPasswordConferma, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPassConferma, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(txtCognome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataDiNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(datePickerDataNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSesso, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbSesso, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtLuogoNascita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -398,17 +381,17 @@ public class registrazione extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrazione;
     private javax.swing.JComboBox<String> cmbSesso;
     private javax.swing.JComboBox<String> cmbStazione;
+    private javax.swing.JLabel dataDiNascita;
     private com.toedter.calendar.JDateChooser datePickerDataNascita;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelCognome;
+    private javax.swing.JLabel labelLuogoNascita;
+    private javax.swing.JLabel labelPassword;
+    private javax.swing.JLabel labelPasswordConferma;
+    private javax.swing.JLabel labelSesso;
+    private javax.swing.JLabel labelTxt;
     private javax.swing.JTextField txtCognome;
     private javax.swing.JTextField txtIdOperatore;
     private javax.swing.JTextField txtLuogoNascita;

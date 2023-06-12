@@ -73,10 +73,10 @@ public class login extends javax.swing.JFrame implements WindowListener {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(96, 108, 56));
+        jPanel1.setBackground(new java.awt.Color(177, 212, 224));
 
-        btnRegistrati.setBackground(new java.awt.Color(96, 108, 56));
-        btnRegistrati.setForeground(new java.awt.Color(254, 250, 224));
+        btnRegistrati.setBackground(new java.awt.Color(177, 212, 224));
+        btnRegistrati.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnRegistrati.setText("Registrati");
         btnRegistrati.setPreferredSize(new java.awt.Dimension(79, 28));
         btnRegistrati.addActionListener(new java.awt.event.ActionListener() {
@@ -85,8 +85,8 @@ public class login extends javax.swing.JFrame implements WindowListener {
             }
         });
 
-        btnAccedi.setBackground(new java.awt.Color(96, 108, 56));
-        btnAccedi.setForeground(new java.awt.Color(254, 250, 224));
+        btnAccedi.setBackground(new java.awt.Color(177, 212, 224));
+        btnAccedi.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnAccedi.setText("Accedi");
         btnAccedi.setPreferredSize(new java.awt.Dimension(72, 28));
         btnAccedi.addActionListener(new java.awt.event.ActionListener() {
@@ -95,14 +95,14 @@ public class login extends javax.swing.JFrame implements WindowListener {
             }
         });
 
-        txtPass.setBackground(new java.awt.Color(96, 108, 56));
-        txtPass.setForeground(new java.awt.Color(254, 250, 224));
+        txtPass.setBackground(new java.awt.Color(177, 212, 224));
+        txtPass.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtPass.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtPass.setText("asd");
         txtPass.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        txtUsername.setBackground(new java.awt.Color(96, 108, 56));
-        txtUsername.setForeground(new java.awt.Color(254, 250, 224));
+        txtUsername.setBackground(new java.awt.Color(177, 212, 224));
+        txtUsername.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtUsername.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtUsername.setText("m_ricci1");
         txtUsername.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -161,16 +161,15 @@ public class login extends javax.swing.JFrame implements WindowListener {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 260));
 
-        jPanel2.setBackground(new java.awt.Color(96, 108, 56));
+        jPanel2.setBackground(new java.awt.Color(177, 212, 224));
 
-        labelUserLoggato.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        labelUserLoggato.setForeground(new java.awt.Color(254, 250, 224));
+        labelUserLoggato.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         labelUserLoggato.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelUserLoggato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/user.png"))); // NOI18N
         labelUserLoggato.setLabelFor(txtUsername);
 
-        btnAggiungiStazione.setBackground(new java.awt.Color(96, 108, 56));
-        btnAggiungiStazione.setForeground(new java.awt.Color(254, 250, 224));
+        btnAggiungiStazione.setBackground(new java.awt.Color(177, 212, 224));
+        btnAggiungiStazione.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnAggiungiStazione.setText("Aggiungi stazione");
         btnAggiungiStazione.setPreferredSize(new java.awt.Dimension(72, 28));
         btnAggiungiStazione.addActionListener(new java.awt.event.ActionListener() {
@@ -179,8 +178,8 @@ public class login extends javax.swing.JFrame implements WindowListener {
             }
         });
 
-        btnGestionePrevisioni.setBackground(new java.awt.Color(96, 108, 56));
-        btnGestionePrevisioni.setForeground(new java.awt.Color(254, 250, 224));
+        btnGestionePrevisioni.setBackground(new java.awt.Color(177, 212, 224));
+        btnGestionePrevisioni.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnGestionePrevisioni.setText("Gestione Previsioni");
         btnGestionePrevisioni.setPreferredSize(new java.awt.Dimension(72, 28));
         btnGestionePrevisioni.addActionListener(new java.awt.event.ActionListener() {
