@@ -59,7 +59,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String strData = sdf.format( new Date() );
         ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData );
-        String[] columns = {"Data di rilevazione", "Id centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai" };
+        String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai" };
 
             
         drawTable( getListaAggregata(list, strData ), columns );
@@ -223,11 +223,10 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String strData = sdf.format( jCalendar.getDate() );
             ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData );
-            String[] columns = {"Data di rilevazione", "Id centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai" };
+            String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai" };
             
             
             drawTable( getListaAggregata(list, strData ), columns );
-//            tabellaPrevisioni.removeColumn(tabellaPrevisioni.getColumnModel().getColumn(1));
             
         } catch (IOException ex) {
             Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
