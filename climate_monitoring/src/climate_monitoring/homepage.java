@@ -33,15 +33,14 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * parametro.
      */
     public boolean drawTable(List<String[]> al) {
+        DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Tipo"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };
         if (!al.isEmpty()) {
-
-            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Tipo"}, 0) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    //all cells false
-                    return false;
-                }
-            };
 
             for (int i = 0; i < al.size(); i++) {
                 model.addRow(al.get(i));
@@ -57,6 +56,9 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             return true;
 
         } else {
+            String[] p = {"", ""};
+            model.addRow(p);
+            tableRisultati.setModel((TableModel) model);
             return false;
         }
     }
@@ -277,33 +279,25 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     }//GEN-LAST:event_btnCercaActionPerformed
 
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
-        int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
-        if (id > 100000) {
-            infoStazione infoStaz = new infoStazione(id);
-            infoStaz.addWindowListener(this);
-            infoStaz.setVisible(true);
-            setVisible(false);
-
-        } else {
-            try {
-                mostraPrevisioni mpFinestra = new mostraPrevisioni(id);
-                mpFinestra.addWindowListener(this);
-                mpFinestra.setVisible(true);
+        if (!tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString().equals("")) {
+            int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
+            if (id > 100000) {
+                infoStazione infoStaz = new infoStazione(id);
+                infoStaz.addWindowListener(this);
+                infoStaz.setVisible(true);
                 setVisible(false);
-            } catch (IOException ex) {
-                Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+
+            } else {
+                try {
+                    mostraPrevisioni mpFinestra = new mostraPrevisioni(id, -1);
+                    mpFinestra.addWindowListener(this);
+                    mpFinestra.setVisible(true);
+                    setVisible(false);
+                } catch (IOException ex) {
+                    Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
-
-//        int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
-//
-//        mostraPrevisioni mpFinestra = new mostraPrevisioni();
-//        mpFinestra.addWindowListener(this);
-//        mpFinestra.setVisible(true);
-//        setVisible(false);
-//
-//        mpFinestra.id = id;
-
     }//GEN-LAST:event_tableRisultatiMouseClicked
 
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed

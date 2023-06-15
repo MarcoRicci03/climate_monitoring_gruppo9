@@ -6,7 +6,6 @@ package climate_monitoring;
 
 import classi.JPrevisioni;
 import classi.ParserCSV;
-import static classi.ParserCSV.creaListaPrevisioni;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -20,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -28,18 +26,21 @@ import javax.swing.table.TableModel;
  *
  * @author marco
  */
-public class mostraPrevisioni extends javax.swing.JFrame implements WindowListener{
+public class mostraPrevisioni extends javax.swing.JFrame implements WindowListener {
+
     public static int id;
+    public static int idStazione;
+
     /**
      * Creates new form mostraPrevisioni
      */
-    public mostraPrevisioni(int id) throws IOException {
+    public mostraPrevisioni(int id, int idStazione) throws IOException {
         initComponents();
-
         this.id = id;
+        this.idStazione = idStazione;
         lblTitle.setText("Previsioni: " + ParserCSV.getNomeStazioneById(id));
-        
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date currentDate = new Date();
 
         // convert date to calendar
@@ -47,30 +48,26 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         c.setTime(currentDate);
 
         // manipulate date
-        c.add(Calendar.DATE, 14); 
+        c.add(Calendar.DATE, 14);
 
         // convert calendar to date
         Date dateTwoWeekAfter = c.getTime();
-        
+
         jCalendar.setTodayButtonVisible(true);
         jCalendar.setSelectableDateRange(new Date(), dateTwoWeekAfter);
 
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String strData = sdf.format( new Date() );
-        ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData );
-        String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai" };
+        String strData = sdf.format(new Date());
+        ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData);
+        String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
-            
-        drawTable( getListaAggregata(list, strData ), columns );
-            
+        drawTable(getListaAggregata(list, strData), columns);
+
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
-        
-        
 
     }
 
@@ -221,13 +218,12 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         try {
             // TODO add your handling code here:
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String strData = sdf.format( jCalendar.getDate() );
-            ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData );
-            String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai" };
-            
-            
-            drawTable( getListaAggregata(list, strData ), columns );
-            
+            String strData = sdf.format(jCalendar.getDate());
+            ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData);
+            String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
+
+            drawTable(getListaAggregata(list, strData), columns);
+
         } catch (IOException ex) {
             Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -235,9 +231,15 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        homepage homePage = new homepage();
-        homePage.setVisible(true);
-        setVisible(false);
+        if (idStazione > -1) {
+            infoStazione info = new infoStazione(idStazione);
+            info.setVisible(true);
+            setVisible(false);
+        } else if (idStazione == -1) {
+            homepage homePage = new homepage();
+            homePage.setVisible(true);
+            setVisible(false);
+        }
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -275,7 +277,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new mostraPrevisioni(id).setVisible(true);
+                    new mostraPrevisioni(id, idStazione).setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -283,7 +285,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         });
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.ButtonGroup btnGroup;
@@ -297,40 +299,39 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
     // End of variables declaration//GEN-END:variables
 
     private void drawTable(ArrayList<JPrevisioni> list, String[] columns) throws IOException {
-        
+
         List<String[]> listaPrev = new ArrayList<>();
-            for (JPrevisioni prev : list) {
-                String[] elements = prev.toString().split(",");
-                elements[1] = ParserCSV.getNomeStazioneByGeonameId( Integer.parseInt( elements[1] ) );
-                listaPrev.add(elements);
-            }
+        for (JPrevisioni prev : list) {
+            String[] elements = prev.toString().split(",");
+            elements[1] = ParserCSV.getNomeStazioneByGeonameId(Integer.parseInt(elements[1]));
+            listaPrev.add(elements);
+        }
 
-            DefaultTableModel model = new DefaultTableModel( columns, 0) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    //all cells false
-                    return false;
-                }
-            };
-
-            if (!list.isEmpty()) {
-                for (int i = 0; i < list.size(); i++) {
-                    model.addRow(listaPrev.get(i));
-                }
+        DefaultTableModel model = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
             }
-            tabellaPrevisioni.setModel((TableModel) model);   
-            
+        };
+
+        if (!list.isEmpty()) {
+            for (int i = 0; i < list.size(); i++) {
+                model.addRow(listaPrev.get(i));
+            }
+        }
+        tabellaPrevisioni.setModel((TableModel) model);
+
     }
-    
-    private ArrayList<JPrevisioni> getListaAggregata(ArrayList<JPrevisioni> list, String strData){
+
+    private ArrayList<JPrevisioni> getListaAggregata(ArrayList<JPrevisioni> list, String strData) {
         int listSize = list.size();
-        
-        if( listSize > 0 ){
+
+        if (listSize > 0) {
             int vento = 0, umidita = 0, pressione = 0, temperatura = 0, precipitazioni = 0, altitudineGhiacc = 0, massaGhiacc = 0, id_centro = 0;
-            
 
             JPrevisioni prev = new JPrevisioni();
-            for( JPrevisioni previsione : list ){
+            for (JPrevisioni previsione : list) {
                 vento += previsione.getvVento();
                 umidita += previsione.getpUmidita();
                 pressione += previsione.getPressione();
@@ -349,21 +350,20 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
             altitudineGhiacc /= listSize;
             massaGhiacc /= listSize;
 
-
             list.clear();
-            list.add( 
+            list.add(
                     new JPrevisioni(
                             strData,
-                            id_centro, 
+                            id_centro,
                             id,
-                            "", 
+                            "",
                             vento,
                             umidita,
-                            pressione, 
+                            pressione,
                             temperatura,
                             precipitazioni,
-                            altitudineGhiacc, 
-                            massaGhiacc) 
+                            altitudineGhiacc,
+                            massaGhiacc)
             );
         }
         return list;
@@ -404,6 +404,4 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
     }
 
-    
-    
 }

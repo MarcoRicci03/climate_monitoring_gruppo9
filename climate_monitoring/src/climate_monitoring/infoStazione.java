@@ -31,11 +31,12 @@ import javax.swing.table.TableModel;
  * @author marco
  */
 public class infoStazione extends javax.swing.JFrame implements WindowListener {
-
+    private static int id;
     /**
      * Creates new form infoStazione
      */
     public infoStazione(int id) {
+        this.id = id;
         try {
             initComponents();
             Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -241,10 +242,9 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
 
     private void InfoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoTableMouseClicked
         // TODO add your handling code here:
-        int id = Integer.parseInt(InfoTable.getModel().getValueAt(InfoTable.getSelectedRow(), 0).toString());
-
+        int idArea = Integer.parseInt(InfoTable.getModel().getValueAt(InfoTable.getSelectedRow(), 0).toString());
         try {
-            mostraPrevisioni mpFinestra = new mostraPrevisioni(id);
+            mostraPrevisioni mpFinestra = new mostraPrevisioni(idArea, id);
             mpFinestra.addWindowListener(this);
             mpFinestra.setVisible(true);
             setVisible(false);
