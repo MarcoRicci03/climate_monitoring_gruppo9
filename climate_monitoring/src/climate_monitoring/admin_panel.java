@@ -570,8 +570,8 @@ public class admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAggiungiPrevisioniActionPerformed
 
     private void jTabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabellaPrevisioniMouseClicked
-        System.out.println(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn()]);
-        
+        //System.out.println(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn()]);
+        txtAreaNoteLettura.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn() + 7]);
     }//GEN-LAST:event_jTabellaPrevisioniMouseClicked
     /**
      * Tramite questo metodo andiamo ad aggiornare la tabella delle previsioni

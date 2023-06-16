@@ -30,6 +30,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
     public static int id;
     public static int idStazione;
+    private ArrayList<JPrevisioni> list;
 
     /**
      * Creates new form mostraPrevisioni
@@ -58,11 +59,10 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String strData = sdf.format(new Date());
-        ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData);
+        list = ParserCSV.creaListaPrevisioniByDate(id, strData);
         String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
         drawTable(list, columns);
-        
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -133,6 +133,11 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabellaPrevisioni.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabellaPrevisioniMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabellaPrevisioni);
@@ -259,6 +264,11 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    private void tabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabellaPrevisioniMouseClicked
+        // TODO add your handling code here:
+        int i = 0;
+    }//GEN-LAST:event_tabellaPrevisioniMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -318,8 +328,8 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         List<String[]> listaPrev = new ArrayList<>();
         for (JPrevisioni prev : list) {
             String[] elements = prev.toString().split(",");
-            for (int i = 0; i < elements.length-2; i++) {
-                elements[i] = elements[i+2];
+            for (int i = 0; i < elements.length - 2; i++) {
+                elements[i] = elements[i + 2];
             }
             listaPrev.add(elements);
         }
