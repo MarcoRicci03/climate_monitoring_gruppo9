@@ -570,8 +570,8 @@ public class admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAggiungiPrevisioniActionPerformed
 
     private void jTabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabellaPrevisioniMouseClicked
-        String nota = listaPrev.get(jTabellaPrevisioni.getSelectedRow())[9];
-        if (!nota.equals("vuoto")) {
+        String nota = listaPrev.get(jTabellaPrevisioni.getModel().getValueAt( jTabellaPrevisioni., ICONIFIED))[9];
+        if (!nota.equals("")) {
             txtAreaNoteLettura.setText(nota);
         } else {
             txtAreaNoteLettura.setText("");
