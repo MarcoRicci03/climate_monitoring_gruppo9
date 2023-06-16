@@ -437,10 +437,10 @@ public class admin_panel extends javax.swing.JFrame {
                     .addComponent(labelData)
                     .addComponent(datePickerData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
-                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelVento)
+                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbVento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(noteVento, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(noteVento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelVento))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelUmidita)
@@ -559,9 +559,9 @@ public class admin_panel extends javax.swing.JFrame {
             String nAGhiacciai = noteAGhiacciai.getText();
             String nMGhiacciai = noteMGhiacciai.getText();
 
-            JPrevisioni previsione = new JPrevisioni(txtData, id, user.getId_areaSelezionata(), user.getUsername(), 
-                                                     valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia, 
-                                                     nVento,nUmidita, nPressione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai);
+            JPrevisioni previsione = new JPrevisioni(txtData, id, user.getId_areaSelezionata(), user.getUsername(),
+                    valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia,
+                    nVento, nUmidita, nPressione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai);
             ParserCSV.aggiungiPrevisione(previsione);
             aggiornaTabella();
         } else {
@@ -570,12 +570,8 @@ public class admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAggiungiPrevisioniActionPerformed
 
     private void jTabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabellaPrevisioniMouseClicked
-        String nota = listaPrev.get(jTabellaPrevisioni.getModel().getValueAt( jTabellaPrevisioni., ICONIFIED))[9];
-        if (!nota.equals("")) {
-            txtAreaNoteLettura.setText(nota);
-        } else {
-            txtAreaNoteLettura.setText("");
-        }
+        System.out.println(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn()]);
+        
     }//GEN-LAST:event_jTabellaPrevisioniMouseClicked
     /**
      * Tramite questo metodo andiamo ad aggiornare la tabella delle previsioni
