@@ -517,9 +517,11 @@ public class admin_panel extends javax.swing.JFrame {
      */
     private void btnAggiungiAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiAreaActionPerformed
         Integer id = ParserCSV.aggiungiAreaInteresse(user.getGeoname_id(), txtNomeArea.getText());
-        String s = id + " " + txtNomeArea.getText();
-        v.add(s);
-        listAree.setListData(v);
+        if (id > 0) {
+            String s = id + " " + txtNomeArea.getText();
+            v.add(s);
+            listAree.setListData(v);
+        }
     }//GEN-LAST:event_btnAggiungiAreaActionPerformed
     /**
      * Questo metodo viene richiamato quando selezionata un'area d'interesse
@@ -570,7 +572,6 @@ public class admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAggiungiPrevisioniActionPerformed
 
     private void jTabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabellaPrevisioniMouseClicked
-        //System.out.println(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn()]);
         txtAreaNoteLettura.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn() + 7]);
     }//GEN-LAST:event_jTabellaPrevisioniMouseClicked
     /**
