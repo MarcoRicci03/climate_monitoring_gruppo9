@@ -333,8 +333,7 @@ public class JPrevisioni {
      */
     public String toCSV() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return df.format(data) + ";" + id_centro + ";" + id_area + ";" + username + ";" + vVento + ";" + pUmidita + ";" + pressione + ";" + temperatura + ";" + precipitazioni + ";" + aGhiacciai + ";" + mGhiacciai + ";" +
-                                                                                          nVento + ";" + nUmidita + ";" + nPressione + ";" + nTemperatura + ";" + nPrecipitazioni + ";" + nAGhiacciai + ";" + nMGhiacciai;
+        return df.format(data) + ";" + id_centro + ";" + id_area + ";" + username + ";" + vVento + ";" + nVento + ";" + pUmidita + ";" + nUmidita + ";" + pressione + ";" + nPressione + ";" + temperatura + ";" + nTemperatura + ";" + precipitazioni + ";" + nPrecipitazioni + ";" + aGhiacciai + ";" + nAGhiacciai + ";" + mGhiacciai + ";" + nMGhiacciai;
     }
 
     /* COSTRUTTORE CON PARAMETRI VECCHIO

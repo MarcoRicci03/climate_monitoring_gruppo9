@@ -554,7 +554,7 @@ public class admin_panel extends javax.swing.JFrame {
             String nVento = noteVento.getText();
             String nUmidita = noteUmidita.getText();
             String nPressione = notePressione.getText();
-            String nTemperatura = notePressione.getText();
+            String nTemperatura = noteTemperatura.getText();
             String nPrecipitazioni = notePrecipitazioni.getText();
             String nAGhiacciai = noteAGhiacciai.getText();
             String nMGhiacciai = noteMGhiacciai.getText();
