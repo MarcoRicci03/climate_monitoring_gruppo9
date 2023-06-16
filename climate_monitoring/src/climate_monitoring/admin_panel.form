@@ -88,7 +88,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Component id="labelIntestazioneIAreaInteresse" min="-2" pref="28" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="33" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtNomeArea" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="labelAreaInteresse" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
@@ -167,13 +167,19 @@
                   <Component id="jScrollPane1" min="-2" pref="155" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane2" pref="1085" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="labelAreaSelezionata" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtAreaSelezionata" min="-2" pref="218" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="labelAreaSelezionata" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtAreaSelezionata" min="-2" pref="218" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel2" min="-2" pref="74" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane2" pref="1085" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -183,16 +189,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelAreaSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtAreaSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" pref="435" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="300" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" pref="108" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" pref="467" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -273,9 +283,32 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTabellaPrevisioniMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="txtAreaNoteLettura">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Note"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="AreaParametri">
@@ -295,69 +328,71 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="labelAreaPrevisioneSelezionata" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtAreaPrevisioneSelezionata" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelData" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelIdCentro" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="txtAreaPrevisioneSelezionata" min="-2" pref="240" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="labelIdCentro" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="txtIdCentro" min="-2" pref="130" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="labelData" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="datePickerData" min="-2" pref="130" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                      <Component id="labelVento" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="cmbVento" min="-2" pref="50" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                      <Component id="labelUmidita" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="cmbUmidita" min="-2" pref="50" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="labelPressione" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="cmbPressione" min="-2" pref="50" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="datePickerData" max="32767" attributes="0"/>
-                                      <Component id="txtIdCentro" min="-2" pref="130" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                                          <Component id="labelVento" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="cmbVento" min="-2" pref="50" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                          <Component id="labelUmidita" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="cmbUmidita" min="-2" pref="50" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="labelPrecipitazioni" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelAltitudine" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelTemperatura" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="cmbPrecipitazioni" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="cmbTemperatura" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="cmbGhiacciai" min="-2" pref="50" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="labelMassa" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="cmbMassaGhiacciai" min="-2" pref="50" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="btnAggiungiPrevisioni" min="-2" pref="195" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel1" min="-2" pref="74" max="-2" attributes="0"/>
+                              <Component id="jScrollPane4" min="-2" pref="316" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="labelPrecipitazioni" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelAltitudine" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelTemperatura" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="cmbPrecipitazioni" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="cmbTemperatura" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="cmbGhiacciai" min="-2" pref="50" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="labelMassa" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="cmbMassaGhiacciai" min="-2" pref="50" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="btnAggiungiPrevisioni" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="60" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -365,60 +400,65 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelAreaPrevisioneSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtAreaPrevisioneSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelAreaPrevisioneSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtAreaPrevisioneSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelIdCentro" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIdCentro" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="labelData" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="datePickerData" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="26" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="cmbTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelMassa" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbMassaGhiacciai" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="cmbPrecipitazioni" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelPrecipitazioni" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmbTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelMassa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmbMassaGhiacciai" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cmbGhiacciai" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="cmbPrecipitazioni" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelPrecipitazioni" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="cmbGhiacciai" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="btnAggiungiPrevisioni" min="-2" pref="50" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                  <Component id="btnAggiungiPrevisioni" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="labelVento" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmbVento" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="labelUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmbUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="labelPressione" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmbPressione" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelAltitudine" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="labelData" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelVento" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbVento" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="datePickerData" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelIdCentro" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtIdCentro" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelPressione" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbPressione" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelAltitudine" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="jScrollPane4" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -727,6 +767,26 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="txtAreaNoteScrittura">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Note"/>
           </Properties>
         </Component>
       </SubComponents>

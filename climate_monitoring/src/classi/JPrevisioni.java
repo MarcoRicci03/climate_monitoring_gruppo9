@@ -32,6 +32,16 @@ public class JPrevisioni {
     private Integer precipitazioni; // in mm, espressa in fasce
     private Integer aGhiacciai;     // Altitudine dei ghiacciai in m, suddivisa in fasce
     private Integer mGhiacciai;     // Massa dei ghiacciai in kg, suddivisisa in fasce
+    private String note;            // Note scritte dall'operatore che ha inserito la previsione
+
+    /**
+     * Metodo che restituisce l'attributo <code> note </code>
+     *
+     * @return note
+     */
+    public String getNote() {
+        return note;
+    }
 
     /**
      * Metodo che restituisce l'attributo <code> cognome </code>
@@ -199,8 +209,9 @@ public class JPrevisioni {
      * @param precipitazioni in mm, espressa in fasce.
      * @param aGhiacciai altitudine dei ghiacciai in m, suddivisa in fasce.
      * @param mGhiacciaia massa dei ghiacciai in kg, suddivisisa in fasce.
+     * @param note note inserite dall'operatore.
      */
-    public JPrevisioni(String data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
+    public JPrevisioni(String data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai, String note) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
         try {
@@ -219,6 +230,7 @@ public class JPrevisioni {
         this.precipitazioni = precipitazioni;
         this.aGhiacciai = aGhiacciai;
         this.mGhiacciai = mGhiacciai;
+        this.note = note;
     }
 
     /**
@@ -232,7 +244,7 @@ public class JPrevisioni {
     @Override
     public String toString() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return df.format(data) + "," + id_centro + "," + vVento + "," + pUmidita + "," + pressione + "," + temperatura + "," + precipitazioni + "," + aGhiacciai + "," + mGhiacciai;
+        return df.format(data) + "," + id_centro + "," + vVento + "," + pUmidita + "," + pressione + "," + temperatura + "," + precipitazioni + "," + aGhiacciai + "," + mGhiacciai + "," + note;
     }
 
     /**
@@ -245,7 +257,7 @@ public class JPrevisioni {
      */
     public String toCSV() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return df.format(data) + ";" + id_centro + ";" + id_area + ";" + username + ";" + vVento + ";" + pUmidita + ";" + pressione + ";" + temperatura + ";" + precipitazioni + ";" + aGhiacciai + ";" + mGhiacciai;
+        return df.format(data) + ";" + id_centro + ";" + id_area + ";" + username + ";" + vVento + ";" + pUmidita + ";" + pressione + ";" + temperatura + ";" + precipitazioni + ";" + aGhiacciai + ";" + mGhiacciai + ";" + note;
     }
 
 }

@@ -367,7 +367,7 @@ public class ParserCSV {
             String[] elements = s.split(";");
             if (Integer.parseInt(elements[2]) == id_area) {
                 String data = elements[0];
-                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10])));
+                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10]), elements[11]));
             }
         }
         return l;
@@ -429,7 +429,7 @@ public class ParserCSV {
                 }
                 
                 if(!sent)
-                    l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10])));
+                    l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10]), elements[11]));
                 
             }
         }
@@ -456,7 +456,7 @@ public class ParserCSV {
 
             if (Integer.parseInt(elements[2]) == id_area && strData.equals(elements[0])) {
                 String data = elements[0];
-                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10])));
+                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10]), elements[11]));
             }
         }
         return l;

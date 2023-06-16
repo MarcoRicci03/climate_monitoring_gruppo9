@@ -59,9 +59,10 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String strData = sdf.format(new Date());
         ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData);
-        String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
+        String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
-        drawTable(getListaAggregata(list, strData), columns);
+        drawTable(list, columns);
+        
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -222,7 +223,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
             ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData);
             String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
-            drawTable(getListaAggregata(list, strData), columns);
+            drawTable(list, columns);
 
         } catch (IOException ex) {
             Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
@@ -303,7 +304,9 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         List<String[]> listaPrev = new ArrayList<>();
         for (JPrevisioni prev : list) {
             String[] elements = prev.toString().split(",");
-            elements[1] = ParserCSV.getNomeStazioneByGeonameId(Integer.parseInt(elements[1]));
+            for (int i = 0; i < elements.length-2; i++) {
+                elements[i] = elements[i+2];
+            }
             listaPrev.add(elements);
         }
 
@@ -322,51 +325,6 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         }
         tabellaPrevisioni.setModel((TableModel) model);
 
-    }
-
-    private ArrayList<JPrevisioni> getListaAggregata(ArrayList<JPrevisioni> list, String strData) {
-        int listSize = list.size();
-
-        if (listSize > 0) {
-            int vento = 0, umidita = 0, pressione = 0, temperatura = 0, precipitazioni = 0, altitudineGhiacc = 0, massaGhiacc = 0, id_centro = 0;
-
-            JPrevisioni prev = new JPrevisioni();
-            for (JPrevisioni previsione : list) {
-                vento += previsione.getvVento();
-                umidita += previsione.getpUmidita();
-                pressione += previsione.getPressione();
-                temperatura += previsione.getTemperatura();
-                precipitazioni += previsione.getPrecipitazioni();
-                altitudineGhiacc += previsione.getaGhiacciai();
-                massaGhiacc += previsione.getmGhiacciai();
-                id_centro = previsione.getId_centro();
-            }
-
-            vento /= listSize;
-            umidita /= listSize;
-            pressione /= listSize;
-            temperatura /= listSize;
-            precipitazioni /= listSize;
-            altitudineGhiacc /= listSize;
-            massaGhiacc /= listSize;
-
-            list.clear();
-            list.add(
-                    new JPrevisioni(
-                            strData,
-                            id_centro,
-                            id,
-                            "",
-                            vento,
-                            umidita,
-                            pressione,
-                            temperatura,
-                            precipitazioni,
-                            altitudineGhiacc,
-                            massaGhiacc)
-            );
-        }
-        return list;
     }
 
     @Override
