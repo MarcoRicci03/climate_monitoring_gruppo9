@@ -32,15 +32,77 @@ public class JPrevisioni {
     private Integer precipitazioni; // in mm, espressa in fasce
     private Integer aGhiacciai;     // Altitudine dei ghiacciai in m, suddivisa in fasce
     private Integer mGhiacciai;     // Massa dei ghiacciai in kg, suddivisisa in fasce
-    private String note;            // Note scritte dall'operatore che ha inserito la previsione
+
+// Note scritte dall'operatore che ha inserito la previsione
+    private String nVento;
+    private String nUmidita;
+    private String nPressione;
+    private String nTemperatura;
+    private String nPrecipitazioni;
+    private String nAGhiacciai;
+    private String nMGhiacciai;
 
     /**
-     * Metodo che restituisce l'attributo <code> note </code>
+     * Metodo che restituisce l'attributo <code> nVento </code>
      *
-     * @return note
+     * @return nVento
      */
-    public String getNote() {
-        return note;
+    public String getnVento() {
+        return nVento;
+    }
+
+    /**
+     * Metodo che restituisce l'attributo <code> nUmidita </code>
+     *
+     * @return nUmidita
+     */
+    public String getnUmidita() {
+        return nUmidita;
+    }
+
+    /**
+     * Metodo che restituisce l'attributo <code> nPressione </code>
+     *
+     * @return nPressione
+     */
+    public String getnPressione() {
+        return nPressione;
+    }
+
+    /**
+     * Metodo che restituisce l'attributo <code> nTemperatura </code>
+     *
+     * @return nTemperatura
+     */
+    public String getnTemperatura() {
+        return nTemperatura;
+    }
+
+    /**
+     * Metodo che restituisce l'attributo <code> nPrecipitazioni </code>
+     *
+     * @return nPrecipitazioni
+     */
+    public String getnPrecipitazioni() {
+        return nPrecipitazioni;
+    }
+
+    /**
+     * Metodo che restituisce l'attributo <code> nAGhiacciai </code>
+     *
+     * @return nAGhiacciai
+     */
+    public String getnAGhiacciai() {
+        return nAGhiacciai;
+    }
+
+    /**
+     * Metodo che restituisce l'attributo <code> nMGhiacciai </code>
+     *
+     * @return nMGhiacciai
+     */
+    public String getnMGhiacciai() {
+        return nMGhiacciai;
     }
 
     /**
@@ -178,10 +240,10 @@ public class JPrevisioni {
      * @param aGhiacciai altitudine dei ghiacciai in m, suddivisa in fasce.
      * @param mGhiacciaia massa dei ghiacciai in kg, suddivisisa in fasce.
      */
-    public JPrevisioni(Date data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
-        this.data = data;
-        this.id_centro = id_centro;
+    public JPrevisioni(Integer id_area, Integer id_centro, Date data, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) {
         this.id_area = id_area;
+        this.id_centro = id_centro;
+        this.data = data;
         this.username = username;
         this.vVento = vVento;
         this.pUmidita = pUmidita;
@@ -190,6 +252,13 @@ public class JPrevisioni {
         this.precipitazioni = precipitazioni;
         this.aGhiacciai = aGhiacciai;
         this.mGhiacciai = mGhiacciai;
+        this.nVento = nVento;
+        this.nUmidita = nUmidita;
+        this.nPressione = nPRessione;
+        this.nTemperatura = nTemperatura;
+        this.nPrecipitazioni = nPrecipitazioni;
+        this.nAGhiacciai = nAGhiacciai;
+        this.nMGhiacciai = nMGhiacciai;
     }
 
     /**
@@ -211,7 +280,7 @@ public class JPrevisioni {
      * @param mGhiacciaia massa dei ghiacciai in kg, suddivisisa in fasce.
      * @param note note inserite dall'operatore.
      */
-    public JPrevisioni(String data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai, String note) {
+    public JPrevisioni(String data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
         try {
@@ -230,7 +299,14 @@ public class JPrevisioni {
         this.precipitazioni = precipitazioni;
         this.aGhiacciai = aGhiacciai;
         this.mGhiacciai = mGhiacciai;
-        this.note = note;
+        this.nVento = nVento;
+        this.nUmidita = nUmidita;
+        this.nPressione = nPRessione;
+        this.nTemperatura = nTemperatura;
+        this.nPrecipitazioni = nPrecipitazioni;
+        this.nAGhiacciai = nAGhiacciai;
+        this.nMGhiacciai = nMGhiacciai;
+
     }
 
     /**
@@ -244,7 +320,8 @@ public class JPrevisioni {
     @Override
     public String toString() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return df.format(data) + "," + id_centro + "," + vVento + "," + pUmidita + "," + pressione + "," + temperatura + "," + precipitazioni + "," + aGhiacciai + "," + mGhiacciai + "," + note;
+        return df.format(data) + "," + id_centro + "," + vVento + "," + pUmidita + "," + pressione + "," + temperatura + "," + precipitazioni + "," + aGhiacciai + "," + mGhiacciai + "," + 
+                                                         nVento + "," + nUmidita + "," + nPressione + "," + nTemperatura + "," + nPrecipitazioni + "," + nAGhiacciai + "," + nMGhiacciai;
     }
 
     /**
@@ -257,7 +334,23 @@ public class JPrevisioni {
      */
     public String toCSV() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return df.format(data) + ";" + id_centro + ";" + id_area + ";" + username + ";" + vVento + ";" + pUmidita + ";" + pressione + ";" + temperatura + ";" + precipitazioni + ";" + aGhiacciai + ";" + mGhiacciai + ";" + note;
+        return df.format(data) + ";" + id_centro + ";" + id_area + ";" + username + ";" + vVento + ";" + pUmidita + ";" + pressione + ";" + temperatura + ";" + precipitazioni + ";" + aGhiacciai + ";" + mGhiacciai + ";" +
+                                                                                          nVento + ";" + nUmidita + ";" + nPressione + ";" + nTemperatura + ";" + nPrecipitazioni + ";" + nAGhiacciai + ";" + nMGhiacciai;
     }
 
+    /* COSTRUTTORE CON PARAMETRI VECCHIO
+        public JPrevisioni(Date data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
+        this.data = data;
+        this.id_centro = id_centro;
+        this.id_area = id_area;
+        this.username = username;
+        this.vVento = vVento;
+        this.pUmidita = pUmidita;
+        this.pressione = pressione;
+        this.temperatura = temperatura;
+        this.precipitazioni = precipitazioni;
+        this.aGhiacciai = aGhiacciai;
+        this.mGhiacciai = mGhiacciai;
+    }
+     */
 }
