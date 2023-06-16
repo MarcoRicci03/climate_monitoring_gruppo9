@@ -278,7 +278,6 @@ public class JPrevisioni {
      * @param precipitazioni in mm, espressa in fasce.
      * @param aGhiacciai altitudine dei ghiacciai in m, suddivisa in fasce.
      * @param mGhiacciaia massa dei ghiacciai in kg, suddivisisa in fasce.
-     * @param note note inserite dall'operatore.
      */
     public JPrevisioni(String data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

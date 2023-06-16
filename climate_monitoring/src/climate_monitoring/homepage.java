@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 /**
@@ -31,6 +29,8 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     /**
      * Questa funzione disegna la tabella attraverso la lista passata come
      * parametro.
+     *
+     * @param al lista con i dati da inserire nella tabella.
      */
     public boolean drawTable(List<String[]> al) {
         DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Tipo"}, 0) {
@@ -79,18 +79,19 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         drawTable(al);
     }
 
+    /**
+     * Costruttore della pagina.
+     *
+     */
     public homepage() {
         initComponents();
         initTable();    // inizializzo la tabella
 
-//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
-
-        // tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(),0);
     }
 
     /**
@@ -110,8 +111,8 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableRisultati = new javax.swing.JTable();
+        txtCercaLon = new javax.swing.JTextField();
         txtCercaLat = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(96, 108, 56));
@@ -132,7 +133,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         txtCerca.setBackground(new java.awt.Color(177, 212, 224));
         txtCerca.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtCerca.setActionCommand("null");
-        txtCerca.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        txtCerca.setBorder(javax.swing.BorderFactory.createTitledBorder("Cerca per nome area o nome utente"));
 
         btnAccedi.setBackground(new java.awt.Color(177, 212, 224));
         btnAccedi.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -182,13 +183,17 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        txtCercaLat.setText("jTextField1");
+        txtCercaLon.setBackground(new java.awt.Color(177, 212, 224));
+        txtCercaLon.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        txtCercaLon.setBorder(javax.swing.BorderFactory.createTitledBorder("Longitudine"));
 
-        jLabel1.setText("Cerca per nome area o nome stazione");
+        txtCercaLat.setBackground(new java.awt.Color(177, 212, 224));
+        txtCercaLat.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        txtCercaLat.setBorder(javax.swing.BorderFactory.createTitledBorder("Latitudine"));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -200,12 +205,12 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(txtCerca, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
-                        .addGap(113, 113, 113)
-                        .addComponent(txtCercaLat, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                        .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76)
+                        .addComponent(txtCercaLat, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCercaLon, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCerca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAccedi))
@@ -218,14 +223,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnReload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCerca, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                        .addComponent(txtCercaLat))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCerca)))
+                    .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                    .addComponent(txtCerca)
+                    .addComponent(txtCercaLat)
+                    .addComponent(txtCercaLon, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnCerca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -255,6 +257,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo richiamato alla pressione del pulsante Accedi o Registrati, apre
+     * la pagina di login.
+     *
+     */
     private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
         //Apro la pagina di login
         login l = new login();
@@ -263,20 +270,20 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         setVisible(false);
     }//GEN-LAST:event_btnAccediActionPerformed
 
+    /**
+     * Metodo richiamato quando viene premuto il pulsante cerca, si controlla
+     * quale campo é stato compilato (per nome o per coordinate) e si cerca in
+     * base ad esso.
+     *
+     */
     private void btnCercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCercaActionPerformed
         //cerca area interesse
-        String testoDaCercare = txtCerca.getText();
+        String testoDaCercare = "";
         List<String[]> al = new ArrayList<>();
 
-        if (JCoordinate.sonoCoordinate(testoDaCercare)) {
-            //cerco per coordinate
-            ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 50);
-            for (JLuogo l : listStazioni) {
-                String[] elements = {"0", l.getNome(), "Stazione metereologica"};
-                al.add(elements);
-            }
-        } else if (!testoDaCercare.isBlank() && testoDaCercare != "") {
-
+        if (!txtCerca.getText().equals("") && (txtCercaLat.getText().equals("") && txtCercaLon.getText().equals(""))) {
+            testoDaCercare = txtCerca.getText();
+            //cerco per nome
             ArrayList<JAreaInteresse> listaAree = ParserCSV.cercaPerArea(testoDaCercare);
 
             for (JAreaInteresse prev : listaAree) {
@@ -289,10 +296,55 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
                 al.add(elements);
             }
+        } else if (!txtCerca.getText().equals("") && (!txtCercaLat.getText().equals("") || !txtCercaLon.getText().equals(""))) {
+            //errore
+            System.out.println("liberare un campo");
+        } else if (txtCercaLat.getText().equals("") || txtCercaLon.getText().equals("")) {
+            //errore
+            System.out.println("compilare entrambi i campi");
+        } else {
+            testoDaCercare = txtCercaLat.getText() + "," + txtCercaLon.getText();
+            //cerco per coordinate
+            if (JCoordinate.sonoCoordinate(testoDaCercare)) {
+                ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 20);
+                for (JLuogo l : listStazioni) {
+                    String[] elements = {"0", l.getNome(), "Stazione metereologica"};
+                    al.add(elements);
+                }
+            } else {
+                //errore
+            }
         }
         drawTable(al);
+//        if (JCoordinate.sonoCoordinate(testoDaCercare)) {
+//            //cerco per coordinate
+//            ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 50);
+//            for (JLuogo l : listStazioni) {
+//                String[] elements = {"0", l.getNome(), "Stazione metereologica"};
+//                al.add(elements);
+//            }
+//        } else if (!testoDaCercare.isBlank() && testoDaCercare != "") {
+//
+//            ArrayList<JAreaInteresse> listaAree = ParserCSV.cercaPerArea(testoDaCercare);
+//
+//            for (JAreaInteresse prev : listaAree) {
+//                String[] elements = {prev.getId_area().toString(), prev.toString().split(",")[1], "Area Interesse"};
+//                al.add(elements);
+//            }
+//
+//            ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(testoDaCercare, null, null);
+//            for (JLuogo l : listStazioni) {
+//                String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
+//                al.add(elements);
+//            }
+//        }
     }//GEN-LAST:event_btnCercaActionPerformed
 
+    /**
+     * Apre la pagina della stazione o area d'interesse selezionata nella
+     * tabella.
+     *
+     */
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
         if (!tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString().equals("")) {
             int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
@@ -315,6 +367,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         }
     }//GEN-LAST:event_tableRisultatiMouseClicked
 
+    /**
+     * Ricarica la tabella.
+     *
+     */
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
         // TODO add your handling code here:
         initTable();
@@ -360,13 +416,13 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     private javax.swing.JButton btnAccedi;
     private javax.swing.JButton btnCerca;
     private javax.swing.JButton btnReload;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableRisultati;
     private javax.swing.JTextField txtCerca;
     private javax.swing.JTextField txtCercaLat;
+    private javax.swing.JTextField txtCercaLon;
     // End of variables declaration//GEN-END:variables
 
     @Override

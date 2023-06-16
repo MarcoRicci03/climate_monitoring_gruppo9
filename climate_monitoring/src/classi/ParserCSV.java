@@ -55,17 +55,20 @@ public class ParserCSV {
         }
         return l;
     }
+
     /**
      * Metodo che dato un geoname id restituisce la stazione associata.
-     * 
+     *
      * @param id codice identificativo della stazione.
-     * @return restituisce un JLuogo in caso di successo e null in caso di fallimento.
+     * @return restituisce un JLuogo in caso di successo e null in caso di
+     * fallimento.
      */
-    public static JLuogo getStazione(int id){
+    public static JLuogo getStazione(int id) {
         ArrayList<JLuogo> listaStazioni = creaListaStazioni();
-        for(JLuogo l : listaStazioni){
-            if(l.getGeoname_id() == id)
+        for (JLuogo l : listaStazioni) {
+            if (l.getGeoname_id() == id) {
                 return l;
+            }
         }
         return null;
     }
@@ -281,7 +284,7 @@ public class ParserCSV {
         }
         return "";
     }
-    
+
     public static String getNomeStazioneById(int id) {
         try {
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
@@ -367,42 +370,37 @@ public class ParserCSV {
             String[] elements = s.split(";");
             if (Integer.parseInt(elements[2]) == id_area) {
                 String data = elements[0];
-                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], 
-                                      Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10]), elements[11])
-                                      elements[12], elements[13], elements[14], elements[15], elements[15], elements[16]);
+                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3],
+                        Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10]), elements[11], elements[12], elements[13], elements[14], elements[15], elements[15], elements[16]));
             }
         }
         return l;
     }
 
-    
-    
     public static ArrayList<String[]> creaListaPrevisioniToSelect(int id_area) throws FileNotFoundException, IOException {
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
         ArrayList<String[]> l = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        
+
         Boolean sent;
         for (String s : list) {
             String[] elements = s.split(";");
-            String[] vc = { elements[0], elements[1] };
+            String[] vc = {elements[0], elements[1]};
             sent = false;
-            
+
             if (Integer.parseInt(elements[2]) == id_area) {
                 String data = elements[0];
 
-                
-                
-                if( !sent )
-                    l.add( vc );
-                
+                if (!sent) {
+                    l.add(vc);
+                }
+
             }
         }
         return l;
     }
-    
-    
+
     /**
      *
      * @param id_area codice identificativo di un'area di interesse
@@ -415,24 +413,25 @@ public class ParserCSV {
         ArrayList<JPrevisioni> l = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        
+
         Boolean sent;
         for (String s : list) {
             String[] elements = s.split(";");
             sent = false;
-            
+
             if (Integer.parseInt(elements[2]) == id_area) {
                 String data = elements[0];
 
-                for(JPrevisioni temp : l){
-                    if( data.equals( sdf.format( temp.getData() ) ) ){
+                for (JPrevisioni temp : l) {
+                    if (data.equals(sdf.format(temp.getData()))) {
                         sent = true;
                     }
                 }
-                
-                if(!sent)
+
+                if (!sent) {
                     l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[5]), Integer.parseInt(elements[6]), Integer.parseInt(elements[7]), Integer.parseInt(elements[8]), Integer.parseInt(elements[9]), Integer.parseInt(elements[10]), elements[11]));
-                
+                }
+
             }
         }
         return l;
@@ -550,6 +549,5 @@ public class ParserCSV {
         }
         return null;
     }
-    
- 
+
 }
