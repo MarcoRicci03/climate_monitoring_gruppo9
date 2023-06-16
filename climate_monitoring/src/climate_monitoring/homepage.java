@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -298,10 +299,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             }
         } else if (!txtCerca.getText().equals("") && (!txtCercaLat.getText().equals("") || !txtCercaLon.getText().equals(""))) {
             //errore
-            System.out.println("liberare un campo");
+            JOptionPane.showMessageDialog(null, "Compilare solo un campo tra la ricerca per e ricerca per coordinate.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         } else if (txtCercaLat.getText().equals("") || txtCercaLon.getText().equals("")) {
             //errore
-            System.out.println("compilare entrambi i campi");
+            JOptionPane.showMessageDialog(null, "Inserire entrambe le coordinate per la ricerca.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         } else {
             testoDaCercare = txtCercaLat.getText() + "," + txtCercaLon.getText();
             //cerco per coordinate
@@ -313,31 +314,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 }
             } else {
                 //errore
+                JOptionPane.showMessageDialog(null, "Inserire delle coordinate valide.", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         drawTable(al);
-//        if (JCoordinate.sonoCoordinate(testoDaCercare)) {
-//            //cerco per coordinate
-//            ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 50);
-//            for (JLuogo l : listStazioni) {
-//                String[] elements = {"0", l.getNome(), "Stazione metereologica"};
-//                al.add(elements);
-//            }
-//        } else if (!testoDaCercare.isBlank() && testoDaCercare != "") {
-//
-//            ArrayList<JAreaInteresse> listaAree = ParserCSV.cercaPerArea(testoDaCercare);
-//
-//            for (JAreaInteresse prev : listaAree) {
-//                String[] elements = {prev.getId_area().toString(), prev.toString().split(",")[1], "Area Interesse"};
-//                al.add(elements);
-//            }
-//
-//            ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(testoDaCercare, null, null);
-//            for (JLuogo l : listStazioni) {
-//                String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
-//                al.add(elements);
-//            }
-//        }
     }//GEN-LAST:event_btnCercaActionPerformed
 
     /**

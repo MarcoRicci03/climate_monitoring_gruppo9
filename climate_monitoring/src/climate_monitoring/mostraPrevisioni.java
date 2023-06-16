@@ -39,7 +39,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         initComponents();
         this.id = id;
         this.idStazione = idStazione;
-        lblTitle.setText("Previsioni: " + ParserCSV.getNomeStazioneById(id));
+        lblTitle.setText("Previsioni: " + ParserCSV.getNomeStazioneByGeonameId(id));
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date currentDate = new Date();
@@ -238,7 +238,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String strData = sdf.format(jCalendar.getDate());
             ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData);
-            String[] columns = {"Data di rilevazione", "Centro", "Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
+            String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
             drawTable(list, columns);
 
@@ -266,7 +266,8 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
     private void tabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabellaPrevisioniMouseClicked
         // TODO add your handling code here:
-        int i = 0;
+        txtNota.setText(list.get(tabellaPrevisioni.getSelectedRow()).toString().split(",")[tabellaPrevisioni.getSelectedColumn()+9]);
+
     }//GEN-LAST:event_tabellaPrevisioniMouseClicked
 
     /**

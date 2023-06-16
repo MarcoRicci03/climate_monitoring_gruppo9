@@ -276,40 +276,47 @@ public class registrazione extends javax.swing.JFrame {
 
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
-        if (true || ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) { //controllo esistenza e correttezza del codice operatore
-            //controlli per verificare che tutti i campi siano stati compilati
-            if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !datePickerDataNascita.getDate().toString().isEmpty()
-                    && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
-                if (txtPass.getText().equals(txtPassConferma.getText())) {
-                    //crezione oggetto persona per il codice fiscale
-                    Person p = new Person();
-                    p.setName(txtNome.getText());
-                    p.setSurname(txtCognome.getText());
-                    LocalDate ld = datePickerDataNascita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    p.setDay(String.valueOf(ld.getDayOfMonth()));
-                    p.setMonth(String.valueOf(ld.getMonthValue()));
-                    p.setYear(String.valueOf(ld.getYear()));
-                    p.setBornCity(txtLuogoNascita.getText().toUpperCase());
-                    p.setSex(cmbSesso.getItemAt(cmbSesso.getSelectedIndex()));
-                    Engine e = null;
-                    try {
-                        e = new Engine(p);
-                    } catch (IOException ex) {
-                        return;
-                    }
-                    //registrazione dell'utente solamente se non esiste altro utente con codice operatore uguali
-                    if (!ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) {
-                        //finestra di errore in caso di un utente già registrato
-                        JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) { //controllo esistenza e correttezza del codice operatore
+                //controlli per verificare che tutti i campi siano stati compilati
+                if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !datePickerDataNascita.getDate().toString().isEmpty()
+                        && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
+                    if (txtPass.getText().equals(txtPassConferma.getText())) {
+                        //crezione oggetto persona per il codice fiscale
+                        Person p = new Person();
+                        p.setName(txtNome.getText());
+                        p.setSurname(txtCognome.getText());
+                        LocalDate ld = datePickerDataNascita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        p.setDay(String.valueOf(ld.getDayOfMonth()));
+                        p.setMonth(String.valueOf(ld.getMonthValue()));
+                        p.setYear(String.valueOf(ld.getYear()));
+                        p.setBornCity(txtLuogoNascita.getText().toUpperCase());
+                        p.setSex(cmbSesso.getItemAt(cmbSesso.getSelectedIndex()));
+                        Engine e = null;
+                        try {
+                            e = new Engine(p);
+                        } catch (IOException ex) {
+                            return;
+                        }
+                        Integer i = al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id();
+                        System.out.println(i);
+
+                        //registrazione dell'utente solamente se non esiste altro utente con codice operatore uguali
+                        if (!ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) {
+                            //finestra di errore in caso di un utente già registrato
+                            JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Le password devono corrispondere", "Errore", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Le password devono corrispondere", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Compilare tutti i campi", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Compilare tutti i campi", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Compilare tutti i campi", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnRegistrazioneActionPerformed
 

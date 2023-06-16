@@ -11,12 +11,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -123,8 +119,6 @@ public class ParserCSV {
     /**
      * Metodo che salva un nuovo utente nel file 'utenti.csv'
      *
-     * @param username indica il nome con cui accedere nell'area riservata agli
-     * operatori.
      * @param nome indica il nome dell'operatore.
      * @param cognome indica il cognome dell'operatore.
      * @param pass indica la parola con cui accedere nell'area riservata agli
@@ -163,7 +157,7 @@ public class ParserCSV {
                 //scrivo su file
                 String mail = username + "@mail.com";
                 FileWriter fileWriter = new FileWriter(new File(fUtenti), true);
-                String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + "\n";
+                String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + ";" + codiceOperatore + "\n";
                 fileWriter.append(line.toString());
                 fileWriter.close();
                 return true;
@@ -186,7 +180,6 @@ public class ParserCSV {
     public static ArrayList<String[]> getNazioni() throws IOException {
         ArrayList<String[]> ar = new ArrayList<String[]>();
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fNazioni), StandardCharsets.UTF_8);
-        int cont = 0;
         for (String s : list) {
             String[] elements = s.split(";");
             ar.add(elements);
@@ -265,7 +258,7 @@ public class ParserCSV {
      * Metodo che fornito un {@code} geoname_id restitusice la stazione
      * metereologica associata
      *
-     * @param geoname_id
+     * @param geoname_id codice identificativo della stazione
      * @return restituisce una stringa, se l'operazione va a buon fine
      * restituisce il nome della stazione altrimenti restituisce una stringa
      * vuota ("")
@@ -275,22 +268,7 @@ public class ParserCSV {
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
             for (String temp : list) {
                 String[] elements = temp.split(";");
-                if (Integer.parseInt(elements[2]) == geoname_id) {
-                    return elements[1];
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "";
-    }
-
-    public static String getNomeStazioneById(int id) {
-        try {
-            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
-            for (String temp : list) {
-                String[] elements = temp.split(";");
-                if (Integer.parseInt(elements[0]) == id) {
+                if (Integer.parseInt(elements[0]) == geoname_id) {
                     return elements[1];
                 }
             }
@@ -301,11 +279,11 @@ public class ParserCSV {
     }
 
     /**
-     * Mettodo che dato un {@code} geoname_id ed un {@code} nome, aggiungendo
+     * Mettodo che dato un {@code} geoname_id ed un {@code} nome dell'area, aggiunge
      * una nuova area di interesse nel file 'areedinteresse.csv'
      *
-     * @param geoname_id
-     * @param nome
+     * @param geoname_id codice identificativo della stazione
+     * @param nome nome dell'area da aggiungere
      * @return restituisce un valore intero, se l'operazione va a buon fine
      * restituisce l'id della nuova area oppure restituisce '-1' se l'operazione
      * non va a buon fine
@@ -330,13 +308,12 @@ public class ParserCSV {
         }
     }
 
-    ///Restituisce oggetto User con tutte le info
     /**
      * Metodo che genera un utente e lo inserisce nel file 'utenti.csv'
      * restituendo poi l'oggetto JUser
      *
-     * @param username
-     * @param pass
+     * @param username nome utente
+     * @param pass password
      * @return restituisce un oggetto JUser con tutte le info
      * @throws IOException
      */
