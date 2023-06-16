@@ -6,17 +6,12 @@ package climate_monitoring;
 
 import classi.JAreaInteresse;
 import classi.JLuogo;
-import classi.JPrevisioni;
-import classi.ParserCSV;
 import static classi.ParserCSV.getAreeInteresse;
-import static classi.ParserCSV.creaListaStazioni;
 import static classi.ParserCSV.getStazione;
-import static climate_monitoring.mostraPrevisioni.id;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.event.WindowStateListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +26,14 @@ import javax.swing.table.TableModel;
  * @author marco
  */
 public class infoStazione extends javax.swing.JFrame implements WindowListener {
+
     private static int id;
+
     /**
-     * Creates new form infoStazione
+     * Crea una nuova pagina infoStazione
+     *
+     * @param id codice identificativo della stazione selezionata nella
+     * home_page.
      */
     public infoStazione(int id) {
         this.id = id;
@@ -51,10 +51,9 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
             txtCodiceNazione.setText(stazione.getCountry_code());
             txtNazione.setText(stazione.getNazione());
             txtCoordinate.setText(stazione.getCoordinate().getLon().toString() + ", " + stazione.getCoordinate().getLat().toString());
-            ArrayList<String[]> listInfo = new ArrayList<String[]>();
 
             String[] columns = {"Id area", "Area d'interesse"};
-            drawTable(listaAree, columns, stazione);
+            drawTable(listaAree, columns);
 
         } catch (IOException ex) {
             Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
@@ -231,15 +230,20 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Questo metodo viene richiamato quando premuto il pulsante Indietro e
+     * permette appunto di tornare alla schermata precedente.
+     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         homepage homePage = new homepage();
         homePage.setVisible(true);
         setVisible(false);
-//        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
-
+    /**
+     * Quanto viene cliccata una riga sulla tabella viene richiamato questo
+     * metodo che apre una nuova finestra con l
+     */
     private void InfoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoTableMouseClicked
         // TODO add your handling code here:
         int idArea = Integer.parseInt(InfoTable.getModel().getValueAt(InfoTable.getSelectedRow(), 0).toString());
@@ -294,7 +298,14 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
         });
     }
 
-    private void drawTable(ArrayList<JAreaInteresse> list, String[] columns, JLuogo l) throws IOException {
+    /**
+     * Il metodo drawTable permette di creare e riempire la tabella con i dati
+     * passati per parametro.
+     *
+     * @param list Lista con tutti i dati da inserire.
+     * @param columns Intestazioni delle colonne.
+     */
+    private void drawTable(ArrayList<JAreaInteresse> list, String[] columns) throws IOException {
 
         List<String[]> listAree = new ArrayList<>();
         Vector v = new Vector();

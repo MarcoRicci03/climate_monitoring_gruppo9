@@ -161,6 +161,8 @@ public class JUser {
 
     /**
      * Metodo che imposta un nuovo valore  all'attributo {@code} Id_areaSelezionata
+     * 
+     * @param id_areaSelezionata codice identificativo dell'area
      *
      */
     public void setId_areaSelezionata(int id_areaSelezionata) {

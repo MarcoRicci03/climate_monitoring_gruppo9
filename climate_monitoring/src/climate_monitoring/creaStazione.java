@@ -16,7 +16,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.w3c.dom.css.CSSValue;
 
 /**
  * Classe che crea e gestisce la finestra creaStazione, da cui si può aggiungere
