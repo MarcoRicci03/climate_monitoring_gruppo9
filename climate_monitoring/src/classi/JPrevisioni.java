@@ -21,31 +21,85 @@ import java.util.logging.Logger;
  */
 public class JPrevisioni {
 
+    /**
+     * Id area previsione
+     */
     private Integer id_area;
+    /**
+     * Id centro previsione
+     */
     private Integer id_centro;
+    /**
+     * Data della previsione
+     */
     private Date data;
+    /**
+     * Username associato alla previsione
+     */
     private String username;
+    /**
+     * Velocità del vento (km/h), suddivisa in fasce
+     */
     private Integer vVento;         // Velocità del vento (km/h), suddivisa in fasce
+    /**
+     * % di Umidità, suddivisa in fasce
+     */
     private Integer pUmidita;       // % di Umidità, suddivisa in fasce
+    /**
+     * In hPa, suddivisa in fasce
+     */
     private Integer pressione;      // In hPa, suddivisa in fasce
+    /**
+     * In °C, suddivisa in fasce
+     */
     private Integer temperatura;    // In °C, suddivisa in fasce
+    /**
+     * in mm, espressa in fasce
+     */
     private Integer precipitazioni; // in mm, espressa in fasce
+    /**
+     * Altitudine dei ghiacciai in m, suddivisa in fasce
+     */
     private Integer aGhiacciai;     // Altitudine dei ghiacciai in m, suddivisa in fasce
+    /**
+     * Massa dei ghiacciai in kg, suddivisisa in fasce
+     */
     private Integer mGhiacciai;     // Massa dei ghiacciai in kg, suddivisisa in fasce
 
 // Note scritte dall'operatore che ha inserito la previsione
+    /**
+     * Note Vento scritte dall'operatore che ha inserito la previsione
+     */
     private String nVento;
+    /**
+     * Note Umidita scritte dall'operatore che ha inserito la previsione
+     */
     private String nUmidita;
+    /**
+     * Note Pressione scritte dall'operatore che ha inserito la previsione
+     */
     private String nPressione;
+    /**
+     * Note Temperatura scritte dall'operatore che ha inserito la previsione
+     */
     private String nTemperatura;
+    /**
+     * Note Precipitazioni scritte dall'operatore che ha inserito la previsione
+     */
     private String nPrecipitazioni;
+    /**
+     * Note Ghiacciai scritte dall'operatore che ha inserito la previsione
+     */
     private String nAGhiacciai;
+    /**
+     * Note Massa ghiacciai scritte dall'operatore che ha inserito la previsione
+     */
     private String nMGhiacciai;
 
     /**
      * Metodo che restituisce l'attributo <code> nVento </code>
      *
-     * @return nVento
+     * @return Note nVento
      */
     public String getnVento() {
         return nVento;
@@ -54,7 +108,7 @@ public class JPrevisioni {
     /**
      * Metodo che restituisce l'attributo <code> nUmidita </code>
      *
-     * @return nUmidita
+     * @return Note nUmidita
      */
     public String getnUmidita() {
         return nUmidita;
@@ -63,7 +117,7 @@ public class JPrevisioni {
     /**
      * Metodo che restituisce l'attributo <code> nPressione </code>
      *
-     * @return nPressione
+     * @return Note nPressione
      */
     public String getnPressione() {
         return nPressione;
@@ -72,7 +126,7 @@ public class JPrevisioni {
     /**
      * Metodo che restituisce l'attributo <code> nTemperatura </code>
      *
-     * @return nTemperatura
+     * @return Note nTemperatura
      */
     public String getnTemperatura() {
         return nTemperatura;
@@ -81,7 +135,7 @@ public class JPrevisioni {
     /**
      * Metodo che restituisce l'attributo <code> nPrecipitazioni </code>
      *
-     * @return nPrecipitazioni
+     * @return Note nPrecipitazioni
      */
     public String getnPrecipitazioni() {
         return nPrecipitazioni;
@@ -90,7 +144,7 @@ public class JPrevisioni {
     /**
      * Metodo che restituisce l'attributo <code> nAGhiacciai </code>
      *
-     * @return nAGhiacciai
+     * @return Note nAGhiacciai
      */
     public String getnAGhiacciai() {
         return nAGhiacciai;
@@ -99,16 +153,16 @@ public class JPrevisioni {
     /**
      * Metodo che restituisce l'attributo <code> nMGhiacciai </code>
      *
-     * @return nMGhiacciai
+     * @return Note nMGhiacciai
      */
     public String getnMGhiacciai() {
         return nMGhiacciai;
     }
 
     /**
-     * Metodo che restituisce l'attributo <code> cognome </code>
+     * Metodo che restituisce l'attributo <code> id_area </code>
      *
-     * @return cognome
+     * @return id_area
      */
     public Integer getId_area() {
         return id_area;
