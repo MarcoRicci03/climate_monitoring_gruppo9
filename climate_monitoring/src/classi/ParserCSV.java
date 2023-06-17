@@ -27,11 +27,29 @@ import javax.swing.JOptionPane;
  */
 public class ParserCSV {
 
+    /**
+     * file che presenta tutte le stazioni metereologiche create 
+     */
     private static final String fStazioni = "dati/stazioni.csv"; //file che presenta tutte le stazioni metereologiche create 
+    /**
+     * file che presenta tutte gli utenti inserite 
+     */
     private static final String fUtenti = "dati/utenti.csv";
+    /**
+     * file che presenta tutte le aree di interesse create 
+     */
     private static final String fAreeInteresse = "dati/areedinteresse.csv"; //file che presenta tutte le aree di interesse create 
+    /**
+     * file che presenta tutte le nazioni inserite 
+     */
     private static final String fNazioni = "dati/nazioni.csv";
+    /**
+     * file che presenta tutti gli operatori registrati
+     */
     private static final String fOperatori = "dati/operatori.csv"; //file che presenta tutti gli operatori registrati
+    /**
+     * file che presenta tutte le previsioni inserite 
+     */
     private static final String fPrevisioni = "dati/previsioni.csv"; //file che presenta tutte le previsioni inserite 
 
     /**
