@@ -50,7 +50,7 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
             txtGeoname.setText(stazione.getGeoname_id().toString());
             txtCodiceNazione.setText(stazione.getCountry_code());
             txtNazione.setText(stazione.getNazione());
-            txtCoordinate.setText(stazione.getCoordinate().getLon().toString() + ", " + stazione.getCoordinate().getLat().toString());
+            txtCoordinate.setText(stazione.getCoordinate().getLat().toString() + ", " + stazione.getCoordinate().getLon().toString());
 
             String[] columns = {"Id area", "Area d'interesse"};
             drawTable(listaAree, columns);

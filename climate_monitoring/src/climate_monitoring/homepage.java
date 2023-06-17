@@ -309,7 +309,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             if (JCoordinate.sonoCoordinate(testoDaCercare)) {
                 ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 20);
                 for (JLuogo l : listStazioni) {
-                    String[] elements = {"0", l.getNome(), "Stazione metereologica"};
+                    String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
                     al.add(elements);
                 }
             } else {
