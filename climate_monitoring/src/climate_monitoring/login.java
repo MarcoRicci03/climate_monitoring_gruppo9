@@ -13,10 +13,13 @@ import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
- *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class login extends javax.swing.JFrame implements WindowListener {
 
@@ -217,6 +220,11 @@ public class login extends javax.swing.JFrame implements WindowListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo che apre la finestra crea stazione
+     *
+     * @param evt
+     */
     private void btnAggiungiStazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiStazioneActionPerformed
         // TODO add your handling code here:
         creaStazione cp = new creaStazione();
@@ -225,6 +233,11 @@ public class login extends javax.swing.JFrame implements WindowListener {
         setVisible(false);
     }//GEN-LAST:event_btnAggiungiStazioneActionPerformed
 
+    /**
+     * Metodo che apre la finestra gestione previsioni con l'utente loggato
+     *
+     * @param evt
+     */
     private void btnGestionePrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionePrevisioniActionPerformed
         // TODO add your handling code here:
         admin_panel ap = new admin_panel(utenteLoggato);
@@ -237,6 +250,10 @@ public class login extends javax.swing.JFrame implements WindowListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
 
+    /**
+     * Metodo che controlla se l'utente esiste, in caso positivo mostra le
+     * funzioni disponili
+     */
     private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
         try {
             //Controllo la correttezza dei dati inseriti
@@ -248,12 +265,19 @@ public class login extends javax.swing.JFrame implements WindowListener {
                 //ap.addWindowListener(this);
                 //ap.setVisible(true);
                 //setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Username/Password errata", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAccediActionPerformed
 
+    /**
+     * Metodo che apre la finestra Registrazione
+     *
+     * @param evt
+     */
     private void btnRegistratiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistratiActionPerformed
         registrazione r = new registrazione();
         r.addWindowListener(this);
@@ -269,6 +293,9 @@ public class login extends javax.swing.JFrame implements WindowListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentRemoved
 
+    /**
+     * Nasconte pannel di accesso
+     */
     private void nascondiOggettiPannelDestro() {
         jPanel1.setVisible(false);
         labelPasswd.setVisible(false);
@@ -279,6 +306,7 @@ public class login extends javax.swing.JFrame implements WindowListener {
         btnRegistrati.setVisible(false);
     }
 
+    //Mostra pannel utente loggato
     public void mostraOggettiPannelSinistro() {
         jPanel2.setVisible(true);
         labelUserLoggato.setText(utenteLoggato.getUsername());
@@ -287,6 +315,9 @@ public class login extends javax.swing.JFrame implements WindowListener {
         btnGestionePrevisioni.setVisible(true);
     }
 
+    /**
+     * Nasconde pannel utente loggato
+     */
     public void nascondiOggettiPannelSinistro() {
         jPanel2.setVisible(false);
         labelUserLoggato.setVisible(false);
