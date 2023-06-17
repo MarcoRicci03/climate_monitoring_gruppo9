@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * Classe che crea e gestisce la finestra creaStazione, da cui si può aggiungere
@@ -247,7 +248,11 @@ public class creaStazione extends javax.swing.JFrame {
             JLuogo l = new JLuogo(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
             ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText());
             registrazione.luogoNuovo = l;
+            JOptionPane.showMessageDialog(null, "Stazione: "+ txtCitta.getText() +" aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Compila tutti i valori", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
+
 
     }//GEN-LAST:event_btnAggiungiActionPerformed
 
