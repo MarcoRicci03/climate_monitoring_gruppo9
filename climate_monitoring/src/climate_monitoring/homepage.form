@@ -64,20 +64,20 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="btnReload" min="-2" pref="271" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtCerca" min="-2" pref="250" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                          <Component id="txtCercaLat" min="-2" pref="130" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnReload" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCerca" min="-2" pref="320" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCercaLat" pref="130" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="txtCercaLon" pref="130" max="32767" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCerca" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnAccedi" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCerca" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAccedi" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jPanel1" max="32767" attributes="0"/>
                   </Group>
@@ -89,13 +89,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnReload" max="32767" attributes="0"/>
-                      <Component id="btnAccedi" pref="67" max="32767" attributes="0"/>
-                      <Component id="txtCerca" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtCercaLat" max="32767" attributes="0"/>
-                      <Component id="txtCercaLon" alignment="1" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="btnCerca" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnReload" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtCerca" alignment="0" pref="71" max="32767" attributes="0"/>
+                      <Component id="txtCercaLon" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnAccedi" max="32767" attributes="0"/>
+                      <Component id="txtCercaLat" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel1" max="32767" attributes="0"/>
@@ -195,7 +195,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="562" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="558" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
