@@ -238,7 +238,7 @@ public class JPrevisioni {
      * @param temperatura in °C, suddivisa in fasce.
      * @param precipitazioni in mm, espressa in fasce.
      * @param aGhiacciai altitudine dei ghiacciai in m, suddivisa in fasce.
-     * @param mGhiacciaia massa dei ghiacciai in kg, suddivisisa in fasce.
+     * @param mGhiacciai massa dei ghiacciai in kg, suddivisisa in fasce.
      */
     public JPrevisioni(Integer id_area, Integer id_centro, Date data, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) {
         this.id_area = id_area;
@@ -271,13 +271,21 @@ public class JPrevisioni {
      * la previsione.
      * @param id_area indica l'area di interesse relativa alla stazione
      * metereologica.
+     * @param username username dell'utente che ha inserito la previsione
      * @param vVento velocità del vento (km/h), suddivisa in fasce.
      * @param pUmidita percentuale di Umidità, suddivisa in fasce.
      * @param pressione in hPa, suddivisa in fasce.
      * @param temperatura in °C, suddivisa in fasce.
      * @param precipitazioni in mm, espressa in fasce.
      * @param aGhiacciai altitudine dei ghiacciai in m, suddivisa in fasce.
-     * @param mGhiacciaia massa dei ghiacciai in kg, suddivisisa in fasce.
+     * @param mGhiacciai massa dei ghiacciai in kg, suddivisisa in fasce.
+     * @param nVento note riguardanti il vento.
+     * @param nUmidita note riguardanti l'umiditá.
+     * @param nPRessione note riguardanti la pressione.
+     * @param nTemperatura note riguardanti la temperatura.
+     * @param nPrecipitazioni note riguardanti le precipitazioni.
+     * @param nAGhiacciai note riguardanti l'altitudine dei ghiacciai.
+     * @param nMGhiacciai note riguardanti la massa dei ghiacciai.
      */
     public JPrevisioni(String data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

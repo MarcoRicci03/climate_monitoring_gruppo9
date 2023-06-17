@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -66,7 +67,18 @@ public class admin_panel extends javax.swing.JFrame {
             }
             listAree.setListData(v);
         }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+
+        // manipulate date
+        c.add(Calendar.DATE, 14);
+
+        // convert calendar to date
+        Date dateTwoWeekAfter = c.getTime();
+
         datePickerData.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        datePickerData.setSelectableDateRange(new Date(), dateTwoWeekAfter);
     }
 
     @SuppressWarnings("unchecked")
@@ -553,13 +565,14 @@ public class admin_panel extends javax.swing.JFrame {
             valPrecipitazioni = Integer.parseInt(cmbPrecipitazioni.getItemAt(cmbPrecipitazioni.getSelectedIndex()));
             valGhiacciai = Integer.parseInt(cmbGhiacciai.getItemAt(cmbGhiacciai.getSelectedIndex()));
             valMassaGhiaccia = Integer.parseInt(cmbMassaGhiacciai.getItemAt(cmbMassaGhiacciai.getSelectedIndex()));
-            String nVento = noteVento.getText();
-            String nUmidita = noteUmidita.getText();
-            String nPressione = notePressione.getText();
-            String nTemperatura = noteTemperatura.getText();
-            String nPrecipitazioni = notePrecipitazioni.getText();
-            String nAGhiacciai = noteAGhiacciai.getText();
-            String nMGhiacciai = noteMGhiacciai.getText();
+
+            String nVento = noteVento.getText().isEmpty() ? " " : noteVento.getText();
+            String nUmidita = noteUmidita.getText().isEmpty() ? " " : noteUmidita.getText();
+            String nPressione = notePressione.getText().isEmpty() ? " " : notePressione.getText();
+            String nTemperatura = noteTemperatura.getText().isEmpty() ? " " : noteTemperatura.getText();
+            String nPrecipitazioni = notePrecipitazioni.getText().isEmpty() ? " " : notePrecipitazioni.getText();
+            String nAGhiacciai = noteAGhiacciai.getText().isEmpty() ? " " : noteAGhiacciai.getText();
+            String nMGhiacciai = noteMGhiacciai.getText().isEmpty() ? " " : noteMGhiacciai.getText();
 
             JPrevisioni previsione = new JPrevisioni(txtData, id, user.getId_areaSelezionata(), user.getUsername(),
                     valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia,
