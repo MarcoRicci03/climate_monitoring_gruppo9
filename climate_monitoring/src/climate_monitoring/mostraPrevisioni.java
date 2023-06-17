@@ -23,8 +23,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class mostraPrevisioni extends javax.swing.JFrame implements WindowListener {
 
@@ -232,6 +234,11 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo che capisce la data selezionata e richiama il metodo drawTable
+     * @see drawTable
+     * @param evt 
+     */
     private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
         try {
             // TODO add your handling code here:
@@ -247,6 +254,10 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         }
     }//GEN-LAST:event_jCalendarPropertyChange
 
+    /**
+     * Metodo che capisce se il mostra previsioni è stato aperto dall'info stazione o dalla homepage e ritorna alla finestra da cui mostra previsioni è stata aperta
+     * @param evt 
+     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         if (idStazione > -1) {
@@ -264,6 +275,10 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    /**
+     * Imposta le note della variabile della previsione sul txtNota
+     * @param evt 
+     */
     private void tabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabellaPrevisioniMouseClicked
         // TODO add your handling code here:
         txtNota.setText(list.get(tabellaPrevisioni.getSelectedRow()).toString().split(",")[tabellaPrevisioni.getSelectedColumn() + 9]);
@@ -324,6 +339,12 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
     private javax.swing.JTextArea txtNota;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Metodo che mostra le previsioni nella tabella giustamente incolonnata
+     * @param lista delle previsioni creara in base alla data precedentemente passata
+     * @param columns
+     * @throws IOException 
+     */
     private void drawTable(ArrayList<JPrevisioni> list, String[] columns) throws IOException {
 
         List<String[]> listaPrev = new ArrayList<>();
