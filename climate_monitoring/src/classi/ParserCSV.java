@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * Classe per la gestione dei file
@@ -142,7 +143,7 @@ public class ParserCSV {
             }
             if (!ris) {
                 String username = nome.substring(0, 1) + "_" + cognome;
-                Integer id = 0;
+                Integer id = 1;
                 Integer cont = 1;
                 for (String s : list) {
                     id++;
@@ -160,8 +161,11 @@ public class ParserCSV {
                 String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + ";" + codiceOperatore + "\n";
                 fileWriter.append(line.toString());
                 fileWriter.close();
+                JOptionPane.showMessageDialog(null, "Registrazione effettuata.\nEcco il tuo username: " + username + " per accedere assieme alla password.", "Registrazione effettuata", JOptionPane.INFORMATION_MESSAGE);
                 return true;
             } else {
+                JOptionPane.showMessageDialog(null, "Errore nella registrazione.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+
                 return false;
             }
         } catch (IOException ex) {
@@ -279,8 +283,8 @@ public class ParserCSV {
     }
 
     /**
-     * Mettodo che dato un {@code} geoname_id ed un {@code} nome dell'area, aggiunge
-     * una nuova area di interesse nel file 'areedinteresse.csv'
+     * Mettodo che dato un {@code} geoname_id ed un {@code} nome dell'area,
+     * aggiunge una nuova area di interesse nel file 'areedinteresse.csv'
      *
      * @param geoname_id codice identificativo della stazione
      * @param nome nome dell'area da aggiungere

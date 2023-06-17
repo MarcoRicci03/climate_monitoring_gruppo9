@@ -299,7 +299,6 @@ public class registrazione extends javax.swing.JFrame {
                             return;
                         }
                         Integer i = al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id();
-                        System.out.println(i);
 
                         //registrazione dell'utente solamente se non esiste altro utente con codice operatore uguali
                         if (!ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) {
@@ -316,7 +315,7 @@ public class registrazione extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Compilare tutti i campi", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex.toString());
         }
     }//GEN-LAST:event_btnRegistrazioneActionPerformed
 
