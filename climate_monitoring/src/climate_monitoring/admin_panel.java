@@ -549,11 +549,15 @@ public class admin_panel extends javax.swing.JFrame {
      * inserito, aggiunto al file e poi aggiunto alla lista.
      */
     private void btnAggiungiAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiAreaActionPerformed
-        Integer id = ParserCSV.aggiungiAreaInteresse(user.getGeoname_id(), txtNomeArea.getText());
-        if (id > 0) {
-            String s = id + " " + txtNomeArea.getText();
-            v.add(s);
-            listAree.setListData(v);
+        String areaDiInteresse=txtNomeArea.getText();
+        
+        if (!areaDiInteresse.isBlank() ) {
+            Integer id = ParserCSV.aggiungiAreaInteresse(user.getGeoname_id(), txtNomeArea.getText());
+            if (id > 0) {
+                String s = id + " " + txtNomeArea.getText();
+                v.add(s);
+                listAree.setListData(v);
+            }
         }
     }//GEN-LAST:event_btnAggiungiAreaActionPerformed
     /**
@@ -606,11 +610,16 @@ public class admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAggiungiPrevisioniActionPerformed
 
     /**
-     * Metodo che prende la nota associata alla variabile di una previsione e la imposta sul txtAreaNoteLettura
-     * @param evt 
+     * Metodo che prende la nota associata alla variabile di una previsione e la
+     * imposta sul txtAreaNoteLettura
+     *
+     * @param evt
      */
     private void jTabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabellaPrevisioniMouseClicked
-        txtAreaNoteLettura.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn() + 7]);
+        if (jTabellaPrevisioni.getSelectedColumn() >= 2)
+            txtAreaNoteLettura.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn() + 7]);
+        else
+            txtAreaNoteLettura.setText("");
     }//GEN-LAST:event_jTabellaPrevisioniMouseClicked
     /**
      * Tramite questo metodo andiamo ad aggiornare la tabella delle previsioni
