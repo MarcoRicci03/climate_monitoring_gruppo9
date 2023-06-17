@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class registrazione extends javax.swing.JFrame {
 
@@ -274,6 +276,10 @@ public class registrazione extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo che permette la creazione di un utente controllando i valori passati nei parametri se correttamente impostati
+     * @param evt 
+     */
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
         try {
@@ -319,6 +325,10 @@ public class registrazione extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRegistrazioneActionPerformed
 
+    /**
+     * Metodo che apre la finestra per la creazione di una nuova stazione controllando l'esistenza del codice operatore
+     * @param evt 
+     */
     private void btnCreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreaActionPerformed
         //controllo esistenza codice operatore
         if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) {
@@ -329,7 +339,10 @@ public class registrazione extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnCreaActionPerformed
-
+    /**
+     * Metodo che visualizza le stazioni possibili per il luogo selezioanto
+     * @param evt 
+     */
     private void cmbStazioneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbStazioneMousePressed
         // TODO add your handling code here:
         if (luogoNuovo != null) {
