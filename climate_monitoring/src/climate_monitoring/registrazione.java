@@ -315,7 +315,7 @@ public class registrazione extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Compilare tutti i campi", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnRegistrazioneActionPerformed
 

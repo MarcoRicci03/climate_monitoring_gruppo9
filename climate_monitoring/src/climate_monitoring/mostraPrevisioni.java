@@ -237,7 +237,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
             // TODO add your handling code here:
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String strData = sdf.format(jCalendar.getDate());
-            ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioniByDate(id, strData);
+            list = ParserCSV.creaListaPrevisioniByDate(id, strData);
             String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
             drawTable(list, columns);
