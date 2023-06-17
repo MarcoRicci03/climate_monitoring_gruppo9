@@ -231,6 +231,7 @@ public class admin_panel extends javax.swing.JFrame {
         txtAreaNoteLettura.setRows(5);
         jScrollPane3.setViewportView(txtAreaNoteLettura);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Note");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -265,12 +266,11 @@ public class admin_panel extends javax.swing.JFrame {
                             .addComponent(labelAreaSelezionata)
                             .addComponent(txtAreaSelezionata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
-                        .addGap(5, 5, 5)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -364,6 +364,27 @@ public class admin_panel extends javax.swing.JFrame {
         txtAreaPrevisioneSelezionata.setBackground(new java.awt.Color(177, 212, 224));
         txtAreaPrevisioneSelezionata.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        noteVento.setBackground(new java.awt.Color(177, 212, 224));
+        noteVento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        noteUmidita.setBackground(new java.awt.Color(177, 212, 224));
+        noteUmidita.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        noteMGhiacciai.setBackground(new java.awt.Color(177, 212, 224));
+        noteMGhiacciai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        noteTemperatura.setBackground(new java.awt.Color(177, 212, 224));
+        noteTemperatura.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        notePressione.setBackground(new java.awt.Color(177, 212, 224));
+        notePressione.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        notePrecipitazioni.setBackground(new java.awt.Color(177, 212, 224));
+        notePrecipitazioni.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        noteAGhiacciai.setBackground(new java.awt.Color(177, 212, 224));
+        noteAGhiacciai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
         javax.swing.GroupLayout AreaParametriLayout = new javax.swing.GroupLayout(AreaParametri);
         AreaParametri.setLayout(AreaParametriLayout);
         AreaParametriLayout.setHorizontalGroup(
@@ -394,9 +415,7 @@ public class admin_panel extends javax.swing.JFrame {
                             .addGroup(AreaParametriLayout.createSequentialGroup()
                                 .addComponent(cmbTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(noteTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(btnAggiungiPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(noteTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(AreaParametriLayout.createSequentialGroup()
                         .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,11 +430,7 @@ public class admin_panel extends javax.swing.JFrame {
                             .addGroup(AreaParametriLayout.createSequentialGroup()
                                 .addComponent(labelAreaPrevisioneSelezionata)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(AreaParametriLayout.createSequentialGroup()
-                                .addComponent(cmbUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(noteUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(AreaParametriLayout.createSequentialGroup()
                                 .addComponent(cmbPressione, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -431,10 +446,18 @@ public class admin_panel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(datePickerData, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(AreaParametriLayout.createSequentialGroup()
-                                .addComponent(cmbVento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(noteVento, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(AreaParametriLayout.createSequentialGroup()
+                                        .addComponent(cmbUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(noteUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(AreaParametriLayout.createSequentialGroup()
+                                        .addComponent(cmbVento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(noteVento, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAggiungiPrevisioni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(330, Short.MAX_VALUE))
         );
         AreaParametriLayout.setVerticalGroup(
             AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,30 +472,28 @@ public class admin_panel extends javax.swing.JFrame {
                     .addComponent(labelData)
                     .addComponent(datePickerData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
-                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbVento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(noteVento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelVento))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelUmidita)
-                    .addComponent(cmbUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(noteUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(AreaParametriLayout.createSequentialGroup()
+                        .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbVento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(noteVento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelVento))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelPressione)
-                            .addComponent(cmbPressione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(notePressione, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(noteTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelTemperatura)))
-                    .addGroup(AreaParametriLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(btnAggiungiPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(labelUmidita)
+                            .addComponent(cmbUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(noteUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnAggiungiPrevisioni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPressione)
+                    .addComponent(cmbPressione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(notePressione, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noteTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTemperatura))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelPrecipitazioni)
@@ -490,7 +511,7 @@ public class admin_panel extends javax.swing.JFrame {
                     .addComponent(labelMassa)
                     .addComponent(cmbMassaGhiacciai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(noteMGhiacciai, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -511,9 +532,9 @@ public class admin_panel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(AreaParametri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(AreaInteresse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -584,6 +605,10 @@ public class admin_panel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAggiungiPrevisioniActionPerformed
 
+    /**
+     * Metodo che prende la nota associata alla variabile di una previsione e la imposta sul txtAreaNoteLettura
+     * @param evt 
+     */
     private void jTabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabellaPrevisioniMouseClicked
         txtAreaNoteLettura.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn() + 7]);
     }//GEN-LAST:event_jTabellaPrevisioniMouseClicked

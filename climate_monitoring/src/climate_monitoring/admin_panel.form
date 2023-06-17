@@ -41,9 +41,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <Component id="jPanel2" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="AreaParametri" max="32767" attributes="0"/>
                   <Component id="AreaInteresse" max="32767" attributes="0"/>
               </Group>
@@ -197,12 +197,11 @@
                               <Component id="txtAreaSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="300" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" pref="348" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" min="-2" pref="108" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" pref="105" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -307,6 +306,9 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Note"/>
           </Properties>
         </Component>
@@ -358,8 +360,6 @@
                                   <Component id="cmbTemperatura" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="noteTemperatura" min="-2" pref="408" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                                  <Component id="btnAggiungiPrevisioni" min="-2" pref="195" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -383,12 +383,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="cmbUmidita" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="noteUmidita" min="-2" pref="408" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="cmbPressione" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -405,15 +400,26 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="datePickerData" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="cmbVento" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="noteVento" min="-2" pref="408" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="cmbUmidita" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="noteUmidita" min="-2" pref="408" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="cmbVento" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="noteVento" min="-2" pref="408" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="btnAggiungiPrevisioni" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="330" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -432,36 +438,33 @@
                       <Component id="datePickerData" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cmbVento" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="noteVento" alignment="1" min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="labelVento" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="cmbVento" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="noteVento" alignment="1" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="labelVento" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="noteUmidita" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="btnAggiungiPrevisioni" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cmbUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="noteUmidita" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="labelPressione" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbPressione" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="notePressione" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelPressione" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbPressione" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="notePressione" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="cmbTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="noteTemperatura" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="labelTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                          <Component id="btnAggiungiPrevisioni" min="-2" pref="50" max="-2" attributes="0"/>
-                      </Group>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="cmbTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="noteTemperatura" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="labelTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -485,7 +488,7 @@
                       <Component id="cmbMassaGhiacciai" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="noteMGhiacciai" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="62" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -797,18 +800,74 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="noteVento">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e0" green="d4" red="b1" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="noteUmidita">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e0" green="d4" red="b1" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="noteMGhiacciai">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e0" green="d4" red="b1" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="noteTemperatura">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e0" green="d4" red="b1" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="notePressione">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e0" green="d4" red="b1" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="notePrecipitazioni">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e0" green="d4" red="b1" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="noteAGhiacciai">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e0" green="d4" red="b1" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
