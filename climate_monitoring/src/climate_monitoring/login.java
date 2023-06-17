@@ -46,6 +46,10 @@ public class login extends javax.swing.JFrame implements WindowListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        labelUserLoggato = new javax.swing.JLabel();
+        btnAggiungiStazione = new javax.swing.JButton();
+        btnGestionePrevisioni = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnRegistrati = new javax.swing.JButton();
         btnAccedi = new javax.swing.JButton();
@@ -53,10 +57,6 @@ public class login extends javax.swing.JFrame implements WindowListener {
         txtUsername = new javax.swing.JTextField();
         labelPasswd = new javax.swing.JLabel();
         labelUser = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        labelUserLoggato = new javax.swing.JLabel();
-        btnAggiungiStazione = new javax.swing.JButton();
-        btnGestionePrevisioni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(40, 54, 24));
@@ -72,6 +72,59 @@ public class login extends javax.swing.JFrame implements WindowListener {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(177, 212, 224));
+
+        labelUserLoggato.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelUserLoggato.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelUserLoggato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/user.png"))); // NOI18N
+        labelUserLoggato.setLabelFor(txtUsername);
+
+        btnAggiungiStazione.setBackground(new java.awt.Color(177, 212, 224));
+        btnAggiungiStazione.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnAggiungiStazione.setText("Aggiungi stazione");
+        btnAggiungiStazione.setPreferredSize(new java.awt.Dimension(72, 28));
+        btnAggiungiStazione.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAggiungiStazioneActionPerformed(evt);
+            }
+        });
+
+        btnGestionePrevisioni.setBackground(new java.awt.Color(177, 212, 224));
+        btnGestionePrevisioni.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnGestionePrevisioni.setText("Gestione Previsioni");
+        btnGestionePrevisioni.setPreferredSize(new java.awt.Dimension(72, 28));
+        btnGestionePrevisioni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionePrevisioniActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                    .addComponent(btnAggiungiStazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelUserLoggato, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelUserLoggato, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAggiungiStazione, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
+        );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 260));
 
         jPanel1.setBackground(new java.awt.Color(177, 212, 224));
 
@@ -160,61 +213,6 @@ public class login extends javax.swing.JFrame implements WindowListener {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 260));
-
-        jPanel2.setBackground(new java.awt.Color(177, 212, 224));
-
-        labelUserLoggato.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelUserLoggato.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        labelUserLoggato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/user.png"))); // NOI18N
-        labelUserLoggato.setLabelFor(txtUsername);
-
-        btnAggiungiStazione.setBackground(new java.awt.Color(177, 212, 224));
-        btnAggiungiStazione.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnAggiungiStazione.setText("Aggiungi stazione");
-        btnAggiungiStazione.setPreferredSize(new java.awt.Dimension(72, 28));
-        btnAggiungiStazione.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAggiungiStazioneActionPerformed(evt);
-            }
-        });
-
-        btnGestionePrevisioni.setBackground(new java.awt.Color(177, 212, 224));
-        btnGestionePrevisioni.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnGestionePrevisioni.setText("Gestione Previsioni");
-        btnGestionePrevisioni.setPreferredSize(new java.awt.Dimension(72, 28));
-        btnGestionePrevisioni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGestionePrevisioniActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(labelUserLoggato, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 11, Short.MAX_VALUE))
-                    .addComponent(btnAggiungiStazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelUserLoggato, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnGestionePrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAggiungiStazione, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 260));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
