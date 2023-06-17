@@ -340,7 +340,7 @@ public class registrazione extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCreaActionPerformed
     /**
-     * Metodo che visualizza le stazioni possibili per il luogo selezioanto
+     * Metodo che visualizza le stazioni possibili
      * @param evt 
      */
     private void cmbStazioneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbStazioneMousePressed
