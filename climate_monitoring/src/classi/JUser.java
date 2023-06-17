@@ -15,8 +15,17 @@ package classi;
  */
 public class JUser {
 
+    /**
+     * username utente , nome utente, cognome utente, id utente, password utente,  cf utente, mail utente
+     */
     private String username, nome, cognome, id, password, cf, mail;
+    /**
+     * Indica la stazione metereologica a cui è associato l'operatore
+     */
     private Integer geoname_id; //Indica la stazione metereologica a cui è associato l'operatore
+    /**
+     * Indica l'ultima area di interesse di cui l'operatore ha aggiunto una previsione 
+     */
     private int id_areaSelezionata; //Indica l'ultima area di interesse di cui l'operatore ha aggiunto una previsione 
 
     /**
