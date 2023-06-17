@@ -22,8 +22,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- *
- * @author marco
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class homepage extends javax.swing.JFrame implements WindowListener {
 
@@ -81,7 +83,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     }
 
     /**
-     * Costruttore della pagina.
+     * Costruttore della pagina mettendo la finestra al centro dello schermo
      *
      */
     public homepage() {
@@ -348,7 +350,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     }//GEN-LAST:event_tableRisultatiMouseClicked
 
     /**
-     * Ricarica la tabella.
+     * Ricarica la tabella con le aree di interesse
      *
      */
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
