@@ -161,7 +161,7 @@ public class registrazione extends javax.swing.JFrame {
 
         btnCrea.setBackground(new java.awt.Color(177, 212, 224));
         btnCrea.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
-        btnCrea.setText("Crea");
+        btnCrea.setText("Crea stazione");
         btnCrea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCreaActionPerformed(evt);
