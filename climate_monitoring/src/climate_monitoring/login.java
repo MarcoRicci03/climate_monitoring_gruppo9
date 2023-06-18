@@ -257,16 +257,20 @@ public class login extends javax.swing.JFrame implements WindowListener {
     private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
         try {
             //Controllo la correttezza dei dati inseriti
-            if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
-                utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
-                mostraOggettiPannelSinistro();
-                nascondiOggettiPannelDestro();
-                //admin_panel ap = new admin_panel(utenteLoggato);
-                //ap.addWindowListener(this);
-                //ap.setVisible(true);
-                //setVisible(false);
+            if (!txtUsername.getText().isBlank() || !txtPass.getText().isBlank()) {
+                if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
+                    utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
+                    mostraOggettiPannelSinistro();
+                    nascondiOggettiPannelDestro();
+                    //admin_panel ap = new admin_panel(utenteLoggato);
+                    //ap.addWindowListener(this);
+                    //ap.setVisible(true);
+                    //setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Username/Password errata", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Username/Password errata", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Inserisci Username/Password", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
