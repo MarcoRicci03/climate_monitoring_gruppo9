@@ -10,6 +10,7 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
+    <EventHandler event="windowGainedFocus" listener="java.awt.event.WindowFocusListener" parameters="java.awt.event.WindowEvent" handler="formWindowGainedFocus"/>
     <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
   </Events>
   <AuxValues>
@@ -57,37 +58,34 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnAggiungi" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="labelCodiceNazione" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelCordinate" max="32767" attributes="0"/>
-                              <Component id="labelNazione" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtCoordinate" alignment="1" max="32767" attributes="0"/>
-                              <Component id="cmbCodNazione" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtCodNazione" alignment="1" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="labelId" pref="119" max="32767" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="labelCodiceNazione" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="labelCordinate" max="32767" attributes="0"/>
+                                          <Component id="labelNazione" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="labelCitta" pref="131" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="labelCitta" pref="123" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                  <Component id="labelId" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtGeoname_id" pref="95" max="32767" attributes="0"/>
+                                  <Component id="txtGeoname_id" pref="89" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnCercaGeonameId" min="-2" pref="135" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="txtCitta" max="32767" attributes="0"/>
+                              <Component id="txtCoordinate" alignment="1" max="32767" attributes="0"/>
+                              <Component id="cmbCodNazione" alignment="1" max="32767" attributes="0"/>
+                              <Component id="txtCitta" alignment="1" max="32767" attributes="0"/>
+                              <Component id="txtCodNazione" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -102,7 +100,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                          <Component id="labelId" max="32767" attributes="0"/>
+                          <Component id="labelId" pref="60" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnCercaGeonameId" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
@@ -112,7 +110,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtCitta" alignment="3" pref="45" max="32767" attributes="0"/>
-                      <Component id="labelCitta" alignment="3" pref="45" max="32767" attributes="0"/>
+                      <Component id="labelCitta" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -126,11 +124,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtCoordinate" pref="45" max="32767" attributes="0"/>
+                      <Component id="txtCoordinate" pref="46" max="32767" attributes="0"/>
                       <Component id="labelCordinate" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnAggiungi" pref="58" max="32767" attributes="0"/>
+                  <Component id="btnAggiungi" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -239,7 +237,15 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="16" style="1"/>
             </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="99" red="99" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Latitudine, Longitudine"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCoordinateKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCoordinateKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelCordinate">
           <Properties>

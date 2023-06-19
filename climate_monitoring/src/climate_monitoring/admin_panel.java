@@ -365,7 +365,7 @@ public class admin_panel extends javax.swing.JFrame {
         txtAreaPrevisioneSelezionata.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         noteVento.setBackground(new java.awt.Color(177, 212, 224));
-        noteVento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        noteVento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         noteUmidita.setBackground(new java.awt.Color(177, 212, 224));
         noteUmidita.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -549,9 +549,9 @@ public class admin_panel extends javax.swing.JFrame {
      * inserito, aggiunto al file e poi aggiunto alla lista.
      */
     private void btnAggiungiAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiAreaActionPerformed
-        String areaDiInteresse=txtNomeArea.getText();
-        
-        if (!areaDiInteresse.isBlank() ) {
+        String areaDiInteresse = txtNomeArea.getText();
+
+        if (!areaDiInteresse.isBlank()) {
             Integer id = ParserCSV.aggiungiAreaInteresse(user.getGeoname_id(), txtNomeArea.getText());
             if (id > 0) {
                 String s = id + " " + txtNomeArea.getText();

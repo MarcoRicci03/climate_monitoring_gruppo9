@@ -7,6 +7,7 @@ package climate_monitoring;
 import classi.JCoordinate;
 import classi.JLuogo;
 import classi.ParserCSV;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -73,6 +74,13 @@ public class creaStazione extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -124,6 +132,16 @@ public class creaStazione extends javax.swing.JFrame {
 
         txtCoordinate.setBackground(new java.awt.Color(177, 212, 224));
         txtCoordinate.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        txtCoordinate.setForeground(new java.awt.Color(153, 153, 153));
+        txtCoordinate.setText("Latitudine, Longitudine");
+        txtCoordinate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCoordinateKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCoordinateKeyReleased(evt);
+            }
+        });
 
         labelCordinate.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCordinate.setText("Coordinate:");
@@ -146,29 +164,27 @@ public class creaStazione extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAggiungi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(labelCodiceNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelCordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCoordinate, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmbCodNazione, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCodNazione, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelId, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(labelCodiceNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(labelCordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(labelNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(labelCitta, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelCitta, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                .addGap(8, 8, 8)))
+                                .addComponent(labelId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtGeoname_id, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                .addComponent(txtGeoname_id, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCercaGeonameId, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCitta))))
+                            .addComponent(txtCoordinate, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cmbCodNazione, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCitta, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCodNazione, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -178,14 +194,14 @@ public class creaStazione extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(labelId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(labelId, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCercaGeonameId, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtGeoname_id, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCitta, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                    .addComponent(labelCitta, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+                    .addComponent(labelCitta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCodNazione, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
@@ -196,10 +212,10 @@ public class creaStazione extends javax.swing.JFrame {
                     .addComponent(labelNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCoordinate, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(txtCoordinate, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                     .addComponent(labelCordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAggiungi, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addComponent(btnAggiungi, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -244,16 +260,25 @@ public class creaStazione extends javax.swing.JFrame {
      */
     private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
         // TODO add your handling code here:
-        if (!txtGeoname_id.getText().isBlank() && !txtCitta.getText().isBlank() && !txtCodNazione.getText().isBlank() && cmbCodNazione.getSelectedIndex() > 0 && !txtCoordinate.getText().isBlank()) {
-            JLuogo l = new JLuogo(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
-            ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText());
-            registrazione.luogoNuovo = l;
-            JOptionPane.showMessageDialog(null, "Stazione: "+ txtCitta.getText() +" aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);
+        if (JCoordinate.sonoCoordinate(txtCoordinate.getText())) {
+            try {
+                if (!txtCoordinate.getText().isBlank() && !txtGeoname_id.getText().isBlank() && !txtCitta.getText().isBlank() && !txtCodNazione.getText().isBlank() && cmbCodNazione.getSelectedIndex() > 0) {
+                    JLuogo l = new JLuogo(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
+                    if (ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText())) {
+                        registrazione.luogoNuovo = l;
+                        JOptionPane.showMessageDialog(null, "Stazione: " + txtCitta.getText() + " aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Stazione già esistente.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Compila tutti i valori.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Controllare di aver inserito correttamente il geoname_id e le coordinate. (latitudine, longitudine)", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Compila tutti i valori", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Coordinate non valide. (latitudine, longitudine)", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
-
-
     }//GEN-LAST:event_btnAggiungiActionPerformed
 
     /**
@@ -270,6 +295,38 @@ public class creaStazione extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
+
+    /**
+     * Quando premuto un tasto mentre si sta scrivendo nella casella testuale
+     * delle coordinate viene richiamato questo metodo che permette di gestire
+     * il watermark (filigrana).
+     */
+    private void txtCoordinateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordinateKeyPressed
+        // TODO add your handling code here:
+        if (txtCoordinate.getForeground() != Color.BLACK && txtCoordinate.getText().equals("Latitudine, Longitudine")) {
+            txtCoordinate.setText("");
+        }
+        txtCoordinate.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txtCoordinateKeyPressed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // TODO add your handling code here:
+        txtCoordinate.setCaretPosition(0);
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    /**
+     * Quando rilasciato un tasto mentre si sta scrivendo nella casella testuale
+     * delle coordinate viene richiamato questo metodo che permette di gestire
+     * il watermark (filigrana).
+     */
+    private void txtCoordinateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordinateKeyReleased
+        // TODO add your handling code here:
+        if (txtCoordinate.getText().isEmpty()) {
+            txtCoordinate.setText("Latitudine, Longitudine");
+            txtCoordinate.setCaretPosition(0);
+            txtCoordinate.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtCoordinateKeyReleased
 
     /**
      * @param args the command line arguments

@@ -28,19 +28,19 @@ import javax.swing.JOptionPane;
 public class ParserCSV {
 
     /**
-     * file che presenta tutte le stazioni metereologiche create 
+     * file che presenta tutte le stazioni metereologiche create
      */
     private static final String fStazioni = "dati/stazioni.csv"; //file che presenta tutte le stazioni metereologiche create 
     /**
-     * file che presenta tutte gli utenti inserite 
+     * file che presenta tutte gli utenti inserite
      */
     private static final String fUtenti = "dati/utenti.csv";
     /**
-     * file che presenta tutte le aree di interesse create 
+     * file che presenta tutte le aree di interesse create
      */
     private static final String fAreeInteresse = "dati/areedinteresse.csv"; //file che presenta tutte le aree di interesse create 
     /**
-     * file che presenta tutte le nazioni inserite 
+     * file che presenta tutte le nazioni inserite
      */
     private static final String fNazioni = "dati/nazioni.csv";
     /**
@@ -48,7 +48,7 @@ public class ParserCSV {
      */
     private static final String fOperatori = "dati/operatori.csv"; //file che presenta tutti gli operatori registrati
     /**
-     * file che presenta tutte le previsioni inserite 
+     * file che presenta tutte le previsioni inserite
      */
     private static final String fPrevisioni = "dati/previsioni.csv"; //file che presenta tutte le previsioni inserite 
 
@@ -101,14 +101,26 @@ public class ParserCSV {
      * metodo
      */
     public static boolean creaStazione(String geoname_id, String citta, String cod_nazione, String nazione, String coordinate) {
-        try {
-            FileWriter fileWriter = new FileWriter(new File(fStazioni), true);
-            String line = geoname_id + ";" + citta + ";" + cod_nazione + ";" + nazione + ";" + coordinate + "\n";
-            fileWriter.append(line);
-            fileWriter.close();
-            return true;
-        } catch (IOException ex) {
-            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+        ArrayList<JLuogo> listaStazioni = creaListaStazioni();
+        Boolean sentinella = true;
+        //cerca per id
+        for (JLuogo l : listaStazioni) {
+            if (l.getGeoname_id() == Integer.parseInt(geoname_id) || l.getNome().equals(citta)) {
+                sentinella = false;
+            }
+        }
+        if (sentinella) {
+            try {
+                FileWriter fileWriter = new FileWriter(new File(fStazioni), true);
+                String line = geoname_id + ";" + citta + ";" + cod_nazione + ";" + nazione + ";" + coordinate + "\n";
+                fileWriter.append(line);
+                fileWriter.close();
+                return true;
+            } catch (IOException ex) {
+                Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        } else {
             return false;
         }
     }
@@ -177,7 +189,7 @@ public class ParserCSV {
                 String mail = username + "@mail.com";
                 FileWriter fileWriter = new FileWriter(new File(fUtenti), true);
                 String line = id + ";" + nome + ";" + cognome + ";" + username + ";" + mail + ";" + pass + ";" + cf + ";" + id_stazione + ";" + codiceOperatore + "\n";
-                fileWriter.append(line.toString());
+                fileWriter.append(line);
                 fileWriter.close();
                 JOptionPane.showMessageDialog(null, "Registrazione effettuata.\nEcco il tuo username: " + username + " per accedere assieme alla password.", "Registrazione effettuata", JOptionPane.INFORMATION_MESSAGE);
                 return true;
@@ -313,16 +325,23 @@ public class ParserCSV {
     public static Integer aggiungiAreaInteresse(Integer geoname_id, String nome) {
         try {
             Integer id = 1;
+            Boolean sentinella = true;
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
-            for (String s : list) {
-                id++;
+            for (id = 0; id < list.size(); id++) {
+                if (list.get(id).split(";")[1].toLowerCase().equals(nome.toLowerCase())) {
+                    sentinella = false;
+                }
             }
-
-            FileWriter fileWriter = new FileWriter(new File(fAreeInteresse), true);
-            String line = id + ";" + nome + ";" + geoname_id + "\n";
-            fileWriter.append(line);
-            fileWriter.close();
-            return id;
+            id++;
+            if (sentinella) {
+                FileWriter fileWriter = new FileWriter(new File(fAreeInteresse), true);
+                String line = id + ";" + nome + ";" + geoname_id + "\n";
+                fileWriter.append(line);
+                fileWriter.close();
+                return id;
+            } else {
+                return -1;
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
