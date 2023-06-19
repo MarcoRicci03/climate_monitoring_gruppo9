@@ -107,6 +107,9 @@ public class ParserCSV {
         for (JLuogo l : listaStazioni) {
             if (l.getGeoname_id() == Integer.parseInt(geoname_id) || l.getNome().equals(citta)) {
                 sentinella = false;
+                if (!sentinella) {
+                    return false;
+                }
             }
         }
         if (sentinella) {
