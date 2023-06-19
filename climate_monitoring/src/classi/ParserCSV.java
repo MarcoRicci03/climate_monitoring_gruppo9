@@ -104,19 +104,16 @@ public class ParserCSV {
         ArrayList<JLuogo> listaStazioni = creaListaStazioni();
         Boolean sentinella = true;
         //cerca per id
-        for (JLuogo l : listaStazioni) {
-            if (l.getGeoname_id() == Integer.parseInt(geoname_id) || l.getNome().equals(citta)) {
+        for (int i = 0; i < listaStazioni.size() && sentinella; i++) {
+            if (listaStazioni.get(i).getGeoname_id() == Integer.parseInt(geoname_id) || listaStazioni.get(i).getNome().toLowerCase().equals(citta.toLowerCase())) {
                 sentinella = false;
-                if (!sentinella) {
-                    return false;
-                }
             }
         }
         if (sentinella) {
             try {
                 FileWriter fileWriter = new FileWriter(new File(fStazioni), true);
                 String line = geoname_id + ";" + citta + ";" + cod_nazione + ";" + nazione + ";" + coordinate + "\n";
-                fileWriter.append(line);
+                //fileWriter.append(line);
                 fileWriter.close();
                 return true;
             } catch (IOException ex) {
