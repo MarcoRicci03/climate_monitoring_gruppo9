@@ -268,7 +268,7 @@ public class creaStazione extends javax.swing.JFrame {
                         registrazione.luogoNuovo = l;
                         JOptionPane.showMessageDialog(null, "Stazione: " + txtCitta.getText() + " aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Stazione già esistente.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "La stazione "+ txtCitta.getText() +", con Geoname_id:" + txtGeoname_id.getText() + " è gia stata creata", "Errore", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Compila tutti i valori.", "Errore", JOptionPane.INFORMATION_MESSAGE);
