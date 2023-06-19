@@ -244,7 +244,18 @@ public class creaStazione extends javax.swing.JFrame {
      */
     private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
         // TODO add your handling code here:
+        
+        var listaStazioni = ParserCSV.creaListaStazioni();  // prelevo tutte le stazioni meteorologiche
         if (!txtGeoname_id.getText().isBlank() && !txtCitta.getText().isBlank() && !txtCodNazione.getText().isBlank() && cmbCodNazione.getSelectedIndex() > 0 && !txtCoordinate.getText().isBlank()) {
+            
+            for( JLuogo luogoTemp : listaStazioni){ // vedo se per ogni stazione già esistente
+                // cerco di inserire la stessa stazione
+                if( txtGeoname_id.getText().equals( luogoTemp.getGeoname_id().toString() ) ){   // in questo caso mostro un messaggio di errore
+                    JOptionPane.showMessageDialog(null, "La stazione "+ txtCitta.getText() +", con Geoname_id:" + txtGeoname_id.getText() + " è gia stata creata", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+            
             JLuogo l = new JLuogo(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
             ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText());
             registrazione.luogoNuovo = l;
