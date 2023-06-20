@@ -260,7 +260,7 @@ public class JPrevisioni {
 
     /**
      * Costruttore senza parametri della classe JPrevisioni, genera un oggetto
-     * JPreivisioni con tutti gli attributi impostati a '0' o null.
+     * JPrevisioni con tutti gli attributi impostati a zero o a stringa vuota.
      */
     public JPrevisioni() {
         this.id_area = 0;
@@ -282,8 +282,8 @@ public class JPrevisioni {
      *
      * @param data indica la data in cui è stata inserita la previsione passando
      * un ogetto di tipo 'Date' (formato della data gg/mm/aaaa).
-     * @param id_centro indica la stazione metereologica da cui è stata inserita
-     * la previsione.
+     * @param id_centro contiene l'id della stazione metereologica da cui è
+     * stata inserita la previsione.
      * @param id_area indica l'area di interesse relativa alla stazione
      * metereologica.
      * @param vVento velocità del vento (km/h), suddivisa in fasce.
@@ -373,7 +373,7 @@ public class JPrevisioni {
     /**
      * Metodo che restituisce una stringa contente tutti gli attributi dell'
      * oggetto separati da una ','. (Esempio
-     * dd/mm/yyyy,id_centro,vVento,pUmidita,pressione,temperatura,precipitazioni,aGhiacchiai,mGhiacciai).
+     * dd/mm/yyyy,id_centro,vVento,pUmidita,pressione,temperatura,precipitazioni,aGhiacchiai,mGhiacciai,nVento,nUmidita,nPressione,nTemperatura,nPrecipitazioni,nAGhiacciai,nMGhiacciai).
      *
      * @return Ritorna una stringa contente i valori degli attributi dell'
      * oggetto separati da una ','.
@@ -381,14 +381,14 @@ public class JPrevisioni {
     @Override
     public String toString() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return df.format(data) + "," + id_centro + "," + vVento + "," + pUmidita + "," + pressione + "," + temperatura + "," + precipitazioni + "," + aGhiacciai + "," + mGhiacciai + "," + 
-                                                         nVento + "," + nUmidita + "," + nPressione + "," + nTemperatura + "," + nPrecipitazioni + "," + nAGhiacciai + "," + nMGhiacciai;
+        return df.format(data) + "," + id_centro + "," + vVento + "," + pUmidita + "," + pressione + "," + temperatura + "," + precipitazioni + "," + aGhiacciai + "," + mGhiacciai + ","
+                + nVento + "," + nUmidita + "," + nPressione + "," + nTemperatura + "," + nPrecipitazioni + "," + nAGhiacciai + "," + nMGhiacciai;
     }
 
     /**
      * Metodo che restituisce una stringa contente tutti gli attributi
      * dell'oggetto separati da un ';'. (Esempio
-     * dd/mm/yyyy;id_centro;vVento;pUmidita;pressione;temperatura;precipitazioni;aGhiacchiai;mGhiacciai).
+     * dd/mm/yyyy;id_centro;vVento;pUmidita;pressione;temperatura;precipitazioni;aGhiacchiai;mGhiacciai;nVento;nUmidita;nPressione;nTemperatura;nPrecipitazioni;nAGhiacciai;nMGhiacciai).
      *
      * @return Ritorna una stringa contente i valori degli attributi dell'
      * oggetto separati da un ';'.
@@ -397,20 +397,4 @@ public class JPrevisioni {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return df.format(data) + ";" + id_centro + ";" + id_area + ";" + username + ";" + vVento + ";" + nVento + ";" + pUmidita + ";" + nUmidita + ";" + pressione + ";" + nPressione + ";" + temperatura + ";" + nTemperatura + ";" + precipitazioni + ";" + nPrecipitazioni + ";" + aGhiacciai + ";" + nAGhiacciai + ";" + mGhiacciai + ";" + nMGhiacciai;
     }
-
-    /* COSTRUTTORE CON PARAMETRI VECCHIO
-        public JPrevisioni(Date data, int id_centro, int id_area, String username, int vVento, int pUmidita, int pressione, int temperatura, int precipitazioni, int aGhiacciai, int mGhiacciai) {
-        this.data = data;
-        this.id_centro = id_centro;
-        this.id_area = id_area;
-        this.username = username;
-        this.vVento = vVento;
-        this.pUmidita = pUmidita;
-        this.pressione = pressione;
-        this.temperatura = temperatura;
-        this.precipitazioni = precipitazioni;
-        this.aGhiacciai = aGhiacciai;
-        this.mGhiacciai = mGhiacciai;
-    }
-     */
 }

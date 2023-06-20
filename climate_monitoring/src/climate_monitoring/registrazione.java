@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
+ * Classe che crea e gestisce la finestra registrazione visibile da tutti,
+ * permette agli operatori di registrarsi al servizio.
+ *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno
@@ -277,8 +280,10 @@ public class registrazione extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Metodo che permette la creazione di un utente controllando i valori passati nei parametri se correttamente impostati
-     * @param evt 
+     * Metodo che permette la creazione di un utente controllando i valori
+     * passati nei parametri se correttamente impostati
+     *
+     * @param evt
      */
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
@@ -326,8 +331,10 @@ public class registrazione extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrazioneActionPerformed
 
     /**
-     * Metodo che apre la finestra per la creazione di una nuova stazione controllando l'esistenza del codice operatore
-     * @param evt 
+     * Metodo che apre la finestra per la creazione di una nuova stazione
+     * controllando l'esistenza del codice operatore
+     *
+     * @param evt
      */
     private void btnCreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreaActionPerformed
         //controllo esistenza codice operatore
@@ -341,7 +348,8 @@ public class registrazione extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreaActionPerformed
     /**
      * Metodo che visualizza le stazioni possibili
-     * @param evt 
+     *
+     * @param evt
      */
     private void cmbStazioneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbStazioneMousePressed
         // TODO add your handling code here:

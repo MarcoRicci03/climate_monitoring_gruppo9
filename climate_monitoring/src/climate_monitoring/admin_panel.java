@@ -547,6 +547,7 @@ public class admin_panel extends javax.swing.JFrame {
      * Questo metodo viene richiamato quando premuto il bottone "Aggiungi" nella
      * sezione per aggiungere una nuova area d'interesse, viene preso il nome
      * inserito, aggiunto al file e poi aggiunto alla lista.
+     * 
      */
     private void btnAggiungiAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiAreaActionPerformed
         String areaDiInteresse = txtNomeArea.getText();

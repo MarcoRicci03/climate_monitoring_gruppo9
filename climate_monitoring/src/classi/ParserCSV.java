@@ -89,14 +89,16 @@ public class ParserCSV {
     }
 
     /**
-     * Metodo che crea una nuova stazione e la salva nel file
+     * Metodo che crea una nuova stazione, controlla se esiste già, in caso non
+     * esista la salva nel file.
      *
-     * @param geoname_id codice che indica
+     * @param geoname_id codice che indica la stazione metereologica.
      * @param citta indica la citta in cui è presente la stazione
-     * @param cod_nazione codice che riferito alla nazione di cui fa parte la
-     * città
-     * @param nazione indica la nazione di cui fa parte la città
+     * @param cod_nazione codice identificativo della nazione in cui si trova la
+     * stazione.
+     * @param nazione indica la nazione nella quale si trova la nazione.
      * @param coordinate indica le coordinate geografiche relative alla città
+     * dove si trova la nazione.
      * @return restituisce un valore booleano che concorda con l'esito del
      * metodo
      */
@@ -133,8 +135,8 @@ public class ParserCSV {
      * @param pass indica la parola con cui accedere nell'area riservata agli
      * operatori.
      * @param cf indica il codice fiscale dell'operatore.
-     * @param id_stazione indica l'id della stazione in cui fa parte l'operatore
-     * @param codiceOperatore idetifica l'operatore
+     * @param id_stazione indica l'id della stazione di cui fa parte l'operatore
+     * @param codiceOperatore codice dell'operatore
      *
      * @return restituisce un valore booleano che concorda con l'esito del
      * metodo
@@ -224,7 +226,7 @@ public class ParserCSV {
 
     /**
      * Metodo che restituisce tutte le aree di interesse presenti nel file
-     * specificato un {@code}geoname_id'areedinteresse.csv'
+     * 'areedinteresse.csv' con il geoname_id passato come parametro.
      *
      * @param geoname_id codice identificativo dell'area d'interesse
      * @return lista di oggetti JAreeInteresse
@@ -290,7 +292,7 @@ public class ParserCSV {
     }
 
     /**
-     * Mettodo che dato un {@code} geoname_id ed un {@code} nome dell'area,
+     * Metodo che dato un {@code} geoname_id ed un {@code} nome dell'area,
      * aggiunge una nuova area di interesse nel file 'areedinteresse.csv'
      *
      * @param geoname_id codice identificativo della stazione
@@ -327,12 +329,12 @@ public class ParserCSV {
     }
 
     /**
-     * Metodo che genera un utente e lo inserisce nel file 'utenti.csv'
-     * restituendo poi l'oggetto JUser
+     * Metodo che controlla username e password inseriti con quelli nei file.
      *
      * @param username nome utente
      * @param pass password
-     * @return restituisce un oggetto JUser con tutte le info
+     * @return In caso di esito positivo restituisce un oggetto JUser con tutte
+     * le informazioni dell'utente, in caso contrario restituisce null.
      * @throws IOException
      */
     public static JUser creaUtenteLoggato(String username, String pass) throws IOException {
@@ -351,7 +353,7 @@ public class ParserCSV {
 
     /**
      * Metodo che dato un {@code} id_area restituisce tutte le previsioni
-     * relative all'area inserita tramite parametro
+     * relative ad essa.
      *
      * @param id_area codice identificativo di un'area di interesse
      * @return restituisce una lista di JPrevisioni
@@ -425,10 +427,11 @@ public class ParserCSV {
     }
 
     /**
-     * Metodo che fornita un'area d'interesse restituscie una lista di JLuogo
-     * che corrispondono ai parametri passati.
+     * Metodo che fornita una stringa restituisce una lista di JAreaInteresse
+     * che corrispondono interamente o parzialmente alla stringa passata come
+     * parametro.
      *
-     * @param citta indica l'area di interesse
+     * @param citta stringa da confrontare con i nomi delle aree
      * @return in caso di coretto funzionamento restituisce una lista di
      * JAreaInteresse, altrimenti restituisce null
      */
@@ -451,10 +454,11 @@ public class ParserCSV {
     }
 
     /**
-     * Metodo che fornita un'area d'interesse restituscie una lista di JLuogo
-     * che corrispondono ai parametri passati.
+     * Metodo che cerca nel file fStazioni in base al nome passato come
+     * parametro e alle coordinate passate come parametro con uno scarto di
+     * massimo 20km.
      *
-     * @param citta indica l'area di interesse
+     * @param citta stringa da confrontare con i nomi delle stazioni
      * @param coordinate indica le coordinate geografiche in cui si vuole
      * trovare una stazione
      * @param scartoDistanza indica il raggio di ricerca a partire dalle

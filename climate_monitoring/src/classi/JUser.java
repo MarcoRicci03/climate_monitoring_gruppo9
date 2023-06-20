@@ -29,7 +29,7 @@ public class JUser {
     private int id_areaSelezionata; //Indica l'ultima area di interesse di cui l'operatore ha aggiunto una previsione 
 
     /**
-     * Costruttore senza parametri, genera un oggetto JUSer impostando a 0 tutti
+     * Costruttore senza parametri, genera un oggetto JUser impostando a zero tutti
      * gli attributi della classe.
      */
     public JUser() {
@@ -74,9 +74,8 @@ public class JUser {
      * agli operatori.
      * @param cf indica il codice fiscale dell'operatore.
      * @param mail indica l'email dell'operatore.
-     * @param station
      */
-    public JUser(String username, String nome, String cognome, String id, String password, String cf, String mail, Integer station) {
+    public JUser(String username, String nome, String cognome, String id, String password, String cf, String mail) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
