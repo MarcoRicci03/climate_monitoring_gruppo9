@@ -172,8 +172,7 @@ public class ParserCSV {
                 JOptionPane.showMessageDialog(null, "Registrazione effettuata.\nEcco il tuo username: " + username + " per accedere assieme alla password.", "Registrazione effettuata", JOptionPane.INFORMATION_MESSAGE);
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Errore nella registrazione.", "Errore", JOptionPane.INFORMATION_MESSAGE);
-
+//                JOptionPane.showMessageDialog(null, "Errore nella registrazione.", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
         } catch (IOException ex) {
