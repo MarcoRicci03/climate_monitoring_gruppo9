@@ -37,8 +37,8 @@ public class JLuogo {
     private JCoordinate coordinate;
 
     /**
-     * Costruttore senza parametri che imposta a 0 (valore predefinito) tutti i
-     * valori dell'oggetto.
+     * Costruttore senza parametri che imposta a zero (valore predefinito) tutti
+     * i valori dell'oggetto.
      */
     public JLuogo() {
         geoname_id = 0;
@@ -48,8 +48,8 @@ public class JLuogo {
     }
 
     /**
-     * Costruttore con parametri che imposta l'oggetto con i valori passati
-     * tramite paremetri.
+     * Costruttore con parametri che assegna agli attributi della classe i
+     * valori passati tramite parametro.
      *
      * @param geoname_id Codice identificativo della cittá dove si trova la
      * stazione metereologica.
@@ -58,7 +58,8 @@ public class JLuogo {
      * metereologica.
      * @param country Nome della nazione dove si trova la stazione
      * metereologica.
-     * @param coordinate Coordinate dove si trova la stazione metereologica.
+     * @param coordinate Coordinate dove si trova la città della stazione
+     * metereologica.
      */
     public JLuogo(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) {
         this.geoname_id = geoname_id;
@@ -137,7 +138,7 @@ public class JLuogo {
     /**
      * Metodo per la nazione della stazione metereologica.
      *
-     * @return Restituisce l'oggetto String della nazione.
+     * @return Restituisce in formato stringa il nome della nazione.
      */
     public String getNazione() {
         return country;

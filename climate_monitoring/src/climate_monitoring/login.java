@@ -16,6 +16,11 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * Classe che crea e gestisce la finestra login visibile da tutti, permette agli
+ * operatori già registrati di accedere alla pagina degli operatori, mentre se
+ * un operatore non è ancora registrato può aprire la pagina della registrazione
+ * tramite l'apposito bottone.
+ *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno
@@ -258,7 +263,7 @@ public class login extends javax.swing.JFrame implements WindowListener {
         try {
             //Controllo la correttezza dei dati inseriti
             if (!txtUsername.getText().isBlank() || !txtPass.getText().isBlank()) {
-                utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText()); 
+                utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
                 if (utenteLoggato != null) {
                     mostraOggettiPannelSinistro();
                     nascondiOggettiPannelDestro();

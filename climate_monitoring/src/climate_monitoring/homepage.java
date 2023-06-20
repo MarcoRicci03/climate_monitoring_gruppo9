@@ -22,6 +22,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
+ * Classe che crea e gestisce la finestra homepage visibile da tutti, permette
+ * di visualizzare aree d'interesse e stazioni in una tabella e cercarle in base
+ * al nome e alle coordinate.
+ *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno

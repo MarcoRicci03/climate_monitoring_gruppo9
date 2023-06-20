@@ -21,8 +21,8 @@ public class JCoordinate {
     private Float lon;
 
     /**
-     * Costruttore senza parametri che imposta a 0 (valore predefinito) le
-     * coordinate dell'oggetto.
+     * Costruttore senza parametri che imposta a zero (valore predefinito) le
+     * coordinate.
      */
     public JCoordinate() {
         lat = 0.0f;
@@ -72,7 +72,8 @@ public class JCoordinate {
     }
 
     /**
-     * Metodo che restituisce una stringa con latitudine e longitudine.
+     * Metodo che restituisce una stringa con latitudine e longitudine divise da
+     * ','.
      *
      * @return Latitudine e Longitudine in una sola stringa.
      */
@@ -86,8 +87,8 @@ public class JCoordinate {
      * in chilometri tra due coordinate, richiede come parametro le coordinate
      * con le quali calcolare la distanza.
      *
-     * @param altro Un altro oggetto coordinate, il quale serve per calcolare la
-     * distanza tra i due punti geografici.
+     * @param altro Un secondo oggetto JCoordinate, dal quale viene misurata la
+     * distanza in chilometri.
      * @return Distanza in chilometri in formato Double.
      */
     public double distanzaDa(JCoordinate altro) {
@@ -106,8 +107,8 @@ public class JCoordinate {
      * parametro puó essere trasformata in oggetto JCoordinate.
      *
      * @param txt Stringa la quale può eventualmente contenere delle coordinate.
-     * @return 'true' o 'false' in base alla presenza o meno di coordinate nella
-     * stringa.
+     * @return 'true' o 'false' in base alla presenza o meno di coordinate
+     * valide nella stringa.
      */
     public static boolean sonoCoordinate(String txt) {
         if (txt.contains(",")) {

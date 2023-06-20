@@ -22,6 +22,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
+ * Classe che crea e gestisce la finestra infoStazione visibile da tutti, permette
+ * di visualizzare le informazioni di una stazione metereologica.
+ *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno

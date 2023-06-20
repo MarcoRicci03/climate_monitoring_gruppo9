@@ -31,7 +31,7 @@ public class JAreaInteresse {
     private String nome;
 
     /**
-     * Costruttore che imposta a 0 gli attributi della classe.
+     * Costruttore che imposta a zero gli attributi della classe.
      */
     public JAreaInteresse() {
         geoname_id = 0;
@@ -39,12 +39,11 @@ public class JAreaInteresse {
     }
 
     /**
-     * Metodo per ottenere il codice identificativo della cittá dove si trova la
-     * stazione metereologica.
+     * Costruttore che assegna agli attributi della classe i parametri passati.
      *
      * @param id_area Codice identificativo dell'area d'interesse.
-     * @param geoname_id Codice della stazione metereologica a cui fa
-     * appartenenza l'area d'interesse.
+     * @param geoname_id Codice della stazione metereologica a cui appartiene
+     * l'area d'interesse.
      * @param nome Nome dell'area d'interesse.
      *
      */
@@ -64,26 +63,16 @@ public class JAreaInteresse {
     }
 
     /**
-     * Metodo per restituire il codice e il nome dell'area.
-     *
-     * @return Sringa contenente id_area e nome divise da ','.
-     */
-    @Override
-    public String toString() {
-        return id_area + "," + nome;
-    }
-
-    /**
      * Metodo per restituire codice e nome dell'area per comporre una lista.
      *
-     * @return Sringa contenente id_area e nome divise da ' '.
+     * @return Sringa contenente id_area e nome divise da uno spazio.
      */
     public String toStringList() {
         return id_area + " " + nome;
     }
 
     /**
-     * Metodo per restiture il nome e il geoname delle aree d'interesse.
+     * Metodo per restiture il nome e il geoname delle aree d'interesse in formato stringa.
      *
      * @return Sringa contenente nome, geoname_id divise e l'id da ','.
      */

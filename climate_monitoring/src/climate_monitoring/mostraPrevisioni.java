@@ -23,6 +23,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
+ * Classe che crea e gestisce la finestra mostraPrevisioni visibile da tutti,
+ * permette di visualizzare le previsioni per una determinata area d'interesse.
+ *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno
@@ -236,8 +239,9 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
     /**
      * Metodo che capisce la data selezionata e richiama il metodo drawTable
+     *
      * @see drawTable
-     * @param evt 
+     * @param evt
      */
     private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
         try {
@@ -255,8 +259,11 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
     }//GEN-LAST:event_jCalendarPropertyChange
 
     /**
-     * Metodo che capisce se il mostra previsioni è stato aperto dall'info stazione o dalla homepage e ritorna alla finestra da cui mostra previsioni è stata aperta
-     * @param evt 
+     * Metodo che capisce se il mostra previsioni è stato aperto dall'info
+     * stazione o dalla homepage e ritorna alla finestra da cui mostra
+     * previsioni è stata aperta
+     *
+     * @param evt
      */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
@@ -277,7 +284,8 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
     /**
      * Imposta le note della variabile della previsione sul txtNota
-     * @param evt 
+     *
+     * @param evt
      */
     private void tabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabellaPrevisioniMouseClicked
         // TODO add your handling code here:
@@ -341,9 +349,11 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
     /**
      * Metodo che mostra le previsioni nella tabella giustamente incolonnata
-     * @param lista delle previsioni creara in base alla data precedentemente passata
+     *
+     * @param lista delle previsioni creara in base alla data precedentemente
+     * passata
      * @param columns
-     * @throws IOException 
+     * @throws IOException
      */
     private void drawTable(ArrayList<JPrevisioni> list, String[] columns) throws IOException {
 
