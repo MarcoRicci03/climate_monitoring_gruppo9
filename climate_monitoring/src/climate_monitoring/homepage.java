@@ -38,6 +38,8 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * parametro.
      *
      * @param al lista con i dati da inserire nella tabella.
+     * @return ritorna true in caso la tabella venga riempita, false in caso non
+     * vengano trovati risultati.
      */
     public boolean drawTable(List<String[]> al) {
         DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Tipo"}, 0) {

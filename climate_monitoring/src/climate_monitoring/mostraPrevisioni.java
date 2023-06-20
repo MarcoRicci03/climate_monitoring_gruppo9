@@ -33,18 +33,21 @@ import javax.swing.table.TableModel;
  */
 public class mostraPrevisioni extends javax.swing.JFrame implements WindowListener {
 
-    public static int id;
-    public static int idStazione;
+    private static int idArea;
+    private static int idStazione;
     private ArrayList<JPrevisioni> list;
 
     /**
-     * Creates new form mostraPrevisioni
+     * Crea una nuova pagina mostraPrevisioni
+     * @param idArea id dell'area d'interesse.
+     * @param idStazione id della stazione metereologica.
+     * @throws java.io.IOException
      */
-    public mostraPrevisioni(int id, int idStazione) throws IOException {
+    public mostraPrevisioni(int idArea, int idStazione) throws IOException {
         initComponents();
-        this.id = id;
+        this.idArea = idArea;
         this.idStazione = idStazione;
-        lblTitle.setText("Previsioni: " + ParserCSV.getNomeStazioneByGeonameId(id));
+        lblTitle.setText("Previsioni: " + ParserCSV.getNomeAreaByGeonameId(idArea));
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
@@ -63,7 +66,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String strData = sdf.format(new Date());
-        list = ParserCSV.creaListaPrevisioniByDate(id, strData);
+        list = ParserCSV.creaListaPrevisioniByDate(idArea, strData);
         String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
         drawTable(list, columns);
@@ -248,7 +251,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
             // TODO add your handling code here:
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String strData = sdf.format(jCalendar.getDate());
-            list = ParserCSV.creaListaPrevisioniByDate(id, strData);
+            list = ParserCSV.creaListaPrevisioniByDate(idArea, strData);
             String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
             drawTable(list, columns);
@@ -324,7 +327,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new mostraPrevisioni(id, idStazione).setVisible(true);
+                    new mostraPrevisioni(idArea, idStazione).setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
                 }

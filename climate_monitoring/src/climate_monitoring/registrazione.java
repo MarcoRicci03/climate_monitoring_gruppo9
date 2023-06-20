@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  */
 public class registrazione extends javax.swing.JFrame {
 
-    public ArrayList<JLuogo> al;
+    private ArrayList<JLuogo> al;
     static JLuogo luogoNuovo;
 
     /**

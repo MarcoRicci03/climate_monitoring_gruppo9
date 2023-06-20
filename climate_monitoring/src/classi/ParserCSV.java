@@ -268,15 +268,14 @@ public class ParserCSV {
     }
 
     /**
-     * Metodo che fornito un {@code} geoname_id restitusice la stazione
-     * metereologica associata
+     * Metodo che dato un id restitusice il nome dell'area d'interesse.
      *
      * @param geoname_id codice identificativo della stazione
      * @return restituisce una stringa, se l'operazione va a buon fine
      * restituisce il nome della stazione altrimenti restituisce una stringa
      * vuota ("")
      */
-    public static String getNomeStazioneByGeonameId(int geoname_id) {
+    public static String getNomeAreaByGeonameId(int geoname_id) {
         try {
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fAreeInteresse), StandardCharsets.UTF_8);
             for (String temp : list) {
@@ -463,7 +462,8 @@ public class ParserCSV {
      * trovare una stazione
      * @param scartoDistanza indica il raggio di ricerca a partire dalle
      * coordinate
-     * @return
+     * @return ritorna una lista di JLuogo in caso vengano trovate
+     * corrispondenze, in caso contrario restituisce null.
      */
     public static ArrayList<JLuogo> cercaPerStazione(String citta, JCoordinate coordinate, Integer scartoDistanza) {
         try {

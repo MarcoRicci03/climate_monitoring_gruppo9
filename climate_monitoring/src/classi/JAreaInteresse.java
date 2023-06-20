@@ -72,7 +72,8 @@ public class JAreaInteresse {
     }
 
     /**
-     * Metodo per restiture il nome e il geoname delle aree d'interesse in formato stringa.
+     * Metodo per restiture il nome e il geoname delle aree d'interesse in
+     * formato stringa.
      *
      * @return Sringa contenente nome, geoname_id divise e l'id da ','.
      */
@@ -80,4 +81,13 @@ public class JAreaInteresse {
         return id_area + "," + nome;
     }
 
+    /**
+     * Metodo per restituire il codice e il nome dell'area.
+     *
+     * @return Sringa contenente id_area e nome divise da ','.
+     */
+    @Override
+    public String toString() {
+        return id_area + "," + nome;
+    }
 }

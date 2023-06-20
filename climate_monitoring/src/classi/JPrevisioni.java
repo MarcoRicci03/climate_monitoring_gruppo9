@@ -280,6 +280,7 @@ public class JPrevisioni {
      * Costruttore JPrevisioni con tutti i parametri, genera un oggetto
      * JPrevisioni.
      *
+     * @param username username dell'operatore che ha inserito la previsione.
      * @param data indica la data in cui è stata inserita la previsione passando
      * un ogetto di tipo 'Date' (formato della data gg/mm/aaaa).
      * @param id_centro contiene l'id della stazione metereologica da cui è
@@ -293,6 +294,13 @@ public class JPrevisioni {
      * @param precipitazioni in mm, espressa in fasce.
      * @param aGhiacciai altitudine dei ghiacciai in m, suddivisa in fasce.
      * @param mGhiacciai massa dei ghiacciai in kg, suddivisisa in fasce.
+     * @param nVento note riguardanti il vento.
+     * @param nUmidita note riguardanti l'umidità.
+     * @param nPRessione note riguardanti la pressione.
+     * @param nTemperatura note riguardanti la temperatura.
+     * @param nPrecipitazioni note riguardanti le precipitazioni.
+     * @param nAGhiacciai note riguardanti l'altitudine dei ghiacciai.
+     * @param nMGhiacciai note riguardanti la massa dei ghiacciai.
      */
     public JPrevisioni(Integer id_area, Integer id_centro, Date data, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) {
         this.id_area = id_area;

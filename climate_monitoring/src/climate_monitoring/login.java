@@ -159,13 +159,11 @@ public class login extends javax.swing.JFrame implements WindowListener {
         txtPass.setBackground(new java.awt.Color(177, 212, 224));
         txtPass.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtPass.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtPass.setText("asd");
         txtPass.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         txtUsername.setBackground(new java.awt.Color(177, 212, 224));
         txtUsername.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtUsername.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtUsername.setText("m_ricci1");
         txtUsername.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         txtUsername.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
@@ -315,7 +313,9 @@ public class login extends javax.swing.JFrame implements WindowListener {
         btnRegistrati.setVisible(false);
     }
 
-    //Mostra pannel utente loggato
+    /**
+     * Mostra pannel utente loggato
+     */
     public void mostraOggettiPannelSinistro() {
         jPanel2.setVisible(true);
         labelUserLoggato.setText(utenteLoggato.getUsername());
