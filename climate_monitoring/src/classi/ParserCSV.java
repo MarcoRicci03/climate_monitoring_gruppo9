@@ -126,28 +126,6 @@ public class ParserCSV {
     }
 
     /**
-     * Metodo verifica che un utente sia già presente nel file 'utenti.csv'
-     *
-     * @param username indica il nome con cui si è registrato l'operatore
-     * @param pass indica la password con la quale si è registrato l'utente
-     * @return restituisce un valore booleano che concorda con l'esito del
-     * metodo
-     * @throws IOException
-     */
-    public static boolean esisteUtente(String username, String pass) throws IOException {
-        boolean ris = true;
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
-        for (String s : list) {
-            String[] elements = s.split(";");
-            ris = elements[3].equals(username) && elements[5].equals(pass);
-            if (ris == true) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Metodo che salva un nuovo utente nel file 'utenti.csv'
      *
      * @param nome indica il nome dell'operatore.

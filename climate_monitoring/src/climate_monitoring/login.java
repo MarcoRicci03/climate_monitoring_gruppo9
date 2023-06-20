@@ -258,8 +258,8 @@ public class login extends javax.swing.JFrame implements WindowListener {
         try {
             //Controllo la correttezza dei dati inseriti
             if (!txtUsername.getText().isBlank() || !txtPass.getText().isBlank()) {
-                if (ParserCSV.esisteUtente(txtUsername.getText(), txtPass.getText())) {
-                    utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText());
+                utenteLoggato = ParserCSV.creaUtenteLoggato(txtUsername.getText(), txtPass.getText()); 
+                if (utenteLoggato != null) {
                     mostraOggettiPannelSinistro();
                     nascondiOggettiPannelDestro();
                     //admin_panel ap = new admin_panel(utenteLoggato);
