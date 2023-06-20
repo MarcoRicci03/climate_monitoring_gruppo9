@@ -557,8 +557,11 @@ public class admin_panel extends javax.swing.JFrame {
                 String s = id + " " + txtNomeArea.getText();
                 v.add(s);
                 listAree.setListData(v);
+            } else {
+                JOptionPane.showMessageDialog(null, "Questa area di interesse è già stata inserita.", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
-        }
+        } else
+            JOptionPane.showMessageDialog(null, "Compilare il valore", "Errore", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnAggiungiAreaActionPerformed
     /**
      * Questo metodo viene richiamato quando selezionata un'area d'interesse
