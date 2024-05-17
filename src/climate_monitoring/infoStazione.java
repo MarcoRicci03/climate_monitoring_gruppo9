@@ -5,7 +5,7 @@
 package climate_monitoring;
 
 import classi.JAreaInteresse;
-import classi.JLuogo;
+import classi.JStazione;
 import static classi.ParserCSV.getAreeInteresse;
 import static classi.ParserCSV.getStazione;
 import java.awt.Dimension;
@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -22,8 +23,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- * Classe che crea e gestisce la finestra infoStazione visibile da tutti, permette
- * di visualizzare le informazioni di una stazione metereologica.
+ * Classe che crea e gestisce la finestra infoStazione visibile da tutti,
+ * permette di visualizzare le informazioni di una stazione metereologica.
  *
  * @author marco_ricci
  * @author edoardo_rizzi
@@ -50,7 +51,7 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
             int y = (screenSize.height - this.getHeight()) / 2;
             this.setLocation(x, y);
             ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id);
-            JLuogo stazione = getStazione(id);
+            JStazione stazione = getStazione(id);
             lblStazione.setText(stazione.getNome());
             txtGeoname.setText(stazione.getGeoname_id().toString());
             txtCodiceNazione.setText(stazione.getCountry_code());
@@ -241,9 +242,15 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
      */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        homepage homePage = new homepage();
-        homePage.setVisible(true);
-        setVisible(false);
+        homepage homePage;
+        try {
+            homePage = new homepage();
+            homePage.setVisible(true);
+            setVisible(false);
+        } catch (RemoteException ex) {
+            Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnBackActionPerformed
     /**
      * Quanto viene cliccata una riga sulla tabella viene richiamato questo

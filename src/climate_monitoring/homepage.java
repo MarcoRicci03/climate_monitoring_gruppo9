@@ -4,15 +4,18 @@
  */
 package climate_monitoring;
 
+import classi.DBInterface;
 import classi.JAreaInteresse;
 import classi.JCoordinate;
-import classi.JLuogo;
+import classi.JStazione;
 import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,6 +23,11 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 /**
  * Classe che crea e gestisce la finestra homepage visibile da tutti, permette
@@ -32,6 +40,9 @@ import javax.swing.table.TableModel;
  * @author denis_di_napoli
  */
 public class homepage extends javax.swing.JFrame implements WindowListener {
+
+    private DBInterface gestore_db = null;
+    private UnicastRemoteObject remoteObject;
 
     /**
      * Questa funzione disegna la tabella attraverso la lista passata come
@@ -78,29 +89,40 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      *
      */
     public void initTable() {
-        List<String[]> al = new ArrayList<>();
-        ArrayList<JAreaInteresse> listaAree = ParserCSV.getAllAreeInteresse();
-        for (JAreaInteresse area : listaAree) {
-            String[] elements = {String.valueOf(area.getId_area()), area.toString().split(",")[1], "Area Interesse"};
-            al.add(elements);
+        try {
+            List<String[]> al = new ArrayList<>();
+            //ArrayList<JAreaInteresse> listaAree = ParserCSV.getAllAreeInteresse();
+            ArrayList<JAreaInteresse> listaAree = gestore_db.loadAree_interesse(null, null, -1);
+            for (JAreaInteresse area : listaAree) {
+                String[] elements = {String.valueOf(area.getId_area()), area.toString().split(",")[1], "Area Interesse"};
+                al.add(elements);
+            }
+            drawTable(al);
+        } catch (RemoteException ex) {
+            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        drawTable(al);
     }
 
     /**
      * Costruttore della pagina mettendo la finestra al centro dello schermo
      *
      */
-    public homepage() {
-        initComponents();
-        initTable();    // inizializzo la tabella
-
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int x = (screenSize.width - this.getWidth()) / 2;
-        int y = (screenSize.height - this.getHeight()) / 2;
-        this.setLocation(x, y);
+    public homepage() throws RemoteException {
+        try {
+            this.gestore_db = gestore_db;
+            this.remoteObject = new RemoteObjectImpl();
+            gestore_db.login(InetAddress.getLocalHost());
+            initComponents();
+            initTable();    // inizializzo la tabella
+            
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Dimension screenSize = toolkit.getScreenSize();
+            int x = (screenSize.width - this.getWidth()) / 2;
+            int y = (screenSize.height - this.getHeight()) / 2;
+            this.setLocation(x, y);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -300,8 +322,8 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 al.add(elements);
             }
 
-            ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(testoDaCercare, null, null);
-            for (JLuogo l : listStazioni) {
+            ArrayList<JStazione> listStazioni = ParserCSV.cercaPerStazione(testoDaCercare, null, null);
+            for (JStazione l : listStazioni) {
                 String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
                 al.add(elements);
             }
@@ -315,8 +337,8 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             testoDaCercare = txtCercaLat.getText() + "," + txtCercaLon.getText();
             //cerco per coordinate
             if (JCoordinate.sonoCoordinate(testoDaCercare)) {
-                ArrayList<JLuogo> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 20);
-                for (JLuogo l : listStazioni) {
+                ArrayList<JStazione> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 20);
+                for (JStazione l : listStazioni) {
                     String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
                     al.add(elements);
                 }
@@ -395,7 +417,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new homepage().setVisible(true);
+                try {
+                    new homepage().setVisible(true);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -440,5 +466,17 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+    }
+    
+    private class RemoteObjectImpl extends UnicastRemoteObject {
+        protected RemoteObjectImpl() throws RemoteException {
+            super();
+            Registry r = LocateRegistry.getRegistry("localhost", 1234);
+            try {
+                gestore_db = (DBInterface) r.lookup("GestoreClimateMonitoring");
+            } catch (Exception ex) {
+                Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

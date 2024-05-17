@@ -30,27 +30,27 @@ public class ParserCSV {
     /**
      * file che presenta tutte le stazioni metereologiche create
      */
-    private static final String fStazioni = "dati/stazioni.csv"; //file che presenta tutte le stazioni metereologiche create 
+    private static final String fStazioni = "dati/.csv"; //file che presenta tutte le stazioni metereologiche create 
     /**
      * file che presenta tutte gli utenti inserite
      */
-    private static final String fUtenti = "dati/utenti.csv";
+    private static final String fUtenti = "dati/.csv";
     /**
      * file che presenta tutte le aree di interesse create
      */
-    private static final String fAreeInteresse = "dati/areedinteresse.csv"; //file che presenta tutte le aree di interesse create 
+    private static final String fAreeInteresse = "dati/.csv"; //file che presenta tutte le aree di interesse create 
     /**
      * file che presenta tutte le nazioni inserite
      */
-    private static final String fNazioni = "dati/nazioni.csv";
+    private static final String fNazioni = "dati/.csv";
     /**
      * file che presenta tutti gli operatori registrati
      */
-    private static final String fOperatori = "dati/operatori.csv"; //file che presenta tutti gli operatori registrati
+    private static final String fOperatori = "dati/.csv"; //file che presenta tutti gli operatori registrati
     /**
      * file che presenta tutte le previsioni inserite
      */
-    private static final String fPrevisioni = "dati/previsioni.csv"; //file che presenta tutte le previsioni inserite 
+    private static final String fPrevisioni = "dati/.csv"; //file che presenta tutte le previsioni inserite 
 
     /**
      * Metodo che restituisce una lista contente tutte le stazioni presenti nel
@@ -58,12 +58,12 @@ public class ParserCSV {
      *
      * @return lista con tutte le stazioni
      */
-    public static ArrayList<JLuogo> creaListaStazioni() {
-        ArrayList<JLuogo> l = new ArrayList<>();
+    public static ArrayList<JStazione> creaListaStazioni() {
+        ArrayList<JStazione> l = new ArrayList<>();
         try {
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
             for (String s : list) {
-                l.add(new JLuogo(s));
+                l.add(new JStazione(s));
             }
         } catch (IOException ex) {
             Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,9 +78,9 @@ public class ParserCSV {
      * @return restituisce un JLuogo in caso di successo e null in caso di
      * fallimento.
      */
-    public static JLuogo getStazione(int id) {
-        ArrayList<JLuogo> listaStazioni = creaListaStazioni();
-        for (JLuogo l : listaStazioni) {
+    public static JStazione getStazione(int id) {
+        ArrayList<JStazione> listaStazioni = creaListaStazioni();
+        for (JStazione l : listaStazioni) {
             if (l.getGeoname_id() == id) {
                 return l;
             }
@@ -103,7 +103,7 @@ public class ParserCSV {
      * metodo
      */
     public static boolean creaStazione(String geoname_id, String citta, String cod_nazione, String nazione, String coordinate) {
-        ArrayList<JLuogo> listaStazioni = creaListaStazioni();
+        ArrayList<JStazione> listaStazioni = creaListaStazioni();
         Boolean sentinella = true;
         //cerca per id
         for (int i = 0; i < listaStazioni.size() && sentinella; i++) {
@@ -465,19 +465,19 @@ public class ParserCSV {
      * @return ritorna una lista di JLuogo in caso vengano trovate
      * corrispondenze, in caso contrario restituisce null.
      */
-    public static ArrayList<JLuogo> cercaPerStazione(String citta, JCoordinate coordinate, Integer scartoDistanza) {
+    public static ArrayList<JStazione> cercaPerStazione(String citta, JCoordinate coordinate, Integer scartoDistanza) {
         try {
-            ArrayList<JLuogo> aL = new ArrayList<>();
+            ArrayList<JStazione> aL = new ArrayList<>();
             ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fStazioni), StandardCharsets.UTF_8);
             for (String s : list) {
-                JLuogo l = new JLuogo(s);
+                JStazione l = new JStazione(s);
                 if (citta != null) {
                     if (l.getNome().toLowerCase().contains(citta.toLowerCase())) {
-                        aL.add(new JLuogo(s));
+                        aL.add(new JStazione(s));
                     }
                 } else if (coordinate != null) {
                     if (l.getCoordinate().distanzaDa(coordinate) < scartoDistanza) {
-                        aL.add(new JLuogo(s));
+                        aL.add(new JStazione(s));
                     }
                 }
             }

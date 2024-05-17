@@ -4,6 +4,9 @@
  */
 package classi;
 
+import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
+
 /**
  * Classe per la creazione e gestione di stazioni metereologiche.
  *
@@ -12,24 +15,28 @@ package classi;
  * @author alberto_stagno
  * @author denis_di_napoli
  */
-public class JLuogo {
+public class JStazione implements Serializable {
 
     /**
      * Codice identificativo della cittá dove si trova la stazione
      * metereologica.
      */
+    @SerializedName("geonameId")
     private Integer geoname_id;
     /**
      * Nome della cittá dove si trova la stazione metereologica.
      */
+    @SerializedName("name")
     private String nome;
     /**
      * Codice della nazione dove si trova la stazione metereologica.
      */
+    @SerializedName("countryCode")
     private String country_code;
     /**
      * Nome della nazione dove si trova la stazione metereologica.
      */
+    @SerializedName("countryName")
     private String country;
     /**
      * Coordinate dove si trova la stazione metereologica.
@@ -40,7 +47,7 @@ public class JLuogo {
      * Costruttore senza parametri che imposta a zero (valore predefinito) tutti
      * i valori dell'oggetto.
      */
-    public JLuogo() {
+    public JStazione() {
         geoname_id = 0;
         nome = "";
         country_code = "";
@@ -61,7 +68,7 @@ public class JLuogo {
      * @param coordinate Coordinate dove si trova la città della stazione
      * metereologica.
      */
-    public JLuogo(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) {
+    public JStazione(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) {
         this.geoname_id = geoname_id;
         this.nome = nome;
         this.country_code = country_code;
@@ -75,7 +82,7 @@ public class JLuogo {
      * @param fromCSV Stringa contenente tutti i valori degli attributi della
      * classe separati da un ';'.
      */
-    public JLuogo(String fromCSV) {
+    public JStazione(String fromCSV) {
         String[] elements = fromCSV.split(";");
         geoname_id = Integer.valueOf(elements[0]);
         nome = elements[1];
@@ -143,5 +150,9 @@ public class JLuogo {
     public String getNazione() {
         return country;
     }
+    
+    public void setCoordinate(JCoordinate jCoordinate) {
+        this.coordinate = jCoordinate;
+    } 
 
 }

@@ -5,7 +5,7 @@
 package climate_monitoring;
 
 import classi.JCoordinate;
-import classi.JLuogo;
+import classi.JStazione;
 import classi.ParserCSV;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -263,7 +263,7 @@ public class creaStazione extends javax.swing.JFrame {
         if (JCoordinate.sonoCoordinate(txtCoordinate.getText())) {
             try {
                 if (!txtCoordinate.getText().isBlank() && !txtGeoname_id.getText().isBlank() && !txtCitta.getText().isBlank() && !txtCodNazione.getText().isBlank() && cmbCodNazione.getSelectedIndex() > 0) {
-                    JLuogo l = new JLuogo(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
+                    JStazione l = new JStazione(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
                     if (ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText())) {
                         registrazione.luogoNuovo = l;
                         JOptionPane.showMessageDialog(null, "Stazione: " + txtCitta.getText() + " aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);

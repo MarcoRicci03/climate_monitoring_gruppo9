@@ -4,6 +4,7 @@
  */
 package classi;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
  * @author alberto_stagno
  * @author denis_di_napoli
  */
-public class JPrevisioni {
+public class JPrevisioni implements Serializable {
 
     /**
      * Id area previsione

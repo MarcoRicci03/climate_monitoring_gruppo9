@@ -1,5 +1,7 @@
 package classi;
 
+import java.io.Serializable;
+
 /**
  * Classe per la creazione e gestione delle coordinate geografiche.
  *
@@ -9,7 +11,7 @@ package classi;
  * @author alberto_stagno
  * @author denis_di_napoli
  */
-public class JCoordinate {
+public class JCoordinate implements Serializable {
 
     /**
      * Variabile per la latitudine.
@@ -80,6 +82,14 @@ public class JCoordinate {
     @Override
     public String toString() {
         return "lat=" + lat + ", lon=" + lon;
+    }
+    
+    public void setLon(Float lon) {
+        this.lon = lon;
+    }
+
+    public void setLat(Float lat) {
+        this.lat = lat;
     }
 
     /**

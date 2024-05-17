@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -275,9 +276,13 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
             info.setVisible(true);
             setVisible(false);
         } else if (idStazione == -1) {
-            homepage homePage = new homepage();
-            homePage.setVisible(true);
-            setVisible(false);
+            try {
+                homepage homePage = new homepage();
+                homePage.setVisible(true);
+                setVisible(false);
+            } catch (RemoteException ex) {
+                Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnBackActionPerformed
 

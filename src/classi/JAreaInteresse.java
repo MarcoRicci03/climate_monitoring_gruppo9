@@ -4,6 +4,8 @@
  */
 package classi;
 
+import java.io.Serializable;
+
 /**
  * Classe per la creazione e gestione di aree d'interesse, collegate a una
  * stazione metereologica.
@@ -14,7 +16,7 @@ package classi;
  * @author alberto_stagno
  * @author denis_di_napoli
  */
-public class JAreaInteresse {
+public class JAreaInteresse implements Serializable {
 
     /**
      * Codice identificativo dell'area d'interesse.

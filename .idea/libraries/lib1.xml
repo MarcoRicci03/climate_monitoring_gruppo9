@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/AbsoluteLayout.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcalendar-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/postgresql-42.7.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/codice-fiscale-java-master.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

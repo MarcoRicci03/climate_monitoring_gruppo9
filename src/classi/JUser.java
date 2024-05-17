@@ -4,6 +4,8 @@
  */
 package classi;
 
+import java.io.Serializable;
+
 /**
  *
  * Classe per la creazione e la gestione degli operatori autorizzati
@@ -13,7 +15,7 @@ package classi;
  * @author alberto_stagno
  * @author denis_di_napoli
  */
-public class JUser {
+public class JUser implements Serializable {
 
     /**
      * username utente , nome utente, cognome utente, id utente, password utente,  cf utente, mail utente

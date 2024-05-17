@@ -4,7 +4,7 @@
  */
 package climate_monitoring;
 
-import classi.JLuogo;
+import classi.JStazione;
 import classi.ParserCSV;
 import engine.Engine;
 import engine.Person;
@@ -27,8 +27,8 @@ import javax.swing.JOptionPane;
  */
 public class registrazione extends javax.swing.JFrame {
 
-    private ArrayList<JLuogo> al;
-    static JLuogo luogoNuovo;
+    private ArrayList<JStazione> al;
+    static JStazione luogoNuovo;
 
     /**
      * Creates new form registrazione
