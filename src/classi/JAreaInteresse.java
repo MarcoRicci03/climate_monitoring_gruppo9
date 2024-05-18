@@ -65,6 +65,15 @@ public class JAreaInteresse implements Serializable {
     }
 
     /**
+     * Metodo che permette di ottenere il nome dell'area d'interesse.
+     *
+     * @return Una stringa che rappresenta il nome dell'area d'interesse.
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
      * Metodo per restituire codice e nome dell'area per comporre una lista.
      *
      * @return Sringa contenente id_area e nome divise da uno spazio.

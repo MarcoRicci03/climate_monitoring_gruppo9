@@ -4,11 +4,8 @@
  */
 package climate_monitoring;
 
-import classi.DBInterface;
-import classi.JAreaInteresse;
-import classi.JCoordinate;
-import classi.JStazione;
-import classi.ParserCSV;
+import classi.*;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -41,6 +38,7 @@ import java.rmi.registry.Registry;
  */
 public class homepage extends javax.swing.JFrame implements WindowListener {
 
+    private DatiCondivisi dc;
     private DBInterface gestore_db = null;
     private UnicastRemoteObject remoteObject;
 
@@ -86,14 +84,13 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     /**
      * Questa funzione inizializza la tabella caricando in una lista le aree di
      * interesse leggendo il file "dati/areedinteresse.csv"
-     *
      */
     public void initTable() {
         try {
             List<String[]> al = new ArrayList<>();
             //ArrayList<JAreaInteresse> listaAree = ParserCSV.getAllAreeInteresse();
-            ArrayList<JAreaInteresse> listaAree = gestore_db.loadAree_interesse(null, null, -1);
-            for (JAreaInteresse area : listaAree) {
+            dc.aree_interesse = gestore_db.loadAree_interesse(null, null, -1);
+            for (JAreaInteresse area : dc.aree_interesse) {
                 String[] elements = {String.valueOf(area.getId_area()), area.toString().split(",")[1], "Area Interesse"};
                 al.add(elements);
             }
@@ -105,16 +102,16 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
     /**
      * Costruttore della pagina mettendo la finestra al centro dello schermo
-     *
      */
     public homepage() throws RemoteException {
         try {
+            this.dc = DatiCondivisi.getInstance();
             this.gestore_db = gestore_db;
             this.remoteObject = new RemoteObjectImpl();
             gestore_db.login(InetAddress.getLocalHost());
             initComponents();
             initTable();    // inizializzo la tabella
-            
+
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Dimension screenSize = toolkit.getScreenSize();
             int x = (screenSize.width - this.getWidth()) / 2;
@@ -204,18 +201,18 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1)
+                                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
-                .addContainerGap())
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         txtCercaLon.setBackground(new java.awt.Color(177, 212, 224));
@@ -229,60 +226,60 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnReload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCercaLat, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                        .addGap(12, 12, 12)
-                        .addComponent(txtCercaLon, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCerca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(btnReload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtCerca, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtCercaLat, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                                .addGap(12, 12, 12)
+                                                .addComponent(txtCercaLon, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnCerca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnCerca, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReload, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtCerca, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                    .addComponent(txtCercaLon, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtCercaLat, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(btnCerca, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnReload, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtCerca, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                                        .addComponent(txtCercaLon, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnAccedi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtCercaLat, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1229, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, 0)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(0, 0, 0)))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 1229, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, 0)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(0, 0, 0)))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 665, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, 0)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(0, 0, 0)))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 665, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, 0)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(0, 0, 0)))
         );
 
         pack();
@@ -291,10 +288,8 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     /**
      * Metodo richiamato alla pressione del pulsante Accedi o Registrati, apre
      * la pagina di login.
-     *
      */
     private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
-        //Apro la pagina di login
         login l = new login();
         l.addWindowListener(this);
         l.setVisible(true);
@@ -305,46 +300,45 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * Metodo richiamato quando viene premuto il pulsante cerca, si controlla
      * quale campo é stato compilato (per nome o per coordinate) e si cerca in
      * base ad esso.
-     *
      */
     private void btnCercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCercaActionPerformed
-        //cerca area interesse
         String testoDaCercare = "";
         List<String[]> al = new ArrayList<>();
 
         if (!txtCerca.getText().equals("") && (txtCercaLat.getText().equals("") && txtCercaLon.getText().equals(""))) {
             testoDaCercare = txtCerca.getText();
             //cerco per nome
-            ArrayList<JAreaInteresse> listaAree = ParserCSV.cercaPerArea(testoDaCercare);
+            ArrayList<JAreaInteresse> listaAree = new ArrayList<>();
 
-            for (JAreaInteresse prev : listaAree) {
-                String[] elements = {prev.getId_area().toString(), prev.toString().split(",")[1], "Area Interesse"};
-                al.add(elements);
-            }
-
-            ArrayList<JStazione> listStazioni = ParserCSV.cercaPerStazione(testoDaCercare, null, null);
-            for (JStazione l : listStazioni) {
-                String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
-                al.add(elements);
+            for (JAreaInteresse area : dc.aree_interesse) {
+                if (area.getNome().toLowerCase().contains(testoDaCercare.toLowerCase())) {
+                    al.add(new String[]{String.valueOf(area.getId_area()), area.toString().split(",")[1], "Area Interesse"});
+                }
             }
         } else if (!txtCerca.getText().equals("") && (!txtCercaLat.getText().equals("") || !txtCercaLon.getText().equals(""))) {
             //errore
-            JOptionPane.showMessageDialog(null, "Compilare solo un campo tra la ricerca per e ricerca per coordinate.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Compilare solo un campo tra la ricerca per nome e ricerca per coordinate.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         } else if (txtCercaLat.getText().equals("") || txtCercaLon.getText().equals("")) {
             //errore
             JOptionPane.showMessageDialog(null, "Inserire entrambe le coordinate per la ricerca.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            testoDaCercare = txtCercaLat.getText() + "," + txtCercaLon.getText();
-            //cerco per coordinate
-            if (JCoordinate.sonoCoordinate(testoDaCercare)) {
-                ArrayList<JStazione> listStazioni = ParserCSV.cercaPerStazione(null, new JCoordinate(testoDaCercare), 20);
-                for (JStazione l : listStazioni) {
-                    String[] elements = {l.getGeoname_id().toString(), l.getNome(), "Stazione metereologica"};
-                    al.add(elements);
+            try {
+                testoDaCercare = txtCercaLat.getText() + "," + txtCercaLon.getText();
+                //cerco per coordinate
+                if (JCoordinate.sonoCoordinate(testoDaCercare)) {
+                    List<JAreaInteresse> list_aree_interesse = null;
+                    list_aree_interesse = gestore_db.loadAree_interesse(null, new JCoordinate(testoDaCercare), 20);
+
+                    for (JAreaInteresse area : list_aree_interesse) {
+                        String[] elements = {area.getId_area().toString(), area.toString().split(",")[1], "Area Interesse"};
+                        al.add(elements);
+                    }
+                } else {
+                    //errore
+                    JOptionPane.showMessageDialog(null, "Inserire delle coordinate valide.", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } else {
-                //errore
-                JOptionPane.showMessageDialog(null, "Inserire delle coordinate valide.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
             }
         }
         drawTable(al);
@@ -353,7 +347,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     /**
      * Apre la pagina della stazione o area d'interesse selezionata nella
      * tabella.
-     *
      */
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
         if (!tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString().equals("")) {
@@ -379,7 +372,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
     /**
      * Ricarica la tabella con le aree di interesse
-     *
      */
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
         // TODO add your handling code here:
@@ -393,7 +385,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -412,7 +404,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             java.util.logging.Logger.getLogger(homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -467,7 +458,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     @Override
     public void windowDeactivated(WindowEvent e) {
     }
-    
+
     private class RemoteObjectImpl extends UnicastRemoteObject {
         protected RemoteObjectImpl() throws RemoteException {
             super();

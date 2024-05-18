@@ -60,45 +60,51 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     @Override
     public ArrayList<JAreaInteresse> loadAree_interesse(String filtro_nome, JCoordinate filtro_coordinate, int filtro_raggio) throws RemoteException {
         try {
-            StringBuilder query = new StringBuilder("SELECT aree_interesse.nome, aree_interesse.geoname_id, aree_interesse.id_area_interesse FROM aree_interesse INNER JOIN stazioni ON aree_interesse.geoname_id = stazioni.geoname_id");
-            /*
-            SELECT aree_interesse.nome, aree_interesse.geoname_id, aree_interesse.id_area_interesse
-            FROM aree_interesse INNER JOIN stazioni ON aree_interesse.geoname_id = stazioni.geoname_id
-            WHERE ACOS(SIN(RADIANS(filtro_coordinate.getLatitudine())) * SIN(RADIANS(latitudine)) + COS(RADIANS(filtro_coordinate.getLatitudine())) * COS(RADIANS(latitudine)) * COS(RADIANS(filtro_coordinate.getLongitudine() - longitudine))) * 6371 <= RAGGIO
-            AND aree_interesse.nome = filtro_nome
-             */
-            if (filtro_coordinate != null && filtro_raggio > 0) {
-                query.append(" WHERE ACOS(SIN(RADIANS(")
-                        .append(filtro_coordinate.getLat())
-                        .append(")) * SIN(RADIANS(latitudine)) + COS(RADIANS(")
-                        .append(filtro_coordinate.getLat())
-                        .append(")) * COS(RADIANS(latitudine)) * COS(RADIANS(")
-                        .append(filtro_coordinate.getLon())
-                        .append(" - longitudine))) * 6371 <= ")
-                        .append(filtro_raggio)
-                        .append(" AND aree_interesse.nome = '")
-                        .append(filtro_nome)
-                        .append("'");
-            } else if (filtro_nome != null) {
-                query.append(" WHERE aree_interesse.nome = '")
-                        .append(filtro_nome)
-                        .append("'");
+            String baseQuery = "SELECT aree_interesse.* FROM aree_interesse";
+            String whereClause = "";
+            ArrayList<Object> parameters = new ArrayList<>();
+            if (filtro_coordinate != null && filtro_raggio > 0 && filtro_nome == null) {
+                whereClause = " INNER JOIN stazioni ON aree_interesse.geoname_id = stazioni.geoname_id WHERE ACOS(SIN(RADIANS(?)) * SIN(RADIANS(latitudine)) + COS(RADIANS(?)) * COS(RADIANS(latitudine)) * COS(RADIANS(? - longitudine))) * 6371 <= ?";
+                parameters.add(filtro_coordinate.getLat());
+                parameters.add(filtro_coordinate.getLat());
+                parameters.add(filtro_coordinate.getLon());
+                parameters.add(filtro_raggio);
+            } else if (filtro_nome != null && filtro_coordinate == null && filtro_raggio == -1) {
+                whereClause = " WHERE aree_interesse.nome LIKE ?";
+                parameters.add(filtro_nome);
             }
-            ResultSet rs = db.executeQuery(query.toString());
-            ArrayList<JAreaInteresse> aree_interesse = new ArrayList<>();
-            while (rs.next()) {
-                JAreaInteresse area = new JAreaInteresse(rs.getInt("id_area_interesse"), rs.getInt("geoname_id"), rs.getString("nome"));
-                aree_interesse.add(area);
+            ResultSet rs = db.executeQuery(baseQuery + whereClause, parameters.toArray(), parameters.size() > 0);
+            if (rs != null) {
+                ArrayList<JAreaInteresse> aree_interesse = new ArrayList<>();
+                while (rs.next()) {
+                    JAreaInteresse area = new JAreaInteresse(rs.getInt("id_area_interesse"), rs.getInt("geoname_id"), rs.getString("nome"));
+                    aree_interesse.add(area);
+                }
+                return aree_interesse;
             }
-            return aree_interesse;
         } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
+            System.err.println("Errore nel caricamento delle aree d'interesse: " + ex.getMessage());
         }
+        return null;
     }
 
     @Override
     public ArrayList<JPrevisioni> loadPrevisioni(String geoname_id, int id_area_interesse) throws RemoteException {
+        try {
+            String baseQuery = "SELECT previsioni.*, utenti.username FROM previsioni INNER JOIN utenti ON utenti.id_utente = previsioni.id_utente WHERE previsioni.geoname_id = ? AND previsioni.id_area_interesse = ?";
+            ResultSet rs = db.executeQuery(baseQuery, new Object[]{geoname_id, id_area_interesse}, true);
+            if (rs != null) {
+                ArrayList<JPrevisioni> previsioni = new ArrayList<>();
+                while (rs.next()) {
+                    JPrevisioni previsione = new JPrevisioni(rs.getInt("id_area_interesse"), rs.getInt("geoname_id"), rs.getDate("data"), rs.getString("username"), rs.getInt("valorevento"), rs.getInt("valoreumidita"), rs.getInt("valorepressione"), rs.getInt("valoretemperatura"), rs.getInt("valoreprecipitazioni"), rs.getInt("valorealtghiacciai"), rs.getInt("valoremassaghiacciai"), rs.getString("notavento"), rs.getString("notaumidita"), rs.getString("notapressione"), rs.getString("notatemperatura"), rs.getString("notaprecipitazioni"), rs.getString("notaaltghiacciai"), rs.getString("notamassaghiacciai"));
+                    previsioni.add(previsione);
+                    System.out.println(previsione.toString());
+                }
+                return previsioni;
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nel caricamento delle previsioni: " + ex.getMessage());
+        }
         return null;
     }
 
@@ -162,13 +168,14 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
     @Override
     public JUser getUser() throws RemoteException {
+        //ResultSet rs = db.executeQuery("SELECT * FROM utenti WHERE username = 'admin'");
         return null;
     }
 
     @Override
     public boolean login(InetAddress ip) throws RemoteException {
         if (client_loggati.contains(ip)) {
-            return false;
+            //return false;
         }
         client_loggati.add(ip);
         System.out.println(client_loggati.get(0));
