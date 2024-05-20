@@ -4,6 +4,7 @@
  */
 package climate_monitoring;
 
+import classi.DatiCondivisi;
 import classi.JStazione;
 import classi.ParserCSV;
 import engine.Engine;
@@ -27,13 +28,16 @@ import javax.swing.JOptionPane;
  */
 public class registrazione extends javax.swing.JFrame {
 
-    private ArrayList<JStazione> al;
+    private DatiCondivisi dc;
+    private ArrayList<JStazione> arrayStazioni;
     static JStazione luogoNuovo;
 
     /**
      * Creates new form registrazione
      */
     public registrazione() {
+        //inizializzo DatiCondivisi
+        this.dc = DatiCondivisi.getInstance();
         initComponents();
         //posizione centrata della finestra all'avvio
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -43,9 +47,10 @@ public class registrazione extends javax.swing.JFrame {
         this.setLocation(x, y);
         //creazione della lista di tutte le stazioni metereologiche salvate sul file stazioni.csv, inserite poi
         //nel combobox per la selezione
-        al = ParserCSV.creaListaStazioni();
-        for (int i = 0; i < al.size(); i++) {
-            cmbStazione.addItem(al.get(i).getNome());
+        //al = ParserCSV.creaListaStazioni();
+        arrayStazioni=dc.stazioni;
+        for (int i = 0; i < arrayStazioni.size(); i++) {
+            cmbStazione.addItem(arrayStazioni.get(i).getNome());
         }
     }
 
@@ -288,7 +293,7 @@ public class registrazione extends javax.swing.JFrame {
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
         // TODO add your handling code here:
         try {
-            if (ParserCSV.checkCodiceOperatore(txtIdOperatore.getText())) { //controllo esistenza e correttezza del codice operatore
+            if (dc.gestore_db.checkCodiceOperatore(txtIdOperatore.getText().trim())) { //controllo esistenza e correttezza del codice operatore
                 //controlli per verificare che tutti i campi siano stati compilati
                 if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !datePickerDataNascita.getDate().toString().isEmpty()
                         && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty()) {
@@ -309,10 +314,10 @@ public class registrazione extends javax.swing.JFrame {
                         } catch (IOException ex) {
                             return;
                         }
-                        Integer i = al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id();
+                        Integer i = arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id();
 
                         //registrazione dell'utente solamente se non esiste altro utente con codice operatore uguali
-                        if (!ParserCSV.registraUtente(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), al.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) {
+                        if (!dc.gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), txtPass.getText(), e.getCode(), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) {
                             //finestra di errore in caso di un utente già registrato
                             JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -355,7 +360,7 @@ public class registrazione extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (luogoNuovo != null) {
             //aggiorno lista e combobox
-            al.add(luogoNuovo);
+            arrayStazioni.add(luogoNuovo);
             cmbStazione.addItem(luogoNuovo.getNome());
         }
     }//GEN-LAST:event_cmbStazioneMousePressed

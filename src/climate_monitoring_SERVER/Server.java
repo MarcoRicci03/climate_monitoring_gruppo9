@@ -73,7 +73,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             } else if (filtro_nome != null && filtro_coordinate == null && filtro_raggio == -1) {
                 whereClause = " WHERE aree_interesse.nome LIKE ?";
                 parameters.add(filtro_nome);
-            } else if(id_stazione != null && id_area != -1) {
+            } else if (id_stazione != null && id_area != -1) {
                 whereClause = " WHERE aree_interesse.geoname_id = ? AND aree_interesse.id_area_interesse = ?";
                 parameters.add(id_stazione);
                 parameters.add(id_area);
@@ -163,8 +163,62 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
     @Override
     public boolean checkCodiceOperatore(String codice_operatore) throws RemoteException {
+        try {
+            String baseQuery = "SELECT codice FROM codici_operatori WHERE codice = ?";
+            ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
+            if (rs != null) {
+                if(rs.next()){
+                    return true;
+                }
+                return false;
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nel controllo del codice operatore: " + ex.getMessage());
+        }
         return false;
     }
+
+    public boolean checkCodiceOperatoreUsed(String codice_operatore) throws RemoteException {
+        try {
+            String baseQuery = "SELECT codice_operatore FROM utenti WHERE codice_operatore = ?";
+            ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
+            if (rs != null) {
+                if(rs.next()!=false){
+                    return true;
+                }
+                return false;
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nel controllo dell'esistenza del codice operatore: " + ex.getMessage());
+        }
+        return false;
+    }
+
+    public String checkUserAlreadyExistsByUsername(String username) throws RemoteException {
+        try {
+            String baseQuery = "SELECT max(username) as max_username FROM utenti WHERE username LIKE ?";
+            ResultSet rs = db.executeQuery(baseQuery, new Object[]{username}, true);
+            if (rs != null) {
+                if(rs.next()!=false){
+                    String maxUsername=rs.getString("max_username");
+                    StringBuilder numeroStr = new StringBuilder();
+                    for (char c : maxUsername.toCharArray()) {
+                        if (Character.isDigit(c)) {
+                            numeroStr.append(c);
+                        }
+                    }
+                    return numeroStr.length() > 0 ? numeroStr.toString() : "1";
+                }
+                return "1";
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nel controllo dell'utente già esistente con lo stesso username: " + ex.getMessage());
+        }
+        return "1";
+    }
+
+
+
 
     @Override
     public boolean AddStazione(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) throws RemoteException {
@@ -172,7 +226,27 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public boolean AddUser(Integer id_utente, String nome, String cognome, String username, String mail, String password, String cf, Integer geoname_id) throws RemoteException {
+    public boolean AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
+        try {
+            boolean checkCodiceOperatoreUsato=checkCodiceOperatoreUsed(codiceOperatore);
+            if(!checkCodiceOperatoreUsato){
+                String username = nome.substring(0, 1) + "_" + cognome;
+                String idNuovoUtente= checkUserAlreadyExistsByUsername(username+"%");
+                System.out.println("Id nuovo utente: "+idNuovoUtente);
+
+                username+=idNuovoUtente;
+                String email = username + "@mail.com";
+
+                String baseQuery = "INSERT INTO utenti (nome,cognome,username,email,codice_operatore,codice_fiscale,geoname_id,password) VALUES (?,?,?,?,?,?,?,?)";
+                ResultSet rs = db.executeQuery(baseQuery, new Object[]{nome, cognome, username, email,codiceOperatore,cf,geoname_id,password}, true);
+                System.out.println(rs);
+                if (rs != null) {
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nell'aggiunta dell'utente: " + ex.getMessage());
+        }
         return false;
     }
 
