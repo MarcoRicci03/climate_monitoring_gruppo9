@@ -60,13 +60,13 @@ public class admin_panel extends javax.swing.JFrame {
 
         user = userLoggato;
 
-        ArrayList<JAreaInteresse> list = ParserCSV.getAreeInteresse(user.getGeoname_id());
-        if (!list.isEmpty()) {
-            for (JAreaInteresse a : list) {
-                v.add(a.toStringList());
-            }
-            listAree.setListData(v);
-        }
+//        ArrayList<JAreaInteresse> list = ParserCSV.getAreeInteresse(user.getGeoname_id());
+//        if (!list.isEmpty()) {
+//            for (JAreaInteresse a : list) {
+//                v.add(a.toStringList());
+//            }
+//            listAree.setListData(v);
+//        }
 
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
@@ -552,17 +552,17 @@ public class admin_panel extends javax.swing.JFrame {
     private void btnAggiungiAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiAreaActionPerformed
         String areaDiInteresse = txtNomeArea.getText();
 
-        if (!areaDiInteresse.isBlank()) {
-            Integer id = ParserCSV.aggiungiAreaInteresse(user.getGeoname_id(), txtNomeArea.getText());
-            if (id > 0) {
-                String s = id + " " + txtNomeArea.getText();
-                v.add(s);
-                listAree.setListData(v);
-            } else {
-                JOptionPane.showMessageDialog(null, "Questa area di interesse è già stata inserita.", "Errore", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else
-            JOptionPane.showMessageDialog(null, "Compilare il valore", "Errore", JOptionPane.INFORMATION_MESSAGE);
+//        if (!areaDiInteresse.isBlank()) {
+//            Integer id = ParserCSV.aggiungiAreaInteresse(user.getGeoname_id(), txtNomeArea.getText());
+//            if (id > 0) {
+//                String s = id + " " + txtNomeArea.getText();
+//                v.add(s);
+//                listAree.setListData(v);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Questa area di interesse è già stata inserita.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//        } else
+//            JOptionPane.showMessageDialog(null, "Compilare il valore", "Errore", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnAggiungiAreaActionPerformed
     /**
      * Questo metodo viene richiamato quando selezionata un'area d'interesse

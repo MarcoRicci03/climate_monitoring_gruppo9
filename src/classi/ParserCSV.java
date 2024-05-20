@@ -342,16 +342,16 @@ public class ParserCSV {
 //     * @throws IOException
 //     */
     public static JUser creaUtenteLoggato(String username, String pass) throws IOException {
-        boolean ris = true;
-        JUser user;
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
-        for (String s : list) {
-            String[] elements = s.split(";");
-            ris = elements[3].equals(username) && elements[5].equals(pass);
-            if (ris == true) {
-                return user = new JUser(elements);
-            }
-        }
+//        boolean ris = true;
+//        JUser user;
+//        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fUtenti), StandardCharsets.UTF_8);
+//        for (String s : list) {
+//            String[] elements = s.split(";");
+//            ris = elements[3].equals(username) && elements[5].equals(pass);
+//            if (ris == true) {
+//                return user = new JUser(elements);
+//            }
+//        }
         return null;
     }
 

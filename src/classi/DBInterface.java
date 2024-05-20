@@ -32,6 +32,6 @@ public interface DBInterface extends Remote {
     //in add previsione manca la data dopo id_centro, non so se devo importare la classe date di java.util o altre
     boolean AddPrevisione(Integer id_area, Integer id_centro, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
 
-    JUser getUser() throws  RemoteException; //metodo per il log in
+    JUser getUser(String user, String pass) throws  RemoteException; //metodo per il log in
     boolean login(InetAddress ip) throws  RemoteException;;
 }

@@ -8,6 +8,7 @@ import classi.DatiCondivisi;
 import classi.JAreaInteresse;
 import classi.JPrevisioni;
 import classi.ParserCSV;
+import com.sun.tools.jconsole.JConsoleContext;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -53,12 +54,12 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
     public mostraPrevisioni(int idArea, String idStazione, boolean fromStazione, Object paginaPrec) throws IOException {
         initComponents();
         //trova area d'interesse con idArea e idStazione
-        JAreaInteresse area = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, 0, idStazione, idArea).get(0);
-        this.area = area;
+
+        this.area = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, idStazione, idArea).get(0);
         this.fromStazione = fromStazione;
         this.paginaPrec = paginaPrec;
 
-        lblTitle.setText("Previsioni: " + area.getNome());
+        lblTitle.setText("Previsioni: " + this.area.getNome());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
         // convert date to calendar
@@ -259,6 +260,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
                 list = DatiCondivisi.getInstance().gestore_db.loadPrevisioni(area.getGeoname_id(), area.getId_area(), false, jCalendar.getDate());
                 if (list != null)
                     drawTable(list);
+                txtNota.setText("");
             } catch (IOException ex) {
                 Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -273,18 +275,17 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
      * @param evt
      */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
         if (fromStazione) {
             ((infoStazione) paginaPrec).setVisible(true);
-            setVisible(false);
+            this.dispose();
         } else {
             ((homepage) paginaPrec).setVisible(true);
-            setVisible(false);
+            this.dispose();
         }
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        btnBackActionPerformed(null);
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -293,9 +294,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
      * @param evt
      */
     private void tabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabellaPrevisioniMouseClicked
-        // TODO add your handling code here:
         txtNota.setText(list.get(tabellaPrevisioni.getSelectedRow()).toString().split(",")[tabellaPrevisioni.getSelectedColumn() + 9]);
-
     }//GEN-LAST:event_tabellaPrevisioniMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

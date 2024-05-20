@@ -351,7 +351,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             String id = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString();
             String nome = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 1).toString();
             if (tipo.equals("Stazione")) {
-                infoStazione infoStaz = new infoStazione(id);
+                infoStazione infoStaz = new infoStazione(id, this);
                 infoStaz.addWindowListener(this);
                 infoStaz.setVisible(true);
                 setVisible(false);
@@ -373,7 +373,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * Ricarica la tabella con le aree di interesse
      */
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
-        // TODO add your handling code here:
         initTable();
     }//GEN-LAST:event_btnReloadActionPerformed
 
@@ -431,7 +430,9 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        setVisible(true);
+        if (!this.isVisible()) {
+            this.setVisible(true);
+        }
     }
 
     @Override
