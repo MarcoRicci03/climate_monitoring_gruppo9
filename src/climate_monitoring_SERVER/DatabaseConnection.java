@@ -45,6 +45,7 @@ public class DatabaseConnection {
             PreparedStatement stmt = conn.prepareStatement(query);
             if (hasParams && (params != null && params.length > 0)) {
                 for (int i = 0; i < params.length; i++) {
+                    if (params[i] == null) continue;
                     Object p = params[i];
                     switch (p.getClass().getSimpleName()) {
                         case "Integer":
@@ -71,13 +72,15 @@ public class DatabaseConnection {
                                 stmt.setString(j + 1, list.get(j));
                             }
                             break;
+                        case "Date":
+                            stmt.setDate(i + 1, (java.sql.Date) p);
+                            break;
                         default:
                             throw new IllegalArgumentException("Tipo non riconosciuto: " + p.getClass().getSimpleName());
                     }
                 }
             }
             return stmt.executeQuery();
-
         } catch (Exception ex) {
             System.out.println("Errore: " + ex.getMessage());
         }

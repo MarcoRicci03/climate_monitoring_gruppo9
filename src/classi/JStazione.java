@@ -77,21 +77,6 @@ public class JStazione implements Serializable {
     }
 
     /**
-     * Costruttore con parametro che imposta l'oggetto tramite stringa.
-     *
-     * @param fromCSV Stringa contenente tutti i valori degli attributi della
-     * classe separati da un ';'.
-     */
-    public JStazione(String fromCSV) {
-        String[] elements = fromCSV.split(";");
-        geoname_id = Integer.valueOf(elements[0]);
-        nome = elements[1];
-        country_code = elements[2];
-        country = elements[3];
-        coordinate = new JCoordinate(Float.valueOf(elements[4].split(",")[0]), Float.valueOf(elements[4].split(",")[1]));
-    }
-
-    /**
      * Metodo per ottenere tutte le informazioni dell'oggetto tramite stringa.
      *
      * @return Ritorna una stringa contentente i valori degli attributi separati

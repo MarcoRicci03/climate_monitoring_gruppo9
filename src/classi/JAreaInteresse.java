@@ -26,7 +26,7 @@ public class JAreaInteresse implements Serializable {
      * Codice della stazione metereologica a cui fa appartenenza l'area
      * d'interesse.
      */
-    private Integer geoname_id;
+    private String geoname_id;
     /**
      * Nome dell'area d'interesse.
      */
@@ -36,7 +36,7 @@ public class JAreaInteresse implements Serializable {
      * Costruttore che imposta a zero gli attributi della classe.
      */
     public JAreaInteresse() {
-        geoname_id = 0;
+        geoname_id = "";
         nome = "";
     }
 
@@ -49,7 +49,7 @@ public class JAreaInteresse implements Serializable {
      * @param nome Nome dell'area d'interesse.
      *
      */
-    public JAreaInteresse(Integer id_area, Integer geoname_id, String nome) {
+    public JAreaInteresse(Integer id_area, String geoname_id, String nome) {
         this.id_area = id_area;
         this.geoname_id = geoname_id;
         this.nome = nome;
@@ -71,6 +71,10 @@ public class JAreaInteresse implements Serializable {
      */
     public String getNome() {
         return nome;
+    }
+
+    public String getGeoname_id() {
+        return geoname_id;
     }
 
     /**

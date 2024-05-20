@@ -4,6 +4,8 @@
  */
 package climate_monitoring;
 
+import classi.DatiCondivisi;
+import classi.JAreaInteresse;
 import classi.JPrevisioni;
 import classi.ParserCSV;
 import java.awt.Dimension;
@@ -35,7 +37,7 @@ import javax.swing.table.TableModel;
 public class mostraPrevisioni extends javax.swing.JFrame implements WindowListener {
 
     private static int idArea;
-    private static int idStazione;
+    private static String idStazione;
     private ArrayList<JPrevisioni> list;
 
     /**
@@ -44,11 +46,14 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
      * @param idStazione id della stazione metereologica.
      * @throws java.io.IOException
      */
-    public mostraPrevisioni(int idArea, int idStazione) throws IOException {
+    public mostraPrevisioni(int idArea, String idStazione) throws IOException {
         initComponents();
         this.idArea = idArea;
         this.idStazione = idStazione;
-        lblTitle.setText("Previsioni: " + ParserCSV.getNomeAreaByGeonameId(idArea));
+
+        //trova area d'interesse con idArea e idStazione
+
+        //lblTitle.setText("Previsioni: " + area.getNome());
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
@@ -67,10 +72,10 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String strData = sdf.format(new Date());
-        list = ParserCSV.creaListaPrevisioniByDate(idArea, strData);
+        //list = DatiCondivisi.getInstance().gestore_db.loadPrevisioni(idArea, idStazione, true, null);
         String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
-        drawTable(list, columns);
+        //drawTable(list, columns);
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -248,18 +253,18 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
      * @param evt
      */
     private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
-        try {
+        //try {
             // TODO add your handling code here:
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String strData = sdf.format(jCalendar.getDate());
-            list = ParserCSV.creaListaPrevisioniByDate(idArea, strData);
+            //list = DatiCondivisi.getInstance().gestore_db.loadPrevisioni(idArea, idStazione, true, jCalendar.getDate());
             String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
-            drawTable(list, columns);
+            //drawTable(list, columns);
 
-        } catch (IOException ex) {
-            Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //} catch (IOException ex) {
+        //    Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
+        //}
     }//GEN-LAST:event_jCalendarPropertyChange
 
     /**
@@ -271,19 +276,19 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
      */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        if (idStazione > -1) {
-            infoStazione info = new infoStazione(idStazione);
-            info.setVisible(true);
-            setVisible(false);
-        } else if (idStazione == -1) {
-            try {
-                homepage homePage = new homepage();
-                homePage.setVisible(true);
-                setVisible(false);
-            } catch (RemoteException ex) {
-                Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        if (idStazione > -1) {
+//            infoStazione info = new infoStazione(idStazione);
+//            info.setVisible(true);
+//            setVisible(false);
+//        } else if (idStazione == -1) {
+//            try {
+//                homepage homePage = new homepage();
+//                homePage.setVisible(true);
+//                setVisible(false);
+//            } catch (RemoteException ex) {
+//                Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -300,46 +305,6 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         txtNota.setText(list.get(tabellaPrevisioni.getSelectedRow()).toString().split(",")[tabellaPrevisioni.getSelectedColumn() + 9]);
 
     }//GEN-LAST:event_tabellaPrevisioniMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(mostraPrevisioni.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(mostraPrevisioni.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(mostraPrevisioni.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(mostraPrevisioni.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new mostraPrevisioni(idArea, idStazione).setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

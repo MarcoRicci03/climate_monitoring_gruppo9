@@ -19,6 +19,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -58,7 +59,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public ArrayList<JAreaInteresse> loadAree_interesse(String filtro_nome, JCoordinate filtro_coordinate, int filtro_raggio) throws RemoteException {
+    public ArrayList<JAreaInteresse> loadAree_interesse(String filtro_nome, JCoordinate filtro_coordinate, int filtro_raggio, String id_stazione, int id_area) throws RemoteException {
         try {
             String baseQuery = "SELECT aree_interesse.* FROM aree_interesse";
             String whereClause = "";
@@ -72,13 +73,16 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             } else if (filtro_nome != null && filtro_coordinate == null && filtro_raggio == -1) {
                 whereClause = " WHERE aree_interesse.nome LIKE ?";
                 parameters.add(filtro_nome);
+            } else if(id_stazione != null && id_area != -1) {
+                whereClause = " WHERE aree_interesse.geoname_id = ? AND aree_interesse.id_area_interesse = ?";
+                parameters.add(id_stazione);
+                parameters.add(id_area);
             }
             ResultSet rs = db.executeQuery(baseQuery + whereClause, parameters.toArray(), parameters.size() > 0);
             if (rs != null) {
                 ArrayList<JAreaInteresse> aree_interesse = new ArrayList<>();
                 while (rs.next()) {
-                    JAreaInteresse area = new JAreaInteresse(rs.getInt("id_area_interesse"), rs.getInt("geoname_id"), rs.getString("nome"));
-                    aree_interesse.add(area);
+                    aree_interesse.add(new JAreaInteresse(rs.getInt("id_area_interesse"), rs.getString("geoname_id"), rs.getString("nome")));
                 }
                 return aree_interesse;
             }
@@ -89,10 +93,12 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public ArrayList<JPrevisioni> loadPrevisioni(String geoname_id, int id_area_interesse) throws RemoteException {
+    public ArrayList<JPrevisioni> loadPrevisioni(String geoname_id, int id_area_interesse, boolean dateFromFilter, Date dateFilter) throws RemoteException {
         try {
             String baseQuery = "SELECT previsioni.*, utenti.username FROM previsioni INNER JOIN utenti ON utenti.id_utente = previsioni.id_utente WHERE previsioni.geoname_id = ? AND previsioni.id_area_interesse = ?";
-            ResultSet rs = db.executeQuery(baseQuery, new Object[]{geoname_id, id_area_interesse}, true);
+            baseQuery += dateFromFilter ? " AND previsioni.data >= CURRENT_DATE" : "";
+            baseQuery += dateFilter != null ? " AND previsioni.data = ?" : "";
+            ResultSet rs = db.executeQuery(baseQuery, new Object[]{geoname_id, id_area_interesse, dateFilter != null ? dateFilter : null}, true);
             if (rs != null) {
                 ArrayList<JPrevisioni> previsioni = new ArrayList<>();
                 while (rs.next()) {
@@ -110,6 +116,20 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
     @Override
     public ArrayList<JStazione> loadStazioni() throws RemoteException {
+        try {
+            String baseQuery = "SELECT stazioni.*, nome_nazione FROM stazioni INNER JOIN nazioni ON stazioni.country_code = nazioni.country_code";
+            ResultSet rs = db.executeQuery(baseQuery, null, false);
+            if (rs != null) {
+                ArrayList<JStazione> stazioni = new ArrayList<>();
+                while (rs.next()) {
+                    JStazione stazione = new JStazione(rs.getInt("geoname_id"), rs.getString("nome"), rs.getString("country_code"), rs.getString("nome_nazione"), new JCoordinate(rs.getFloat("latitudine"), rs.getFloat("longitudine")));
+                    stazioni.add(stazione);
+                }
+                return stazioni;
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nel caricamento delle stazioni: " + ex.getMessage());
+        }
         return null;
     }
 

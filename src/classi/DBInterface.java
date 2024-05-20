@@ -10,14 +10,15 @@ import java.rmi.RemoteException;
 import classi.*;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Date;
 
 /**
  *
  * @author marco
  */
 public interface DBInterface extends Remote {
-    ArrayList<JAreaInteresse> loadAree_interesse(String filtro_nome, JCoordinate filtro_coordinate, int filtro_raggio) throws RemoteException;
-    ArrayList<JPrevisioni> loadPrevisioni(String geoname_id, int id_area_interesse) throws RemoteException;
+    ArrayList<JAreaInteresse> loadAree_interesse(String filtro_nome, JCoordinate filtro_coordinate, int filtro_raggio, String id_stazione, int id_area) throws RemoteException;
+    ArrayList<JPrevisioni> loadPrevisioni(String geoname_id, int id_area_interesse, boolean dateFromFilter, Date dateFilter) throws RemoteException;
 
     ArrayList<JStazione> loadStazioni() throws RemoteException;
     ArrayList<JNazione> loadNazioni() throws RemoteException;

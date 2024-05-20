@@ -39,7 +39,6 @@ import java.rmi.registry.Registry;
 public class homepage extends javax.swing.JFrame implements WindowListener {
 
     private DatiCondivisi dc;
-    private DBInterface gestore_db = null;
     private UnicastRemoteObject remoteObject;
 
     /**
@@ -88,11 +87,18 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     public void initTable() {
         try {
             List<String[]> al = new ArrayList<>();
-            //ArrayList<JAreaInteresse> listaAree = ParserCSV.getAllAreeInteresse();
-            dc.aree_interesse = gestore_db.loadAree_interesse(null, null, -1);
+            if (dc.aree_interesse.isEmpty()) {
+                dc.aree_interesse = dc.gestore_db.loadAree_interesse(null, null, -1, null, -1);
+            }
             for (JAreaInteresse area : dc.aree_interesse) {
-                String[] elements = {String.valueOf(area.getId_area()), area.toString().split(",")[1], "Area Interesse"};
+                String[] elements = {String.valueOf(area.getId_area()) + ";" + area.getGeoname_id(), area.toString().split(",")[1], "Area Interesse"};
                 al.add(elements);
+            }
+            dc.stazioni = dc.gestore_db.loadStazioni();
+            for (JStazione stazione : dc.stazioni) {
+                String[] elements = {String.valueOf(stazione.getGeoname_id()), stazione.getNome(), "Stazione"};
+                al.add(elements);
+
             }
             drawTable(al);
         } catch (RemoteException ex) {
@@ -104,22 +110,16 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * Costruttore della pagina mettendo la finestra al centro dello schermo
      */
     public homepage() throws RemoteException {
-        try {
-            this.dc = DatiCondivisi.getInstance();
-            this.gestore_db = gestore_db;
-            this.remoteObject = new RemoteObjectImpl();
-            gestore_db.login(InetAddress.getLocalHost());
-            initComponents();
-            initTable();    // inizializzo la tabella
-
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Dimension screenSize = toolkit.getScreenSize();
-            int x = (screenSize.width - this.getWidth()) / 2;
-            int y = (screenSize.height - this.getHeight()) / 2;
-            this.setLocation(x, y);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.dc = DatiCondivisi.getInstance();
+        this.remoteObject = new RemoteObjectImpl();
+        //DatiCondivisi.getInstance().gestore_db.login(InetAddress.getLocalHost());
+        initComponents();
+        initTable();    // inizializzo la tabella
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int x = (screenSize.width - this.getWidth()) / 2;
+        int y = (screenSize.height - this.getHeight()) / 2;
+        this.setLocation(x, y);
     }
 
     /**
@@ -327,7 +327,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 //cerco per coordinate
                 if (JCoordinate.sonoCoordinate(testoDaCercare)) {
                     List<JAreaInteresse> list_aree_interesse = null;
-                    list_aree_interesse = gestore_db.loadAree_interesse(null, new JCoordinate(testoDaCercare), 20);
+                    list_aree_interesse = dc.gestore_db.loadAree_interesse(null, new JCoordinate(testoDaCercare), 20, null, -1);
 
                     for (JAreaInteresse area : list_aree_interesse) {
                         String[] elements = {area.getId_area().toString(), area.toString().split(",")[1], "Area Interesse"};
@@ -350,16 +350,18 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      */
     private void tableRisultatiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRisultatiMouseClicked
         if (!tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString().equals("")) {
-            int id = Integer.parseInt(tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString());
-            if (id > 100000) {
-                infoStazione infoStaz = new infoStazione(id);
-                infoStaz.addWindowListener(this);
-                infoStaz.setVisible(true);
-                setVisible(false);
+            String tipo = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 2).toString();
+            String id = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString();
+            String nome = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 1).toString();
+            if (tipo.equals("Stazione")) {
+//                infoStazione infoStaz = new infoStazione(id);
+//                infoStaz.addWindowListener(this);
+//                infoStaz.setVisible(true);
+//                setVisible(false);
 
-            } else {
+            } else if (tipo.equals("Area Interesse")) {
                 try {
-                    mostraPrevisioni mpFinestra = new mostraPrevisioni(id, -1);
+                    mostraPrevisioni mpFinestra = new mostraPrevisioni(Integer.parseInt(id.split(";")[0]), id.split(";")[1]);
                     mpFinestra.addWindowListener(this);
                     mpFinestra.setVisible(true);
                     setVisible(false);
@@ -464,7 +466,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             super();
             Registry r = LocateRegistry.getRegistry("localhost", 1234);
             try {
-                gestore_db = (DBInterface) r.lookup("GestoreClimateMonitoring");
+                dc.gestore_db = (DBInterface) r.lookup("GestoreClimateMonitoring");
             } catch (Exception ex) {
                 Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
             }
