@@ -73,15 +73,11 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             } else if (filtro_nome != null && filtro_coordinate == null && filtro_raggio == -1) {
                 whereClause = " WHERE aree_interesse.nome LIKE ?";
                 parameters.add(filtro_nome);
-            } else if(id_stazione != null) {
-                whereClause = " WHERE aree_interesse.geoname_id = ?";
+            } else if(id_stazione != null && id_area != -1) {
+                whereClause = " WHERE aree_interesse.geoname_id = ? AND aree_interesse.id_area_interesse = ?";
                 parameters.add(id_stazione);
-                if(id_area != -1){
-                    whereClause += " aree_interesse.id_area_interesse = ?";
-                    parameters.add(id_area);
-                }
+                parameters.add(id_area);
             }
-
             ResultSet rs = db.executeQuery(baseQuery + whereClause, parameters.toArray(), parameters.size() > 0);
             if (rs != null) {
                 ArrayList<JAreaInteresse> aree_interesse = new ArrayList<>();
@@ -118,16 +114,10 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public ArrayList<JStazione> loadStazioni(String filtro_id) throws RemoteException {
+    public ArrayList<JStazione> loadStazioni() throws RemoteException {
         try {
             String baseQuery = "SELECT stazioni.*, nome_nazione FROM stazioni INNER JOIN nazioni ON stazioni.country_code = nazioni.country_code";
-            String whereClause = "";
-            ArrayList<Object> parameters = new ArrayList<>();
-            if(filtro_id != null){
-                whereClause += " WHERE geoname_id = ?";
-                parameters.add(filtro_id);
-            }
-            ResultSet rs = db.executeQuery(baseQuery + whereClause, parameters.toArray(), parameters.size() > 0);
+            ResultSet rs = db.executeQuery(baseQuery, null, false);
             if (rs != null) {
                 ArrayList<JStazione> stazioni = new ArrayList<>();
                 while (rs.next()) {

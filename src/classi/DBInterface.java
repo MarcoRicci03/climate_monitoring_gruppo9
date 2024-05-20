@@ -20,7 +20,7 @@ public interface DBInterface extends Remote {
     ArrayList<JAreaInteresse> loadAree_interesse(String filtro_nome, JCoordinate filtro_coordinate, int filtro_raggio, String id_stazione, int id_area) throws RemoteException;
     ArrayList<JPrevisioni> loadPrevisioni(String geoname_id, int id_area_interesse, boolean dateFromFilter, Date dateFilter) throws RemoteException;
 
-    ArrayList<JStazione> loadStazioni(String filtro_id) throws RemoteException;
+    ArrayList<JStazione> loadStazioni() throws RemoteException;
     ArrayList<JNazione> loadNazioni() throws RemoteException;
     ArrayList<JStazione> getStationGeonameIdfromWS(String cityName) throws IOException, InterruptedException; //carica i geoname_id da webService
 

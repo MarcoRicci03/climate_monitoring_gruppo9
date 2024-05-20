@@ -4,8 +4,8 @@
  */
 package climate_monitoring;
 
-import classi.*;
-
+import classi.JAreaInteresse;
+import classi.JStazione;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -31,7 +31,7 @@ import javax.swing.table.TableModel;
  */
 public class infoStazione extends javax.swing.JFrame implements WindowListener {
 
-    private static String id;
+    private static int id;
 
     /**
      * Crea una nuova pagina infoStazione
@@ -39,30 +39,29 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
      * @param id codice identificativo della stazione selezionata nella
      * home_page.
      */
-    public infoStazione(String id) {
+    public infoStazione(int id) {
         this.id = id;
-        try {
+        //try {
             initComponents();
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Dimension screenSize = toolkit.getScreenSize();
             int x = (screenSize.width - this.getWidth()) / 2;
             int y = (screenSize.height - this.getHeight()) / 2;
             this.setLocation(x, y);
-
-            ArrayList<JAreaInteresse> listaAree = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, id, -1);
-            JStazione stazione = DatiCondivisi.getInstance().gestore_db.loadStazioni(id).get(0);
-            lblStazione.setText(stazione.getNome());
-            txtGeoname.setText(stazione.getGeoname_id().toString());
-            txtCodiceNazione.setText(stazione.getCountry_code());
-            txtNazione.setText(stazione.getNazione());
-            txtCoordinate.setText(stazione.getCoordinate().getLat().toString() + ", " + stazione.getCoordinate().getLon().toString());
+            //ArrayList<JAreaInteresse> listaAree = getAreeInteresse(id);
+            //JStazione stazione = getStazione(id);
+            //lblStazione.setText(stazione.getNome());
+            //txtGeoname.setText(stazione.getGeoname_id().toString());
+            //txtCodiceNazione.setText(stazione.getCountry_code());
+            //txtNazione.setText(stazione.getNazione());
+            //txtCoordinate.setText(stazione.getCoordinate().getLat().toString() + ", " + stazione.getCoordinate().getLon().toString());
 
             String[] columns = {"Id area", "Area d'interesse"};
-            drawTable(listaAree, columns);
+            //drawTable(listaAree, columns);
 
-        } catch (IOException ex) {
-            Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (IOException ex) {
+//            Logger.getLogger(infoStazione.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**
@@ -258,14 +257,14 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
     private void InfoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoTableMouseClicked
         // TODO add your handling code here:
         int idArea = Integer.parseInt(InfoTable.getModel().getValueAt(InfoTable.getSelectedRow(), 0).toString());
-        try {
-            mostraPrevisioni mpFinestra = new mostraPrevisioni(idArea, id);
-            mpFinestra.addWindowListener(this);
-            mpFinestra.setVisible(true);
-            setVisible(false);
-        } catch (IOException ex) {
-            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            mostraPrevisioni mpFinestra = new mostraPrevisioni(idArea, id);
+//            mpFinestra.addWindowListener(this);
+//            mpFinestra.setVisible(true);
+//            setVisible(false);
+//        } catch (IOException ex) {
+//            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_InfoTableMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

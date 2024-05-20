@@ -92,7 +92,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 String[] elements = {String.valueOf(area.getId_area()) + ";" + area.getGeoname_id(), area.toString().split(",")[1], "Area Interesse"};
                 al.add(elements);
             }
-            dc.stazioni = dc.gestore_db.loadStazioni(null);
+            dc.stazioni = dc.gestore_db.loadStazioni();
             for (JStazione stazione : dc.stazioni) {
                 String[] elements = {String.valueOf(stazione.getGeoname_id()), stazione.getNome(), "Stazione"};
                 al.add(elements);
@@ -351,10 +351,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             String id = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString();
             String nome = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 1).toString();
             if (tipo.equals("Stazione")) {
-                infoStazione infoStaz = new infoStazione(id);
-                infoStaz.addWindowListener(this);
-                infoStaz.setVisible(true);
-                setVisible(false);
+//                infoStazione infoStaz = new infoStazione(id);
+//                infoStaz.addWindowListener(this);
+//                infoStaz.setVisible(true);
+//                setVisible(false);
 
             } else if (tipo.equals("Area Interesse")) {
                 try {
