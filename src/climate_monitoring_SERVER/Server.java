@@ -104,7 +104,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
                 while (rs.next()) {
                     JPrevisioni previsione = new JPrevisioni(rs.getInt("id_area_interesse"), rs.getInt("geoname_id"), rs.getDate("data"), rs.getString("username"), rs.getInt("valorevento"), rs.getInt("valoreumidita"), rs.getInt("valorepressione"), rs.getInt("valoretemperatura"), rs.getInt("valoreprecipitazioni"), rs.getInt("valorealtghiacciai"), rs.getInt("valoremassaghiacciai"), rs.getString("notavento"), rs.getString("notaumidita"), rs.getString("notapressione"), rs.getString("notatemperatura"), rs.getString("notaprecipitazioni"), rs.getString("notaaltghiacciai"), rs.getString("notamassaghiacciai"));
                     previsioni.add(previsione);
-                    System.out.println(previsione.toString());
                 }
                 return previsioni;
             }
