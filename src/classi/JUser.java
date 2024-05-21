@@ -5,6 +5,8 @@
 package classi;
 
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -144,4 +146,20 @@ public class JUser implements Serializable {
         this.id_areaSelezionata = id_areaSelezionata;
     }
 
+    public static String getMD5(String input){
+        MessageDigest md= null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+            md.update(input.getBytes());
+            byte[] digest = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
