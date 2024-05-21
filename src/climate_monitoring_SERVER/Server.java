@@ -144,6 +144,20 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
     @Override
     public ArrayList<JNazione> loadNazioni() throws RemoteException {
+        try {
+            String baseQuery = "SELECT * FROM nazioni";
+            ResultSet rs = db.executeQuery(baseQuery);
+            if (rs != null) {
+                ArrayList<JStazione> stazioni = new ArrayList<>();
+                while (rs.next()) {
+                    JStazione stazione = new JStazione(rs.getInt("geoname_id"), rs.getString("nome"), rs.getString("country_code"), rs.getString("nome_nazione"), new JCoordinate(rs.getFloat("latitudine"), rs.getFloat("longitudine")));
+                    stazioni.add(stazione);
+                }
+                return stazioni;
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nel caricamento delle stazioni: " + ex.getMessage());
+        }
         return null;
     }
 

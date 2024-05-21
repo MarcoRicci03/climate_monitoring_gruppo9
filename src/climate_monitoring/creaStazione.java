@@ -4,9 +4,8 @@
  */
 package climate_monitoring;
 
-import classi.JCoordinate;
-import classi.JStazione;
-import classi.ParserCSV;
+import classi.*;
+
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -30,7 +29,8 @@ import javax.swing.JOptionPane;
  */
 public class creaStazione extends javax.swing.JFrame {
 
-    private ArrayList<String[]> ar;
+    private ArrayList<JNazione> arrayNazioni;
+    private DatiCondivisi dc;
 
     /**
      * Crea la pagina "creaStazione" mettendo la finestra al centro dello
@@ -38,19 +38,17 @@ public class creaStazione extends javax.swing.JFrame {
      * apposito.
      */
     public creaStazione() {
-        try {
-            initComponents();
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Dimension screenSize = toolkit.getScreenSize();
-            int x = (screenSize.width - this.getWidth()) / 2;
-            int y = (screenSize.height - this.getHeight()) / 2;
-            this.setLocation(x, y);
-            ar = ParserCSV.getNazioni();
-            for (String[] s : ar) {
-                cmbCodNazione.addItem(s[1]);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(creaStazione.class.getName()).log(Level.SEVERE, null, ex);
+        this.dc = DatiCondivisi.getInstance();
+        initComponents();
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int x = (screenSize.width - this.getWidth()) / 2;
+        int y = (screenSize.height - this.getHeight()) / 2;
+        this.setLocation(x, y);
+        //ar = ParserCSV.getNazioni();
+        arrayNazioni=dc.nazioni;
+        for (JNazione nazione : arrayNazioni) {
+            cmbCodNazione.addItem(nazione.getNome_nazione());
         }
     }
 
@@ -263,8 +261,8 @@ public class creaStazione extends javax.swing.JFrame {
         if (JCoordinate.sonoCoordinate(txtCoordinate.getText())) {
             try {
                 if (!txtCoordinate.getText().isBlank() && !txtGeoname_id.getText().isBlank() && !txtCitta.getText().isBlank() && !txtCodNazione.getText().isBlank() && cmbCodNazione.getSelectedIndex() > 0) {
-                    JStazione l = new JStazione(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
-                    if (ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText())) {
+                    JStazione l = new JStazione(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), arrayNazioni.get(cmbCodNazione.getSelectedIndex() - 1).getNome_nazione(), new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
+                    if (ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), arrayNazioni.get(cmbCodNazione.getSelectedIndex() - 1).getNome_nazione(), txtCoordinate.getText())) {
                         registrazione.luogoNuovo = l;
                         JOptionPane.showMessageDialog(null, "Stazione: " + txtCitta.getText() + " aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);
                     } else {
@@ -288,7 +286,7 @@ public class creaStazione extends javax.swing.JFrame {
     private void cmbCodNazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCodNazioneActionPerformed
         // TODO add your handling code here:
         if (cmbCodNazione.getSelectedIndex() > 0) {
-            txtCodNazione.setText(ar.get(cmbCodNazione.getSelectedIndex() - 1)[0]);
+            txtCodNazione.setText(arrayNazioni.get(cmbCodNazione.getSelectedIndex() - 1).getCountry_code());
         }
     }//GEN-LAST:event_cmbCodNazioneActionPerformed
 
