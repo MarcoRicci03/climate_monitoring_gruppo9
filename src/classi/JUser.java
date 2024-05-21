@@ -20,13 +20,10 @@ import java.security.NoSuchAlgorithmException;
 public class JUser implements Serializable {
 
     /**
-     * username utente , nome utente, cognome utente, id utente, password utente,  cf utente, mail utente
+     * username utente , nome utente, cognome utente, id utente, password utente,  cf utente, mail utente, stazione meterologica a cui è associato l'operatore
      */
-    private String username, nome, cognome, id, password, cf, mail;
-    /**
-     * Indica la stazione metereologica a cui è associato l'operatore
-     */
-    private Integer geoname_id; //Indica la stazione metereologica a cui è associato l'operatore
+    private String username, nome, cognome, id, cf, mail, geoname_id;
+
     /**
      * Indica l'ultima area di interesse di cui l'operatore ha aggiunto una previsione 
      */
@@ -42,28 +39,8 @@ public class JUser implements Serializable {
         this.cognome = "";
         this.username = "";
         this.mail = "";
-        this.password = "";
         this.cf = "";
-        this.geoname_id = 0;
-    }
-
-    /**
-     * Costruttore con parametri, genera un ogetto JUser.
-     *
-     * @param elementi vettore di stringhe contenente tutti gli elementi
-     * necessari per costruire un oggetto. (Esempio di vettore: String[]
-     * elementi = {id, nome, cognome, username, mail, password, cf, geoname_id}
-     */
-    public JUser(String[] elementi) {
-        this.id = elementi[0];
-        this.nome = elementi[1];
-        this.cognome = elementi[2];
-        this.username = elementi[3];
-        this.mail = elementi[4];
-        this.password = elementi[5];
-        this.cf = elementi[6];
-        this.geoname_id = Integer.parseInt(elementi[7]);
-
+        this.geoname_id = "";
     }
 
     /**
@@ -74,17 +51,14 @@ public class JUser implements Serializable {
      * @param nome indica il nome dell'operatore.
      * @param cognome indica il cognome dell'operatore.
      * @param id codice univoco che indica l'operatore.
-     * @param password indica la parola con cui accedere nell'area riservata
-     * agli operatori.
      * @param cf indica il codice fiscale dell'operatore.
      * @param mail indica l'email dell'operatore.
      */
-    public JUser(String username, String nome, String cognome, String id, String password, String cf, String mail) {
+    public JUser(String username, String nome, String cognome, String id, String cf, String mail, String geoname_id) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.id = id;
-        this.password = password;
         this.cf = cf;
         this.mail = mail;
         this.geoname_id = geoname_id;
@@ -127,15 +101,6 @@ public class JUser implements Serializable {
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} password 
-     *
-     * @return password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
      * Metodo che restituisce l'attributo {@code} cf (codice fiscale) 
      *
      * @return cf (codice fiscale)
@@ -158,7 +123,7 @@ public class JUser implements Serializable {
      *
      * @return Geonema_id
      */
-    public Integer getGeoname_id() {
+    public String getGeoname_id() {
         return geoname_id;
     }
 

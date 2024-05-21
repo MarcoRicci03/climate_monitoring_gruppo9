@@ -1,10 +1,14 @@
 package climate_monitoring_SERVER;
 
+import com.sun.tools.jconsole.JConsoleContext;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DatabaseConnection {
     private Connection conn = null;
@@ -73,7 +77,12 @@ public class DatabaseConnection {
                             }
                             break;
                         case "Date":
-                            stmt.setDate(i + 1, (java.sql.Date) p);
+                            //formato yyyy-mm-dd
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            String strData = sdf.format((Date) p);
+                            java.sql.Date data = java.sql.Date.valueOf(strData);
+                            System.out.println(data);
+                            stmt.setDate(i + 1, data);
                             break;
                         default:
                             throw new IllegalArgumentException("Tipo non riconosciuto: " + p.getClass().getSimpleName());

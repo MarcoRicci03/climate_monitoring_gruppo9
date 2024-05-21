@@ -73,11 +73,15 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             } else if (filtro_nome != null && filtro_coordinate == null && filtro_raggio == -1) {
                 whereClause = " WHERE aree_interesse.nome LIKE ?";
                 parameters.add(filtro_nome);
-            } else if (id_stazione != null && id_area != -1) {
-                whereClause = " WHERE aree_interesse.geoname_id = ? AND aree_interesse.id_area_interesse = ?";
+            } else if (id_stazione != null) {
+                whereClause = " WHERE aree_interesse.geoname_id = ?";
                 parameters.add(id_stazione);
-                parameters.add(id_area);
+                if (id_area != -1) {
+                    whereClause += " AND aree_interesse.id_area_interesse = ?";
+                    parameters.add(id_area);
+                }
             }
+
             ResultSet rs = db.executeQuery(baseQuery + whereClause, parameters.toArray(), parameters.size() > 0);
             if (rs != null) {
                 ArrayList<JAreaInteresse> aree_interesse = new ArrayList<>();
@@ -104,7 +108,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
                 while (rs.next()) {
                     JPrevisioni previsione = new JPrevisioni(rs.getInt("id_area_interesse"), rs.getInt("geoname_id"), rs.getDate("data"), rs.getString("username"), rs.getInt("valorevento"), rs.getInt("valoreumidita"), rs.getInt("valorepressione"), rs.getInt("valoretemperatura"), rs.getInt("valoreprecipitazioni"), rs.getInt("valorealtghiacciai"), rs.getInt("valoremassaghiacciai"), rs.getString("notavento"), rs.getString("notaumidita"), rs.getString("notapressione"), rs.getString("notatemperatura"), rs.getString("notaprecipitazioni"), rs.getString("notaaltghiacciai"), rs.getString("notamassaghiacciai"));
                     previsioni.add(previsione);
-                    System.out.println(previsione.toString());
                 }
                 return previsioni;
             }
@@ -115,10 +118,16 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public ArrayList<JStazione> loadStazioni() throws RemoteException {
+    public ArrayList<JStazione> loadStazioni(String filtro_id) throws RemoteException {
         try {
             String baseQuery = "SELECT stazioni.*, nome_nazione FROM stazioni INNER JOIN nazioni ON stazioni.country_code = nazioni.country_code";
-            ResultSet rs = db.executeQuery(baseQuery, null, false);
+            String whereClause = "";
+            ArrayList<Object> parameters = new ArrayList<>();
+            if (filtro_id != null) {
+                whereClause += " WHERE geoname_id = ?";
+                parameters.add(filtro_id);
+            }
+            ResultSet rs = db.executeQuery(baseQuery + whereClause, parameters.toArray(), parameters.size() > 0);
             if (rs != null) {
                 ArrayList<JStazione> stazioni = new ArrayList<>();
                 while (rs.next()) {
@@ -267,8 +276,18 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public JUser getUser() throws RemoteException {
-        //ResultSet rs = db.executeQuery("SELECT * FROM utenti WHERE username = 'admin'");
+    public JUser getUser(String user, String pass) throws RemoteException {
+        String baseQuery = "SELECT * FROM utenti WHERE username = ? AND password = ?";
+        ResultSet rs = db.executeQuery(baseQuery, new Object[]{user, pass}, true);
+        if (rs != null) {
+            try {
+                if (rs.next()) {
+                    return new JUser(user, rs.getString("nome"), rs.getString("cognome"), rs.getString("id_utente"), rs.getString("codice_fiscale"), rs.getString("email"), rs.getString("geoname_id"));
+                }
+            } catch (Exception ex) {
+                System.err.println("Errore nel caricamento dell'utente: " + ex.getMessage());
+            }
+        }
         return null;
     }
 

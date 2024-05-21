@@ -87,18 +87,15 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     public void initTable() {
         try {
             List<String[]> al = new ArrayList<>();
-            if (dc.aree_interesse.isEmpty()) {
-                dc.aree_interesse = dc.gestore_db.loadAree_interesse(null, null, -1, null, -1);
-            }
+            dc.aree_interesse = dc.gestore_db.loadAree_interesse(null, null, -1, null, -1);
             for (JAreaInteresse area : dc.aree_interesse) {
                 String[] elements = {String.valueOf(area.getId_area()) + ";" + area.getGeoname_id(), area.toString().split(",")[1], "Area Interesse"};
                 al.add(elements);
             }
-            dc.stazioni = dc.gestore_db.loadStazioni();
+            dc.stazioni = dc.gestore_db.loadStazioni(null);
             for (JStazione stazione : dc.stazioni) {
                 String[] elements = {String.valueOf(stazione.getGeoname_id()), stazione.getNome(), "Stazione"};
                 al.add(elements);
-
             }
             drawTable(al);
         } catch (RemoteException ex) {
@@ -354,14 +351,14 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             String id = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString();
             String nome = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 1).toString();
             if (tipo.equals("Stazione")) {
-//                infoStazione infoStaz = new infoStazione(id);
-//                infoStaz.addWindowListener(this);
-//                infoStaz.setVisible(true);
-//                setVisible(false);
+                infoStazione infoStaz = new infoStazione(id, this);
+                infoStaz.addWindowListener(this);
+                infoStaz.setVisible(true);
+                setVisible(false);
 
             } else if (tipo.equals("Area Interesse")) {
                 try {
-                    mostraPrevisioni mpFinestra = new mostraPrevisioni(Integer.parseInt(id.split(";")[0]), id.split(";")[1]);
+                    mostraPrevisioni mpFinestra = new mostraPrevisioni(Integer.parseInt(id.split(";")[0]), id.split(";")[1], false, this);
                     mpFinestra.addWindowListener(this);
                     mpFinestra.setVisible(true);
                     setVisible(false);
@@ -376,7 +373,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * Ricarica la tabella con le aree di interesse
      */
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
-        // TODO add your handling code here:
         initTable();
     }//GEN-LAST:event_btnReloadActionPerformed
 
@@ -434,7 +430,9 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        setVisible(true);
+        if (!this.isVisible()) {
+            this.setVisible(true);
+        }
     }
 
     @Override
