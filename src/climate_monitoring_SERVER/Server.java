@@ -167,7 +167,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT codice FROM codici_operatori WHERE codice = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
             if (rs != null) {
-                if(rs.next()){
+                if(rs.isBeforeFirst()){
                     return true;
                 }
                 return false;
@@ -183,7 +183,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT codice_operatore FROM utenti WHERE codice_operatore = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
             if (rs != null) {
-                if(rs.next()!=false){
+                if(rs.isBeforeFirst()){
                     return true;
                 }
                 return false;
@@ -199,15 +199,19 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT max(username) as max_username FROM utenti WHERE username LIKE ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{username}, true);
             if (rs != null) {
-                if(rs.next()!=false){
+                if(rs.isBeforeFirst()){
+                    rs.next();
                     String maxUsername=rs.getString("max_username");
-                    StringBuilder numeroStr = new StringBuilder();
-                    for (char c : maxUsername.toCharArray()) {
-                        if (Character.isDigit(c)) {
-                            numeroStr.append(c);
+                    if(maxUsername!=null){
+                        StringBuilder numeroStr = new StringBuilder();
+                        for (char c : maxUsername.toCharArray()) {
+                            if (Character.isDigit(c)) {
+                                numeroStr.append(c);
+                            }
                         }
+                        return numeroStr.length() > 0 ? numeroStr.toString() : "1";
                     }
-                    return numeroStr.length() > 0 ? numeroStr.toString() : "1";
+                    return "1";
                 }
                 return "1";
             }
@@ -226,7 +230,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public boolean AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
+    public String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
         try {
             boolean checkCodiceOperatoreUsato=checkCodiceOperatoreUsed(codiceOperatore);
             if(!checkCodiceOperatoreUsato){
@@ -238,16 +242,18 @@ public class Server extends UnicastRemoteObject implements DBInterface {
                 String email = username + "@mail.com";
 
                 String baseQuery = "INSERT INTO utenti (nome,cognome,username,email,codice_operatore,codice_fiscale,geoname_id,password) VALUES (?,?,?,?,?,?,?,?)";
-                ResultSet rs = db.executeQuery(baseQuery, new Object[]{nome, cognome, username, email,codiceOperatore,cf,geoname_id,password}, true);
+                int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email,codiceOperatore,cf,geoname_id,password}, true);
                 System.out.println(rs);
-                if (rs != null) {
-                    return true;
+                if (rs != -1) {
+                    if(rs==1){
+                        return username;
+                    }
                 }
             }
         } catch (Exception ex) {
             System.err.println("Errore nell'aggiunta dell'utente: " + ex.getMessage());
         }
-        return false;
+        return null;
     }
 
     @Override
