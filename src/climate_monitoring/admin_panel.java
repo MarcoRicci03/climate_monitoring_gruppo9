@@ -4,6 +4,7 @@
  */
 package climate_monitoring;
 
+import classi.DatiCondivisi;
 import classi.JAreaInteresse;
 import classi.JPrevisioni;
 import classi.JUser;
@@ -11,6 +12,7 @@ import classi.ParserCSV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -50,7 +52,7 @@ public class admin_panel extends javax.swing.JFrame {
      * @param userLoggato Oggetto che contiene l'utente che ha compiuto
      * l'accesso
      */
-    public admin_panel(JUser userLoggato) {
+    public admin_panel(JUser userLoggato) throws RemoteException {
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -60,13 +62,14 @@ public class admin_panel extends javax.swing.JFrame {
 
         user = userLoggato;
 
-//        ArrayList<JAreaInteresse> list = ParserCSV.getAreeInteresse(user.getGeoname_id());
-//        if (!list.isEmpty()) {
-//            for (JAreaInteresse a : list) {
-//                v.add(a.toStringList());
-//            }
-//            listAree.setListData(v);
-//        }
+        ArrayList<JAreaInteresse> list = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, user.getGeoname_id(), -1 );
+
+        if ( list != null && !list.isEmpty()) {
+            for (JAreaInteresse a : list) {
+                v.add(a.toStringList());
+            }
+            listAree.setListData(v);
+        }
 
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
@@ -606,7 +609,7 @@ public class admin_panel extends javax.swing.JFrame {
             JPrevisioni previsione = new JPrevisioni(txtData, id, user.getId_areaSelezionata(), user.getUsername(),
                     valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia,
                     nVento, nUmidita, nPressione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai);
-            ParserCSV.aggiungiPrevisione(previsione);
+            // ParserCSV.aggiungiPrevisione(previsione);
             aggiornaTabella();
         } else {
             JOptionPane.showMessageDialog(null, "Seleziona un'area d'interesse.", "Errore", JOptionPane.INFORMATION_MESSAGE);
@@ -639,7 +642,7 @@ public class admin_panel extends javax.swing.JFrame {
             txtAreaPrevisioneSelezionata.setText(data[1]);
             txtIdCentro.setText(String.valueOf(user.getGeoname_id()));
 
-            ArrayList<JPrevisioni> list = ParserCSV.creaListaPrevisioni(idAreaInteresse);
+            ArrayList<JPrevisioni> list = DatiCondivisi.getInstance().gestore_db.loadPrevisioni( user.getGeoname_id(), idAreaInteresse, false, null );
 
             listaPrev = new ArrayList<>();
             for (JPrevisioni prev : list) {
@@ -667,40 +670,6 @@ public class admin_panel extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(admin_panel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(admin_panel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(admin_panel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(admin_panel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new admin_panel(user).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AreaInteresse;

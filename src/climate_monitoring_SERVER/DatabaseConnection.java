@@ -44,7 +44,6 @@ public class DatabaseConnection {
     }
 
     public ResultSet executeQuery(String query, Object[] params, boolean hasParams) {
-        ResultSet rs = null;
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             if (hasParams && (params != null && params.length > 0)) {
