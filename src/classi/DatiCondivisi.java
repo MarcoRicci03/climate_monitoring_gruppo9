@@ -8,11 +8,14 @@ public class DatiCondivisi {
     public ArrayList<JAreaInteresse> aree_interesse;
     public ArrayList<JStazione> stazioni;
 
+    public ArrayList<JNazione> nazioni;
+
     public DBInterface gestore_db;
 
     private DatiCondivisi() {
         aree_interesse = new ArrayList<>();
         stazioni = new ArrayList<>();
+        nazioni= new ArrayList<>();
     }
 
     public static DatiCondivisi getInstance() {

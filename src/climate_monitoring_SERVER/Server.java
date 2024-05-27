@@ -144,6 +144,21 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
     @Override
     public ArrayList<JNazione> loadNazioni() throws RemoteException {
+        try {
+            String baseQuery = "SELECT * FROM nazioni";
+            ArrayList<Object> parameters = new ArrayList<>();
+            ResultSet rs = db.executeQuery(baseQuery, parameters.toArray(), parameters.size() > 0);
+            if (rs != null) {
+                ArrayList<JNazione> nazioni = new ArrayList<>();
+                while (rs.next()) {
+                    JNazione nazione = new JNazione(rs.getString("country_code"), rs.getString("nome_nazione"));
+                    nazioni.add(nazione);
+                }
+                return nazioni;
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nel caricamento delle nazioni: " + ex.getMessage());
+        }
         return null;
     }
 
@@ -176,7 +191,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT codice FROM codici_operatori WHERE codice = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
             if (rs != null) {
-                if(rs.isBeforeFirst()){
+                if (rs.isBeforeFirst()) {
                     return true;
                 }
                 return false;
@@ -192,7 +207,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT codice_operatore FROM utenti WHERE codice_operatore = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
             if (rs != null) {
-                if(rs.isBeforeFirst()){
+                if (rs.isBeforeFirst()) {
                     return true;
                 }
                 return false;
@@ -208,10 +223,10 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT max(username) as max_username FROM utenti WHERE username LIKE ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{username}, true);
             if (rs != null) {
-                if(rs.isBeforeFirst()){
+                if (rs.isBeforeFirst()) {
                     rs.next();
-                    String maxUsername=rs.getString("max_username");
-                    if(maxUsername!=null){
+                    String maxUsername = rs.getString("max_username");
+                    if (maxUsername != null) {
                         StringBuilder numeroStr = new StringBuilder();
                         for (char c : maxUsername.toCharArray()) {
                             if (Character.isDigit(c)) {
@@ -230,31 +245,63 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return "1";
     }
 
-
+    @Override
+    public boolean checkExistStazione(String geoname_id, String nome) throws RemoteException{
+        try {
+            String baseQuery = "SELECT geoname_id, nome FROM stazioni WHERE geoname_id = ? OR nome = ?";
+            ResultSet rs = db.executeQuery(baseQuery, new Object[]{geoname_id, nome}, true);
+            if (rs != null) {
+                if (rs.isBeforeFirst()) {
+                    return true;
+                }
+                return false;
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nel controllo dell'esistenza di una stazione già presente: " + ex.getMessage());
+        }
+        return false;
+    }
 
 
     @Override
-    public boolean AddStazione(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) throws RemoteException {
+    public boolean AddStazione(String geoname_id, String nome, String country_code,JCoordinate coordinate) throws RemoteException {
+        try {
+            //controllo l'esistenza di una stazione con lo stesso geoname_id - nome
+            boolean isStazioneUsata = checkExistStazione(geoname_id, nome);
+            if (!isStazioneUsata) {
+                //inserisco la stazione
+                String baseQuery = "INSERT INTO stazioni (geoname_id,nome,country_code,latitudine,longitudine) VALUES (?,?,?,?,?)";
+                int rs = db.executeUpdate(baseQuery, new Object[]{geoname_id, nome, country_code, coordinate.getLat(),coordinate.getLon()}, true);
+                if (rs != -1) {
+                    if (rs == 1) {
+                        return true;
+                    }
+                }
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            System.err.println("Errore nell'aggiunta della stazione: " + ex.getMessage());
+        }
         return false;
     }
 
     @Override
     public String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
         try {
-            boolean checkCodiceOperatoreUsato=checkCodiceOperatoreUsed(codiceOperatore);
-            if(!checkCodiceOperatoreUsato){
+            boolean checkCodiceOperatoreUsato = checkCodiceOperatoreUsed(codiceOperatore);
+            if (!checkCodiceOperatoreUsato) {
                 String username = nome.substring(0, 1) + "_" + cognome;
-                String idNuovoUtente= checkUserAlreadyExistsByUsername(username+"%");
-                System.out.println("Id nuovo utente: "+idNuovoUtente);
+                String idNuovoUtente = checkUserAlreadyExistsByUsername(username + "%");
+                System.out.println("Id nuovo utente: " + idNuovoUtente);
 
-                username+=idNuovoUtente;
+                username += idNuovoUtente;
                 String email = username + "@mail.com";
 
                 String baseQuery = "INSERT INTO utenti (nome,cognome,username,email,codice_operatore,codice_fiscale,geoname_id,password) VALUES (?,?,?,?,?,?,?,?)";
-                int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email,codiceOperatore,cf,geoname_id,password}, true);
-                System.out.println(rs);
+                int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email, codiceOperatore, cf, geoname_id, password}, true);
                 if (rs != -1) {
-                    if(rs==1){
+                    if (rs == 1) {
                         return username;
                     }
                 }
