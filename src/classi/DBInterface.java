@@ -31,7 +31,10 @@ public interface DBInterface extends Remote {
     //Controllo che non esista già un utente con lo stesso username, se esiste ritorno id nuovo, se non esiste ritorno 1
     String checkUserAlreadyExistsByUsername(String username) throws RemoteException;
 
-    boolean AddStazione(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) throws RemoteException;
+    //Controllo che non esista una stazione con lo stesso geoname_id e nome
+    boolean checkExistStazione(String geoname_id,String nome) throws RemoteException;
+
+    boolean AddStazione(String geoname_id, String nome, String country_code,JCoordinate coordinate) throws RemoteException;
     String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException;
     boolean AddAreaInteresse(Integer id_area, String geoname_id, String nome) throws RemoteException;
     //in add previsione manca la data dopo id_centro, non so se devo importare la classe date di java.util o altre

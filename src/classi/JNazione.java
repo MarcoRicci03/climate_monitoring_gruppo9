@@ -22,9 +22,10 @@ public class JNazione implements Serializable {
         this.nome_nazione = "";
         this.country_code = "";
     }
-    public JNazione(String nome, String country_code) {
-        this.nome_nazione = nome;
+    public JNazione(String country_code,String nome) {
         this.country_code = country_code;
+        this.nome_nazione = nome;
+
     }
 
     public String getNome_nazione() {

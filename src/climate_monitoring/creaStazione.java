@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +47,12 @@ public class creaStazione extends javax.swing.JFrame {
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
         //ar = ParserCSV.getNazioni();
-        arrayNazioni=dc.nazioni;
+        try {
+            dc.nazioni=dc.gestore_db.loadNazioni();
+            arrayNazioni=dc.nazioni;
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         for (JNazione nazione : arrayNazioni) {
             cmbCodNazione.addItem(nazione.getNome_nazione());
         }
@@ -262,7 +268,7 @@ public class creaStazione extends javax.swing.JFrame {
             try {
                 if (!txtCoordinate.getText().isBlank() && !txtGeoname_id.getText().isBlank() && !txtCitta.getText().isBlank() && !txtCodNazione.getText().isBlank() && cmbCodNazione.getSelectedIndex() > 0) {
                     JStazione l = new JStazione(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), arrayNazioni.get(cmbCodNazione.getSelectedIndex() - 1).getNome_nazione(), new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
-                    if (ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), arrayNazioni.get(cmbCodNazione.getSelectedIndex() - 1).getNome_nazione(), txtCoordinate.getText())) {
+                    if (dc.gestore_db.AddStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(),new JCoordinate(txtCoordinate.getText()))) {
                         registrazione.luogoNuovo = l;
                         JOptionPane.showMessageDialog(null, "Stazione: " + txtCitta.getText() + " aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);
                     } else {
