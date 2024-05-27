@@ -28,7 +28,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="379" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="538" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
           </Group>
@@ -36,9 +36,12 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="339" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="450" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jPanel1" min="-2" pref="450" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,38 +57,32 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <Component id="btnAggiungi" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="labelCodiceNazione" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="labelCordinate" max="32767" attributes="0"/>
-                                          <Component id="labelNazione" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="labelCitta" pref="131" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="labelId" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                              </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="labelCitta" min="-2" pref="174" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtCitta" min="-2" pref="193" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnCercaGeonameId" min="-2" pref="135" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="labelCodiceNazione" alignment="0" pref="174" max="32767" attributes="0"/>
+                              <Component id="labelId" alignment="0" max="32767" attributes="0"/>
+                              <Component id="labelNazione" max="32767" attributes="0"/>
+                              <Component id="labelCordinate" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtGeoname_id" pref="89" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnCercaGeonameId" min="-2" pref="135" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="txtCoordinate" alignment="1" max="32767" attributes="0"/>
-                              <Component id="cmbCodNazione" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtCitta" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtCodNazione" alignment="1" max="32767" attributes="0"/>
+                              <Component id="txtCoordinate" max="32767" attributes="0"/>
+                              <Component id="txtCodNazione" max="32767" attributes="0"/>
+                              <Component id="txtGeoname_id" max="32767" attributes="0"/>
+                              <Component id="cmbCodNazione" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -97,39 +94,36 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                          <Component id="labelId" pref="60" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnCercaGeonameId" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                          <Component id="txtGeoname_id" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnCercaGeonameId" alignment="3" max="32767" attributes="0"/>
+                      <Component id="txtCitta" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="labelCitta" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="96" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtCitta" alignment="3" pref="45" max="32767" attributes="0"/>
-                      <Component id="labelCitta" alignment="3" max="32767" attributes="0"/>
+                      <Component id="labelId" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="txtGeoname_id" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="txtCodNazione" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="labelCodiceNazione" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtCodNazione" pref="45" max="32767" attributes="0"/>
-                      <Component id="labelCodiceNazione" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="cmbCodNazione" pref="45" max="32767" attributes="0"/>
                       <Component id="labelNazione" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtCoordinate" pref="46" max="32767" attributes="0"/>
-                      <Component id="labelCordinate" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="txtCoordinate" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="labelCordinate" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnAggiungi" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -187,6 +181,9 @@
               <Font name="Segoe UI" size="16" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="txtCittaInputMethodTextChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelCodiceNazione">
           <Properties>
@@ -276,6 +273,23 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JList" name="jList1">
+              <Properties>
+                <Property name="selectionMode" type="int" value="0"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>
