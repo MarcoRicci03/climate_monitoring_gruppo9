@@ -273,11 +273,12 @@ public class Server extends UnicastRemoteObject implements DBInterface {
                 //inserisco la stazione
                 String baseQuery = "INSERT INTO stazioni (geoname_id,nome,country_code,latitudine,longitudine) VALUES (?,?,?,?,?)";
                 int rs = db.executeUpdate(baseQuery, new Object[]{geoname_id, nome, country_code, coordinate.getLat(), coordinate.getLon()}, true);
-                if (rs != -1) {
-                    if (rs == 1) {
-                        return true;
-                    }
-                }
+                return rs != -1 && rs == 1;
+//                if (rs != -1) {
+//                    if (rs == 1) {
+//                        return true;
+//                    }
+//                }
             } else {
                 return false;
             }
@@ -294,7 +295,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             if (!checkCodiceOperatoreUsato) {
                 String username = nome.substring(0, 1) + "_" + cognome;
                 String idNuovoUtente = checkUserAlreadyExistsByUsername(username + "%");
-                System.out.println("Id nuovo utente: " + idNuovoUtente);
 
                 username += idNuovoUtente;
                 String email = username + "@mail.com";
@@ -345,7 +345,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             //return false;
         }
         client_loggati.add(ip);
-        System.out.println(client_loggati.get(0));
         return true;
     }
     
