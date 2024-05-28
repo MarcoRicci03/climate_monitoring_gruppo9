@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -165,7 +166,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     @Override
     public ArrayList<JStazione> getStationGeonameIdfromWS(String cityName) throws RemoteException, IOException, InterruptedException {
         ArrayList<JStazione> stazioni = new ArrayList<>();
-        String url = "http://api.geonames.org/searchJSON?lang=en&username=gexebit147&maxRows=8&name_equals=" + cityName;
+        String url = "http://api.geonames.org/searchJSON?lang=en&username=gexebit147&maxRows=8&name_equals=" + URLEncoder.encode(cityName, "UTF-8");
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -246,7 +247,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public boolean checkExistStazione(String geoname_id, String nome) throws RemoteException{
+    public boolean checkExistStazione(String geoname_id, String nome) throws RemoteException {
         try {
             String baseQuery = "SELECT geoname_id, nome FROM stazioni WHERE geoname_id = ? OR nome = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{geoname_id, nome}, true);
@@ -264,14 +265,14 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
 
     @Override
-    public boolean AddStazione(String geoname_id, String nome, String country_code,JCoordinate coordinate) throws RemoteException {
+    public boolean AddStazione(String geoname_id, String nome, String country_code, JCoordinate coordinate) throws RemoteException {
         try {
             //controllo l'esistenza di una stazione con lo stesso geoname_id - nome
             boolean isStazioneUsata = checkExistStazione(geoname_id, nome);
             if (!isStazioneUsata) {
                 //inserisco la stazione
                 String baseQuery = "INSERT INTO stazioni (geoname_id,nome,country_code,latitudine,longitudine) VALUES (?,?,?,?,?)";
-                int rs = db.executeUpdate(baseQuery, new Object[]{geoname_id, nome, country_code, coordinate.getLat(),coordinate.getLon()}, true);
+                int rs = db.executeUpdate(baseQuery, new Object[]{geoname_id, nome, country_code, coordinate.getLat(), coordinate.getLon()}, true);
                 if (rs != -1) {
                     if (rs == 1) {
                         return true;
