@@ -165,7 +165,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     @Override
     public ArrayList<JStazione> getStationGeonameIdfromWS(String cityName) throws RemoteException, IOException, InterruptedException {
         ArrayList<JStazione> stazioni = new ArrayList<>();
-        String url = "http://api.geonames.org/searchJSON?lang=it&username=gexebit147&maxRows=5&country=IT&name_equals=" + cityName;
+        String url = "http://api.geonames.org/searchJSON?lang=en&username=gexebit147&maxRows=8&name_equals=" + cityName;
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
