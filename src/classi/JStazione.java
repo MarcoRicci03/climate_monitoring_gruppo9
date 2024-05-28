@@ -87,6 +87,11 @@ public class JStazione implements Serializable {
         return "geoname_id=" + geoname_id + ", nome=" + nome + ", country_code=" + country_code + ", coordinate=" + coordinate;
     }
 
+    public String toStringCsv() {
+        return geoname_id + "," + nome + "," + country_code + "," + country + "," + coordinate.getLat()+","+coordinate.getLon();
+
+    }
+
     /**
      * Metodo per ottenere il codice identificativo della cittá dove si trova la
      * stazione metereologica.
@@ -135,9 +140,9 @@ public class JStazione implements Serializable {
     public String getNazione() {
         return country;
     }
-    
+
     public void setCoordinate(JCoordinate jCoordinate) {
         this.coordinate = jCoordinate;
-    } 
+    }
 
 }
