@@ -8,10 +8,6 @@ import java.util.ArrayList;
 public class DatiCondivisi {
     private static DatiCondivisi instance = null;
 
-    /**
-     * Lista di nazioni condivise.
-     */
-    public ArrayList<JNazione> nazioni;
 
     /**
      * Interfaccia per la gestione del database.
@@ -23,7 +19,7 @@ public class DatiCondivisi {
      * Inizializza la lista di nazioni.
      */
     private DatiCondivisi() {
-        nazioni = new ArrayList<>();
+
     }
 
     /**

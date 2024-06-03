@@ -63,8 +63,7 @@ public class creaStazione extends javax.swing.JFrame {
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
         try {
-            dc.nazioni = dc.gestore_db.loadNazioni();
-            arrayNazioni = dc.nazioni;
+            arrayNazioni = dc.gestore_db.loadNazioni();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
