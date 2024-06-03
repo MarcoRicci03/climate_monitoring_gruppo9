@@ -1,45 +1,181 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package classi;
 
 import java.util.ArrayList;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import classi.*;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Date;
 
 /**
+ * Interfaccia remota per la gestione delle operazioni del database.
+ * Fornisce metodi per caricare dati e verificare esistenze nel database.
  *
- * @author marco
+ * @autor marco_ricci
+ * @autor edoardo_rizzi
+ * @autor alberto_stagno
+ * @autor denis_di_napoli
  */
 public interface DBInterface extends Remote {
+
+    /**
+     * Carica le aree di interesse dal database in base ai filtri forniti.
+     *
+     * @param filtro_nome       il nome da filtrare (può essere null).
+     * @param filtro_coordinate le coordinate da utilizzare per la ricerca (può essere null).
+     * @param filtro_raggio     il raggio per la ricerca basata su coordinate (deve essere maggiore di 0 se utilizzato).
+     * @param id_stazione       l'ID della stazione da filtrare (può essere null).
+     * @param id_area           l'ID dell'area di interesse da filtrare (può essere -1).
+     * @return una lista di aree di interesse che soddisfano i criteri di filtro.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     ArrayList<JAreaInteresse> loadAree_interesse(String filtro_nome, JCoordinate filtro_coordinate, int filtro_raggio, String id_stazione, int id_area) throws RemoteException;
+
+    /**
+     * Carica le previsioni dal database in base ai filtri forniti.
+     *
+     * @param geoname_id        l'ID Geoname dell'area di interesse.
+     * @param id_area_interesse l'ID dell'area di interesse.
+     * @param dateFromFilter    indica se filtrare le previsioni a partire dalla data corrente.
+     * @param dateFilter        la data specifica per cui filtrare le previsioni (può essere null).
+     * @return una lista di previsioni che soddisfano i criteri di filtro.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     ArrayList<JPrevisioni> loadPrevisioni(String geoname_id, int id_area_interesse, boolean dateFromFilter, Date dateFilter) throws RemoteException;
 
+    /**
+     * Carica le stazioni dal database in base al filtro fornito.
+     *
+     * @param filtro_id l'ID della stazione da filtrare (può essere null).
+     * @return una lista di stazioni che soddisfano i criteri di filtro.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     ArrayList<JStazione> loadStazioni(String filtro_id) throws RemoteException;
-    ArrayList<JNazione> loadNazioni() throws RemoteException;
-    ArrayList<JStazione> getStationGeonameIdfromWS(String cityName) throws IOException, InterruptedException; //carica i geoname_id da webService
 
-    //Controllo che il codice operatore esiste nella tabella codici_operatori
+    /**
+     * Carica tutte le nazioni dal database.
+     *
+     * @return una lista di nazioni.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
+    ArrayList<JNazione> loadNazioni() throws RemoteException;
+
+    /**
+     * Ottiene le stazioni Geoname ID dal servizio web in base al nome della città.
+     *
+     * @param cityName il nome della città per cui cercare le stazioni.
+     * @return una lista di stazioni che corrispondono al nome della città.
+     * @throws IOException          se si verifica un problema di I/O durante la comunicazione con il servizio web.
+     * @throws InterruptedException se il thread viene interrotto durante l'attesa della risposta.
+     */
+    ArrayList<JStazione> getStationGeonameIdfromWS(String cityName) throws IOException, InterruptedException;
+
+    /**
+     * Controlla se il codice operatore esiste nella tabella codici_operatori.
+     *
+     * @param codice_operatore il codice operatore da verificare.
+     * @return true se il codice operatore esiste nel database, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     boolean checkCodiceOperatore(String codice_operatore) throws RemoteException;
-    //Controllo che non esista già un utente con lo stesso codice operatore
-    boolean checkCodiceOperatoreUsed(String codice_operatore ) throws RemoteException;
-    //Controllo che non esista già un utente con lo stesso username, se esiste ritorno id nuovo, se non esiste ritorno 1
+
+    /**
+     * Controlla se il codice operatore è già stato utilizzato.
+     *
+     * @param codice_operatore il codice operatore da verificare.
+     * @return true se il codice operatore è già stato utilizzato, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
+    boolean checkCodiceOperatoreUsed(String codice_operatore) throws RemoteException;
+
+    /**
+     * Controlla se esiste già un utente con lo stesso username.
+     * Se esiste ritorna l'id nuovo, altrimenti ritorna "1".
+     *
+     * @param username lo username da verificare.
+     * @return l'id nuovo se esiste un utente con lo stesso username, altrimenti "1".
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     String checkUserAlreadyExistsByUsername(String username) throws RemoteException;
 
-    //Controllo che non esista una stazione con lo stesso geoname_id e nome
-    boolean checkExistStazione(String geoname_id,String nome) throws RemoteException;
+    /**
+     * Controlla se esiste una stazione con lo stesso geoname_id o nome.
+     *
+     * @param geoname_id l'ID Geoname della stazione da verificare.
+     * @param nome       il nome della stazione da verificare.
+     * @return true se esiste una stazione con lo stesso geoname_id o nome, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
+    boolean checkExistStazione(String geoname_id, String nome) throws RemoteException;
 
-    boolean AddStazione(String geoname_id, String nome, String country_code,JCoordinate coordinate) throws RemoteException;
+    /**
+     * Aggiunge una nuova stazione al database.
+     *
+     * @param geoname_id   l'ID Geoname della nuova stazione.
+     * @param nome         il nome della nuova stazione.
+     * @param country_code il codice del paese della nuova stazione.
+     * @param coordinate   le coordinate (latitudine e longitudine) della nuova stazione.
+     * @return true se la stazione è stata aggiunta con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
+    boolean AddStazione(String geoname_id, String nome, String country_code, JCoordinate coordinate) throws RemoteException;
+
+    /**
+     * Aggiunge un nuovo utente al database.
+     *
+     * @param nome            il nome dell'utente.
+     * @param cognome         il cognome dell'utente.
+     * @param password        la password dell'utente.
+     * @param cf              il codice fiscale dell'utente.
+     * @param geoname_id      l'ID Geoname associato all'utente.
+     * @param codiceOperatore il codice operatore dell'utente.
+     * @return lo username del nuovo utente se l'inserimento è avvenuto con successo, null altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException;
+
+    /**
+     * Aggiunge una nuova area di interesse al database.
+     *
+     * @param id_area    l'ID dell'area di interesse.
+     * @param geoname_id l'ID Geoname dell'area di interesse.
+     * @param nome       il nome dell'area di interesse.
+     * @return true se l'area di interesse è stata aggiunta con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     boolean AddAreaInteresse(Integer id_area, String geoname_id, String nome) throws RemoteException;
-    //in add previsione manca la data dopo id_centro, non so se devo importare la classe date di java.util o altre
+
+    /**
+     * Aggiunge una nuova previsione al database.
+     *
+     * @param id_area         l'ID dell'area di interesse.
+     * @param id_centro       l'ID del centro.
+     * @param username        lo username dell'utente che aggiunge la previsione.
+     * @param vVento          il valore del vento.
+     * @param pUmidita        il valore dell'umidità.
+     * @param pressione       il valore della pressione.
+     * @param temperatura     il valore della temperatura.
+     * @param precipitazioni  il valore delle precipitazioni.
+     * @param aGhiacciai      il valore dell'altitudine dei ghiacciai.
+     * @param mGhiacciai      il valore della massa dei ghiacciai.
+     * @param nVento          la nota del vento.
+     * @param nUmidita        la nota dell'umidità.
+     * @param nPRessione      la nota della pressione.
+     * @param nTemperatura    la nota della temperatura.
+     * @param nPrecipitazioni la nota delle precipitazioni.
+     * @param nAGhiacciai     la nota dell'altitudine dei ghiacciai.
+     * @param nMGhiacciai     la nota della massa dei ghiacciai.
+     * @return true se la previsione è stata aggiunta con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     boolean AddPrevisione(Integer id_area, Integer id_centro, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
 
-    JUser getUser(String user, String pass) throws  RemoteException; //metodo per il log in
-    boolean login(InetAddress ip) throws  RemoteException;;
+    /**
+     * Recupera un utente dal database in base allo username e alla password forniti.
+     *
+     * @param user lo username dell'utente.
+     * @param pass la password dell'utente.
+     * @return un oggetto JUser che rappresenta l'utente se le credenziali sono corrette, null altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
+    JUser getUser(String user, String pass) throws RemoteException;
 }
