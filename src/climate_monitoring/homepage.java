@@ -285,7 +285,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * la pagina di login.
      */
     private void btnAccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccediActionPerformed
-        login l = new login();
+        login l = new login(this);
         l.addWindowListener(this);
         l.setVisible(true);
         setVisible(false);
