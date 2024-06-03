@@ -319,6 +319,7 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
      * @throws IOException
      */
     private void drawTable(ArrayList<JPrevisioni> list) throws IOException {
+        tabellaPrevisioni.getTableHeader().setReorderingAllowed(false);
         List<String[]> listaPrev = new ArrayList<>();
         if (list != null && !list.isEmpty()) {
             for (JPrevisioni prev : list) {

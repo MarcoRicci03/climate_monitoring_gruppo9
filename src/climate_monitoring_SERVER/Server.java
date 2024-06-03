@@ -25,15 +25,30 @@ import java.util.Scanner;
 
 
 public class Server extends UnicastRemoteObject implements DBInterface {
-    private ArrayList<InetAddress> client_loggati;
+    /**
+     * Connessione al database utilizzata per le operazioni di accesso ai dati.
+     */
     private DatabaseConnection db;
 
+    /**
+     * Costruttore della classe Server.
+     * Inizializza la connessione al database e segnala che il server è pronto.
+     *
+     * @param db la connessione al database da utilizzare per le operazioni di accesso ai dati.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     public Server(DatabaseConnection db) throws RemoteException {
         this.db = db;
-        client_loggati = new ArrayList<>();
         System.err.println("Server ready");
     }
 
+    /**
+     * Punto di ingresso principale dell'applicazione server.
+     * Configura la connessione al database e avvia il server RMI.
+     *
+     * @param args argomenti della riga di comando che includono URL del database, porta, nome, username e password.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     public static void main(String[] args) throws RemoteException {
         Scanner s = new Scanner(System.in);
         String url = "jdbc:postgresql://", user, password;
@@ -59,6 +74,17 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         r.rebind("GestoreClimateMonitoring", server);
     }
 
+    /**
+     * Carica le aree di interesse dal database in base ai filtri forniti.
+     *
+     * @param filtro_nome       il nome da filtrare (può essere null).
+     * @param filtro_coordinate le coordinate da utilizzare per la ricerca (può essere null).
+     * @param filtro_raggio     il raggio per la ricerca basata su coordinate (deve essere maggiore di 0 se utilizzato).
+     * @param id_stazione       l'ID della stazione da filtrare (può essere null).
+     * @param id_area           l'ID dell'area di interesse da filtrare (può essere -1).
+     * @return una lista di aree di interesse che soddisfano i criteri di filtro, o null se si verifica un errore.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public ArrayList<JAreaInteresse> loadAree_interesse(String filtro_nome, JCoordinate filtro_coordinate, int filtro_raggio, String id_stazione, int id_area) throws RemoteException {
         try {
@@ -72,8 +98,8 @@ public class Server extends UnicastRemoteObject implements DBInterface {
                 parameters.add(filtro_coordinate.getLon());
                 parameters.add(filtro_raggio);
             } else if (filtro_nome != null && filtro_coordinate == null && filtro_raggio == -1) {
-                whereClause = " WHERE aree_interesse.nome LIKE ?";
-                parameters.add(filtro_nome);
+                whereClause = " WHERE LOWER(aree_interesse.nome) LIKE LOWER(?)";
+                parameters.add("%" + filtro_nome.toLowerCase() + "%");
             } else if (id_stazione != null) {
                 whereClause = " WHERE aree_interesse.geoname_id = ?";
                 parameters.add(id_stazione);
@@ -97,6 +123,16 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return null;
     }
 
+    /**
+     * Carica le previsioni dal database in base ai filtri forniti.
+     *
+     * @param geoname_id        l'ID Geoname dell'area di interesse.
+     * @param id_area_interesse l'ID dell'area di interesse.
+     * @param dateFromFilter    indica se filtrare le previsioni a partire dalla data corrente.
+     * @param dateFilter        la data specifica per cui filtrare le previsioni (può essere null).
+     * @return una lista di previsioni che soddisfano i criteri di filtro, o null se si verifica un errore.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public ArrayList<JPrevisioni> loadPrevisioni(String geoname_id, int id_area_interesse, boolean dateFromFilter, Date dateFilter) throws RemoteException {
         try {
@@ -118,6 +154,13 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return null;
     }
 
+    /**
+     * Carica le stazioni dal database in base al filtro fornito.
+     *
+     * @param filtro_id l'ID della stazione da filtrare (può essere null).
+     * @return una lista di stazioni che soddisfano i criteri di filtro, o null se si verifica un errore.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public ArrayList<JStazione> loadStazioni(String filtro_id) throws RemoteException {
         try {
@@ -143,6 +186,12 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return null;
     }
 
+    /**
+     * Carica tutte le nazioni dal database.
+     *
+     * @return una lista di nazioni, o null se si verifica un errore.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public ArrayList<JNazione> loadNazioni() throws RemoteException {
         try {
@@ -163,6 +212,15 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return null;
     }
 
+    /**
+     * Ottiene le stazioni Geoname ID dal servizio web in base al nome della città.
+     *
+     * @param cityName il nome della città per cui cercare le stazioni.
+     * @return una lista di stazioni che corrispondono al nome della città.
+     * @throws RemoteException      se si verifica un problema di comunicazione remota.
+     * @throws IOException          se si verifica un problema di I/O durante la comunicazione con il servizio web.
+     * @throws InterruptedException se il thread viene interrotto durante l'attesa della risposta.
+     */
     @Override
     public ArrayList<JStazione> getStationGeonameIdfromWS(String cityName) throws RemoteException, IOException, InterruptedException {
         ArrayList<JStazione> stazioni = new ArrayList<>();
@@ -186,6 +244,13 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return stazioni;
     }
 
+    /**
+     * Verifica se il codice operatore esiste nel database.
+     *
+     * @param codice_operatore il codice operatore da verificare.
+     * @return true se il codice operatore esiste nel database, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public boolean checkCodiceOperatore(String codice_operatore) throws RemoteException {
         try {
@@ -203,6 +268,13 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return false;
     }
 
+    /**
+     * Verifica se il codice operatore è già stato utilizzato nel database.
+     *
+     * @param codice_operatore il codice operatore da verificare.
+     * @return true se il codice operatore è già stato utilizzato, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     public boolean checkCodiceOperatoreUsed(String codice_operatore) throws RemoteException {
         try {
             String baseQuery = "SELECT codice_operatore FROM utenti WHERE codice_operatore = ?";
@@ -219,6 +291,14 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return false;
     }
 
+    /**
+     * Verifica se esiste già un utente con lo stesso username nel database.
+     * Restituisce il numero più alto trovato nell'username, o "1" se nessun numero è trovato.
+     *
+     * @param username lo username da verificare.
+     * @return una stringa rappresentante il numero più alto trovato nell'username, o "1" se nessun numero è trovato o in caso di errore.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     public String checkUserAlreadyExistsByUsername(String username) throws RemoteException {
         try {
             String baseQuery = "SELECT max(username) as max_username FROM utenti WHERE username LIKE ?";
@@ -246,6 +326,14 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return "1";
     }
 
+    /**
+     * Verifica se esiste già una stazione con lo stesso geoname_id o nome nel database.
+     *
+     * @param geoname_id l'ID Geoname della stazione da verificare.
+     * @param nome       il nome della stazione da verificare.
+     * @return true se esiste già una stazione con lo stesso geoname_id o nome, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public boolean checkExistStazione(String geoname_id, String nome) throws RemoteException {
         try {
@@ -263,7 +351,17 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return false;
     }
 
-
+    /**
+     * Aggiunge una nuova stazione al database.
+     * Verifica se esiste già una stazione con lo stesso geoname_id o nome prima di inserirla.
+     *
+     * @param geoname_id   l'ID Geoname della nuova stazione.
+     * @param nome         il nome della nuova stazione.
+     * @param country_code il codice del paese della nuova stazione.
+     * @param coordinate   le coordinate (latitudine e longitudine) della nuova stazione.
+     * @return true se la stazione è stata aggiunta con successo, false se la stazione esiste già o se si verifica un errore.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public boolean AddStazione(String geoname_id, String nome, String country_code, JCoordinate coordinate) throws RemoteException {
         try {
@@ -274,11 +372,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
                 String baseQuery = "INSERT INTO stazioni (geoname_id,nome,country_code,latitudine,longitudine) VALUES (?,?,?,?,?)";
                 int rs = db.executeUpdate(baseQuery, new Object[]{geoname_id, nome, country_code, coordinate.getLat(), coordinate.getLon()}, true);
                 return rs != -1 && rs == 1;
-//                if (rs != -1) {
-//                    if (rs == 1) {
-//                        return true;
-//                    }
-//                }
             } else {
                 return false;
             }
@@ -288,6 +381,19 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return false;
     }
 
+    /**
+     * Aggiunge un nuovo utente al database.
+     * Verifica se il codice operatore è già stato utilizzato prima di inserire il nuovo utente.
+     *
+     * @param nome il nome dell'utente.
+     * @param cognome il cognome dell'utente.
+     * @param password la password dell'utente.
+     * @param cf il codice fiscale dell'utente.
+     * @param geoname_id l'ID Geoname associato all'utente.
+     * @param codiceOperatore il codice operatore dell'utente.
+     * @return lo username del nuovo utente se l'inserimento è avvenuto con successo, null altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
         try {
@@ -301,11 +407,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
                 String baseQuery = "INSERT INTO utenti (nome,cognome,username,email,codice_operatore,codice_fiscale,geoname_id,password) VALUES (?,?,?,?,?,?,?,?)";
                 int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email, codiceOperatore, cf, geoname_id, password}, true);
-                if (rs != -1) {
-                    if (rs == 1) {
-                        return username;
-                    }
-                }
+                return rs != -1 && rs == 1 ? username : null;
             }
         } catch (Exception ex) {
             System.err.println("Errore nell'aggiunta dell'utente: " + ex.getMessage());
@@ -323,6 +425,14 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return false;
     }
 
+    /**
+     * Recupera un utente dal database in base allo username e alla password forniti.
+     *
+     * @param user lo username dell'utente.
+     * @param pass la password dell'utente.
+     * @return un oggetto JUser che rappresenta l'utente se le credenziali sono corrette, null altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public JUser getUser(String user, String pass) throws RemoteException {
         String baseQuery = "SELECT * FROM utenti WHERE username = ? AND password = ?";
@@ -338,20 +448,4 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         }
         return null;
     }
-
-    @Override
-    public boolean login(InetAddress ip) throws RemoteException {
-        if (client_loggati.contains(ip)) {
-            //return false;
-        }
-        client_loggati.add(ip);
-        return true;
-    }
-    
-    
-    /*
-        String url = "jdbc:postgresql://localhost:5432/db_CM";
-        String user = "postgres";
-        String password = "root";
-     */
 }
