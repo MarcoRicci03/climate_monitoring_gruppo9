@@ -69,7 +69,8 @@ public class creaStazione extends javax.swing.JFrame {
             cmbCodNazione.addItem(nazione.getNome_nazione());
         }
         StazioneTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        StazioneTable.getTableHeader().setReorderingAllowed(false);
+        this.setResizable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -352,7 +353,6 @@ public class creaStazione extends javax.swing.JFrame {
      * il watermark (filigrana).
      */
     private void txtCoordinateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordinateKeyPressed
-        // TODO add your handling code here:
         if (txtCoordinate.getForeground() != Color.BLACK && txtCoordinate.getText().equals("Latitudine, Longitudine")) {
             txtCoordinate.setText("");
         }
@@ -360,7 +360,6 @@ public class creaStazione extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCoordinateKeyPressed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        // TODO add your handling code here:
         txtCoordinate.setCaretPosition(0);
     }//GEN-LAST:event_formWindowGainedFocus
 
@@ -370,7 +369,6 @@ public class creaStazione extends javax.swing.JFrame {
      * il watermark (filigrana).
      */
     private void txtCoordinateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordinateKeyReleased
-        // TODO add your handling code here:
         if (txtCoordinate.getText().isEmpty()) {
             txtCoordinate.setText("Latitudine, Longitudine");
             txtCoordinate.setCaretPosition(0);
@@ -402,6 +400,7 @@ public class creaStazione extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCittaKeyReleased
 
     private synchronized void drawTable(ArrayList<JStazione> arraySuggerimenti) {
+        StazioneTable.getTableHeader().setReorderingAllowed(false);
         listStazioni = new ArrayList<>();
         Vector v = new Vector();
 
@@ -422,8 +421,8 @@ public class creaStazione extends javax.swing.JFrame {
     }
 
     private void StazioneTableMouseClicked(java.awt.event.MouseEvent evt) {
-        if (StazioneTable.getModel().getRowCount() > 0) {
-            if (StazioneTable.getSelectedColumn() >= 0) {
+        try {
+            if (StazioneTable.getModel().getRowCount() > 0 && StazioneTable.getSelectedColumn() >= 0) {
                 txtGeoname_id.setText(listStazioni.get(StazioneTable.getSelectedRow())[0]);
                 txtCitta.setText(listStazioni.get(StazioneTable.getSelectedRow())[1]);
                 txtCodNazione.setText(listStazioni.get(StazioneTable.getSelectedRow())[2]);
@@ -432,6 +431,8 @@ public class creaStazione extends javax.swing.JFrame {
                 String lon = listStazioni.get(StazioneTable.getSelectedRow())[5];
                 txtCoordinate.setText(lat + ", " + lon);
             }
+        } catch (NullPointerException e) {
+
         }
     }
 
