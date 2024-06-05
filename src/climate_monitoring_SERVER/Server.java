@@ -286,11 +286,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-<<<<<<< Updated upstream
-    public boolean AddPrevisione(Integer id_area, Integer id_centro, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
-        String baseQuery = "INSERT INTO previsioni (\"data\", geoname_id, id_area_interesse, id_utente, valorevento, notavento, valoreumidita, notaumidita, valorepressione, notapressione, valoretemperatura, notatemperatura, valoreprecipitazioni, notaprecipitazioni, valorealtghiacciai, notaaltghiacciai, valoremassaghiacciai, notamassaghiacciai) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-        int rs = db.executeUpdate(baseQuery, new Object[]{id_area, id_centro, username, vVento, pUmidita, pressione, temperatura, precipitazioni, aGhiacciai, mGhiacciai, nVento, nUmidita, nPRessione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai}, true);
-=======
     public boolean AddPrevisione(Date data, Integer id_area, Integer id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
         String baseQuery = "INSERT INTO public.previsioni (" +
             "data, geoname_id, id_area_interesse, id_utente, valorevento, notavento, " +
@@ -319,9 +314,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             mGhiacciai, 
             nMGhiacciai
         }, true);
-        
->>>>>>> Stashed changes
-        System.out.println(rs);
         return rs != -1;
     }
 

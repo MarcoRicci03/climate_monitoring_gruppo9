@@ -597,12 +597,9 @@ public class admin_panel extends javax.swing.JFrame {
      * aggiornarla manualmente.
      */
     private void btnAggiungiPrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiPrevisioniActionPerformed
-        // TODO add your handling code here:
         if (!txtAreaSelezionata.getText().isEmpty()) {
-            int valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia;
-            
             Date date = datePickerData.getDate();
-            
+
             int id = Integer.parseInt(txtIdCentro.getText());
             String vVento = cmbVento.getItemAt(cmbVento.getSelectedIndex());
             String pUmidita = cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex());
@@ -620,26 +617,34 @@ public class admin_panel extends javax.swing.JFrame {
             String nAGhiacciai = noteAGhiacciai.getText().isEmpty() ? " " : noteAGhiacciai.getText();
             String nMGhiacciai = noteMGhiacciai.getText().isEmpty() ? " " : noteMGhiacciai.getText();
 
-            // ParserCSV.aggiungiPrevisione(previsione);
-
-            var id_centro = id;
             var id_area = user.getId_areaSelezionata();
-            Integer username = Integer.valueOf( user.getId() );
+            Integer username = Integer.valueOf(user.getId());
             var result = false;
             try {
-<<<<<<< Updated upstream
-                result = DatiCondivisi.getInstance().gestore_db.AddPrevisione(id_area, id_centro, username, vVento, pUmidita, pressione, temperatura, precipitazioni, aGhiacciai, mGhiacciai, nVento, nUmidita, nPRessione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai);
-=======
-                result = DatiCondivisi.getInstance().gestore_db.AddPrevisione( date, id_area, id_centro, username, vVento, pUmidita, pressione, temperatura, precipitazioni, aGhiacciai, mGhiacciai, nVento, nUmidita, nPRessione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai );
->>>>>>> Stashed changes
+                result = DatiCondivisi.getInstance().gestore_db.AddPrevisione(date, id_area, id, username, vVento, pUmidita, pressione, temperatura, precipitazioni, aGhiacciai, mGhiacciai, nVento, nUmidita, nPRessione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai);
             } catch (RemoteException ex) {
                 Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (result == false) {
+            if (!result) {
                 JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             aggiornaTabella();
+            cmbVento.setSelectedIndex(0);
+            cmbUmidita.setSelectedIndex(0);
+            cmbPressione.setSelectedIndex(0);
+            cmbTemperatura.setSelectedIndex(0);
+            cmbPrecipitazioni.setSelectedIndex(0);
+            cmbGhiacciai.setSelectedIndex(0);
+            cmbMassaGhiacciai.setSelectedIndex(0);
+
+            noteVento.setText("");
+            noteUmidita.setText("");
+            notePressione.setText("");
+            noteTemperatura.setText("");
+            notePrecipitazioni.setText("");
+            noteAGhiacciai.setText("");
+            noteMGhiacciai.setText("");
         } else {
             JOptionPane.showMessageDialog(null, "Seleziona un'area d'interesse.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -665,7 +670,7 @@ public class admin_panel extends javax.swing.JFrame {
     void aggiornaTabella() {
         try {
             // TODO add your handling code here:
-            
+
             String[] data = listAree.getSelectedValue().split(" ", 2);
             int idAreaInteresse = Integer.parseInt(data[0]);
             user.setId_areaSelezionata(idAreaInteresse);
@@ -677,7 +682,7 @@ public class admin_panel extends javax.swing.JFrame {
 
             listaPrev = new ArrayList<>();
             for (JPrevisioni prev : list) {
-                String[] elements = prev.toString().split(",",-1);
+                String[] elements = prev.toString().split(",", -1);
                 listaPrev.add(elements);
             }
 
@@ -689,7 +694,7 @@ public class admin_panel extends javax.swing.JFrame {
                     return false;
                 }
             };
-            
+
             if (!list.isEmpty()) {
                 for (int i = 0; i < list.size(); i++) {
                     model.addRow(listaPrev.get(i));

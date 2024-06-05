@@ -36,15 +36,10 @@ public interface DBInterface extends Remote {
     boolean AddAreaInteresse( String nome, String geoname_id) throws RemoteException;
     
     // Controllo che il nome dell'area di interesse sia presente nella tabella
-<<<<<<< Updated upstream
     boolean checkAreaInteresse( String nome, String geoname_id ) throws RemoteException;
     //in add previsione manca la data dopo id_centro, non so se devo importare la classe date di java.util o altre
-    boolean AddPrevisione(Integer id_area, Integer id_centro, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
-=======
-    boolean checkAreaInteresse( String nome ) throws RemoteException;
-    
     boolean AddPrevisione(Date data, Integer id_area, Integer id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
->>>>>>> Stashed changes
+
 
     JUser getUser(String user, String pass) throws  RemoteException; //metodo per il log in
     boolean login(InetAddress ip) throws  RemoteException;;

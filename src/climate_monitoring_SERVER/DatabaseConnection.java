@@ -103,7 +103,6 @@ public class DatabaseConnection {
                     if (params[i] == null) continue;
                     Object p = params[i];
                     switch (p.getClass().getSimpleName()) {
-                        
                         case "Integer":
                             stmt.setInt(i + 1, (Integer) p);
                             break;
