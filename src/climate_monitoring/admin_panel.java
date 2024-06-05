@@ -14,6 +14,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -657,10 +659,27 @@ public class admin_panel extends javax.swing.JFrame {
      * @param evt
      */
     private void jTabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabellaPrevisioniMouseClicked
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         if (jTabellaPrevisioni.getSelectedColumn() >= 2)
             txtAreaNoteLettura.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn() + 7]);
         else
             txtAreaNoteLettura.setText("");
+        if(jTabellaPrevisioni.getSelectedRow()>=0){
+            try {
+                datePickerData.setDate(formatter.parse(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[0]));
+                txtIdCentro.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[1]);
+                noteVento.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[9]);
+                noteUmidita.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[10]);
+                notePressione.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[11]);
+                noteTemperatura.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[12]);
+                notePrecipitazioni.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[13]);
+                noteAGhiacciai.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[14]);
+                noteMGhiacciai.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[15]);
+            } catch (ParseException ex) {
+                Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                    
+        }
     }//GEN-LAST:event_jTabellaPrevisioniMouseClicked
 
     /**
