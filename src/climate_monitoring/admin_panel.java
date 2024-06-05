@@ -660,6 +660,7 @@ public class admin_panel extends javax.swing.JFrame {
     void aggiornaTabella() {
         try {
             // TODO add your handling code here:
+            
             String[] data = listAree.getSelectedValue().split(" ", 2);
             int idAreaInteresse = Integer.parseInt(data[0]);
             user.setId_areaSelezionata(idAreaInteresse);
@@ -683,13 +684,14 @@ public class admin_panel extends javax.swing.JFrame {
                     return false;
                 }
             };
-
+            
             if (!list.isEmpty()) {
                 for (int i = 0; i < list.size(); i++) {
                     model.addRow(listaPrev.get(i));
                 }
             }
             jTabellaPrevisioni.setModel((TableModel) model);
+            jTabellaPrevisioni.getTableHeader().setReorderingAllowed(false);
         } catch (IOException ex) {
             Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
         }
