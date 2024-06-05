@@ -600,16 +600,17 @@ public class admin_panel extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!txtAreaSelezionata.getText().isEmpty()) {
             int valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia;
-            LocalDate ld = datePickerData.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            String txtData = ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            
+            Date date = datePickerData.getDate();
+            
             int id = Integer.parseInt(txtIdCentro.getText());
-            int vVento = Integer.parseInt(cmbVento.getItemAt(cmbVento.getSelectedIndex()));
-            int pUmidita = Integer.parseInt(cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex()));
-            int pressione = Integer.parseInt(cmbPressione.getItemAt(cmbPressione.getSelectedIndex()));
-            int temperatura = Integer.parseInt(cmbTemperatura.getItemAt(cmbTemperatura.getSelectedIndex()));
-            int precipitazioni = Integer.parseInt(cmbPrecipitazioni.getItemAt(cmbPrecipitazioni.getSelectedIndex()));
-            int aGhiacciai = Integer.parseInt(cmbGhiacciai.getItemAt(cmbGhiacciai.getSelectedIndex()));
-            int mGhiacciai = Integer.parseInt(cmbMassaGhiacciai.getItemAt(cmbMassaGhiacciai.getSelectedIndex()));
+            String vVento = cmbVento.getItemAt(cmbVento.getSelectedIndex());
+            String pUmidita = cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex());
+            String pressione = cmbPressione.getItemAt(cmbPressione.getSelectedIndex());
+            String temperatura = cmbTemperatura.getItemAt(cmbTemperatura.getSelectedIndex());
+            String precipitazioni = cmbPrecipitazioni.getItemAt(cmbPrecipitazioni.getSelectedIndex());
+            String aGhiacciai = cmbGhiacciai.getItemAt(cmbGhiacciai.getSelectedIndex());
+            String mGhiacciai = cmbMassaGhiacciai.getItemAt(cmbMassaGhiacciai.getSelectedIndex());
 
             String nVento = noteVento.getText().isEmpty() ? " " : noteVento.getText();
             String nUmidita = noteUmidita.getText().isEmpty() ? " " : noteUmidita.getText();
@@ -623,10 +624,14 @@ public class admin_panel extends javax.swing.JFrame {
 
             var id_centro = id;
             var id_area = user.getId_areaSelezionata();
-            var username = user.getUsername();
+            Integer username = Integer.valueOf( user.getId() );
             var result = false;
             try {
+<<<<<<< Updated upstream
                 result = DatiCondivisi.getInstance().gestore_db.AddPrevisione(id_area, id_centro, username, vVento, pUmidita, pressione, temperatura, precipitazioni, aGhiacciai, mGhiacciai, nVento, nUmidita, nPRessione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai);
+=======
+                result = DatiCondivisi.getInstance().gestore_db.AddPrevisione( date, id_area, id_centro, username, vVento, pUmidita, pressione, temperatura, precipitazioni, aGhiacciai, mGhiacciai, nVento, nUmidita, nPRessione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai );
+>>>>>>> Stashed changes
             } catch (RemoteException ex) {
                 Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
             }

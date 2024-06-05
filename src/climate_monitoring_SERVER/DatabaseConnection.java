@@ -103,6 +103,7 @@ public class DatabaseConnection {
                     if (params[i] == null) continue;
                     Object p = params[i];
                     switch (p.getClass().getSimpleName()) {
+                        
                         case "Integer":
                             stmt.setInt(i + 1, (Integer) p);
                             break;
@@ -128,7 +129,12 @@ public class DatabaseConnection {
                             }
                             break;
                         case "Date":
-                            stmt.setDate(i + 1, (java.sql.Date) p);
+                            //formato yyyy-mm-dd
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            String strData = sdf.format((Date) p);
+                            java.sql.Date data = java.sql.Date.valueOf(strData);
+                            System.out.println(data);
+                            stmt.setDate(i + 1, data);
                             break;
                         default:
                             throw new IllegalArgumentException("Tipo non riconosciuto: " + p.getClass().getSimpleName());
