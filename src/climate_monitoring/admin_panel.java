@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -62,14 +63,7 @@ public class admin_panel extends javax.swing.JFrame {
 
         user = userLoggato;
 
-        ArrayList<JAreaInteresse> list = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, user.getGeoname_id(), -1 );
-
-        if ( list != null && !list.isEmpty()) {
-            for (JAreaInteresse a : list) {
-                v.add(a.toStringList());
-            }
-            listAree.setListData(v);
-        }
+        loadAreeInteresse();
 
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
@@ -554,18 +548,35 @@ public class admin_panel extends javax.swing.JFrame {
      */
     private void btnAggiungiAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiAreaActionPerformed
         String areaDiInteresse = txtNomeArea.getText();
-
-//        if (!areaDiInteresse.isBlank()) {
-//            Integer id = ParserCSV.aggiungiAreaInteresse(user.getGeoname_id(), txtNomeArea.getText());
-//            if (id > 0) {
-//                String s = id + " " + txtNomeArea.getText();
-//                v.add(s);
-//                listAree.setListData(v);
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Questa area di interesse è già stata inserita.", "Errore", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//        } else
-//            JOptionPane.showMessageDialog(null, "Compilare il valore", "Errore", JOptionPane.INFORMATION_MESSAGE);
+        
+        if (!areaDiInteresse.isBlank()) {
+            // Controllo se è già stata inserita la seguente area di interesse
+            boolean exist_area;
+            try {
+                exist_area = DatiCondivisi.getInstance().gestore_db.checkAreaInteresse( areaDiInteresse );
+                if( exist_area ){
+                    JOptionPane.showMessageDialog(null, "L'area di interesse è già stata aggiunta in precedenza", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
+                return;
+            }
+            
+            try {
+                var result = DatiCondivisi.getInstance().gestore_db.AddAreaInteresse( areaDiInteresse, user.getGeoname_id() );
+                if( !result ){
+                    JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta dell'area di interesse", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                
+                loadAreeInteresse();
+            } catch (RemoteException ex) {
+                Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } else
+            JOptionPane.showMessageDialog(null, "Compilare il valore", "Errore", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnAggiungiAreaActionPerformed
     /**
      * Questo metodo viene richiamato quando selezionata un'area d'interesse
@@ -590,26 +601,37 @@ public class admin_panel extends javax.swing.JFrame {
             LocalDate ld = datePickerData.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             String txtData = ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             int id = Integer.parseInt(txtIdCentro.getText());
-            valVento = Integer.parseInt(cmbVento.getItemAt(cmbVento.getSelectedIndex()));
-            valUmidita = Integer.parseInt(cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex()));
-            valPressione = Integer.parseInt(cmbPressione.getItemAt(cmbPressione.getSelectedIndex()));
-            valTemperatura = Integer.parseInt(cmbTemperatura.getItemAt(cmbTemperatura.getSelectedIndex()));
-            valPrecipitazioni = Integer.parseInt(cmbPrecipitazioni.getItemAt(cmbPrecipitazioni.getSelectedIndex()));
-            valGhiacciai = Integer.parseInt(cmbGhiacciai.getItemAt(cmbGhiacciai.getSelectedIndex()));
-            valMassaGhiaccia = Integer.parseInt(cmbMassaGhiacciai.getItemAt(cmbMassaGhiacciai.getSelectedIndex()));
+            int vVento = Integer.parseInt(cmbVento.getItemAt(cmbVento.getSelectedIndex()));
+            int pUmidita = Integer.parseInt(cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex()));
+            int pressione = Integer.parseInt(cmbPressione.getItemAt(cmbPressione.getSelectedIndex()));
+            int temperatura = Integer.parseInt(cmbTemperatura.getItemAt(cmbTemperatura.getSelectedIndex()));
+            int precipitazioni = Integer.parseInt(cmbPrecipitazioni.getItemAt(cmbPrecipitazioni.getSelectedIndex()));
+            int aGhiacciai = Integer.parseInt(cmbGhiacciai.getItemAt(cmbGhiacciai.getSelectedIndex()));
+            int mGhiacciai = Integer.parseInt(cmbMassaGhiacciai.getItemAt(cmbMassaGhiacciai.getSelectedIndex()));
 
             String nVento = noteVento.getText().isEmpty() ? " " : noteVento.getText();
             String nUmidita = noteUmidita.getText().isEmpty() ? " " : noteUmidita.getText();
-            String nPressione = notePressione.getText().isEmpty() ? " " : notePressione.getText();
+            String nPRessione = notePressione.getText().isEmpty() ? " " : notePressione.getText();
             String nTemperatura = noteTemperatura.getText().isEmpty() ? " " : noteTemperatura.getText();
             String nPrecipitazioni = notePrecipitazioni.getText().isEmpty() ? " " : notePrecipitazioni.getText();
             String nAGhiacciai = noteAGhiacciai.getText().isEmpty() ? " " : noteAGhiacciai.getText();
             String nMGhiacciai = noteMGhiacciai.getText().isEmpty() ? " " : noteMGhiacciai.getText();
-
-            JPrevisioni previsione = new JPrevisioni(txtData, id, user.getId_areaSelezionata(), user.getUsername(),
-                    valVento, valUmidita, valPressione, valTemperatura, valPrecipitazioni, valGhiacciai, valMassaGhiaccia,
-                    nVento, nUmidita, nPressione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai);
+            
             // ParserCSV.aggiungiPrevisione(previsione);
+
+            var id_centro = id;
+            var id_area = user.getId_areaSelezionata();
+            var username = user.getUsername();
+            var result = false;
+            try {
+                result = DatiCondivisi.getInstance().gestore_db.AddPrevisione( id_area, id_centro, username, vVento, pUmidita, pressione, temperatura, precipitazioni, aGhiacciai, mGhiacciai, nVento, nUmidita, nPRessione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai );
+            } catch (RemoteException ex) {
+                Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(result == false){
+                JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             aggiornaTabella();
         } else {
             JOptionPane.showMessageDialog(null, "Seleziona un'area d'interesse.", "Errore", JOptionPane.INFORMATION_MESSAGE);
@@ -717,4 +739,17 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JTextField txtIdCentro;
     private javax.swing.JTextField txtNomeArea;
     // End of variables declaration//GEN-END:variables
+
+    private void loadAreeInteresse() throws RemoteException {
+        listAree.setListData(new String[0]);
+          
+        ArrayList<JAreaInteresse> list = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, user.getGeoname_id(), -1 );
+
+        if ( list != null && !list.isEmpty()) {
+            for (JAreaInteresse a : list) {
+                v.add(a.toStringList());
+            }
+            listAree.setListData(v);
+        }
+    }
 }
