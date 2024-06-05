@@ -256,7 +256,6 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
     private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
         if (area != null) {
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 list = DatiCondivisi.getInstance().gestore_db.loadPrevisioni(area.getGeoname_id(), area.getId_area(), false, jCalendar.getDate());
                 if (list != null)
                     drawTable(list);
