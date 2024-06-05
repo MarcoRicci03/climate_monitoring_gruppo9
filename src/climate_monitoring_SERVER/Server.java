@@ -179,7 +179,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT codice FROM codici_operatori WHERE codice = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
             if (rs != null) {
-                if(rs.isBeforeFirst()){
+                if (rs.isBeforeFirst()) {
                     return true;
                 }
                 return false;
@@ -195,7 +195,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT codice_operatore FROM utenti WHERE codice_operatore = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
             if (rs != null) {
-                if(rs.isBeforeFirst()){
+                if (rs.isBeforeFirst()) {
                     return true;
                 }
                 return false;
@@ -211,10 +211,10 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT max(username) as max_username FROM utenti WHERE username LIKE ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{username}, true);
             if (rs != null) {
-                if(rs.isBeforeFirst()){
+                if (rs.isBeforeFirst()) {
                     rs.next();
-                    String maxUsername=rs.getString("max_username");
-                    if(maxUsername!=null){
+                    String maxUsername = rs.getString("max_username");
+                    if (maxUsername != null) {
                         StringBuilder numeroStr = new StringBuilder();
                         for (char c : maxUsername.toCharArray()) {
                             if (Character.isDigit(c)) {
@@ -234,8 +234,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
 
-
-
     @Override
     public boolean AddStazione(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) throws RemoteException {
         return false;
@@ -244,20 +242,20 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     @Override
     public String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
         try {
-            boolean checkCodiceOperatoreUsato=checkCodiceOperatoreUsed(codiceOperatore);
-            if(!checkCodiceOperatoreUsato){
+            boolean checkCodiceOperatoreUsato = checkCodiceOperatoreUsed(codiceOperatore);
+            if (!checkCodiceOperatoreUsato) {
                 String username = nome.substring(0, 1) + "_" + cognome;
-                String idNuovoUtente= checkUserAlreadyExistsByUsername(username+"%");
-                System.out.println("Id nuovo utente: "+idNuovoUtente);
+                String idNuovoUtente = checkUserAlreadyExistsByUsername(username + "%");
+                System.out.println("Id nuovo utente: " + idNuovoUtente);
 
-                username+=idNuovoUtente;
+                username += idNuovoUtente;
                 String email = username + "@mail.com";
 
                 String baseQuery = "INSERT INTO utenti (nome,cognome,username,email,codice_operatore,codice_fiscale,geoname_id,password) VALUES (?,?,?,?,?,?,?,?)";
-                int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email,codiceOperatore,cf,geoname_id,password}, true);
+                int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email, codiceOperatore, cf, geoname_id, password}, true);
                 System.out.println(rs);
                 if (rs != -1) {
-                    if(rs==1){
+                    if (rs == 1) {
                         return username;
                     }
                 }
@@ -272,41 +270,27 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     public boolean AddAreaInteresse(String nome, String geoname_id) throws RemoteException {
         String baseQuery = "INSERT INTO public.aree_interesse (nome, geoname_id) VALUES(?,?);";
         int rs = db.executeUpdate(baseQuery, new Object[]{nome, geoname_id}, true);
-        System.out.println("id_area: " + rs);
         return rs > 0;
     }
-    
+
     @Override
-    public boolean checkAreaInteresse( String nome ) throws RemoteException {
-        String baseQuery = "SELECT id_area_interesse FROM aree_interesse WHERE nome=?";
-        ResultSet rs = db.executeQuery(baseQuery, new Object[]{nome}, true);
+    public boolean checkAreaInteresse(String nome, String geoname_id) throws RemoteException {
+        String baseQuery = "SELECT id_area_interesse FROM aree_interesse WHERE LOWER(nome)=? AND geoname_id = ?";
         try {
-            if( rs.next() ){
-                if (rs.getInt("id_area_interesse") > 0 ) {
-                    System.out.println("id: " + rs.getInt("id_area_interesse") );
-                    return true;
-                }else{
-                    System.out.println("Errore 1");
-                    return false;
-                }
-            }
+            ResultSet rs = db.executeQuery(baseQuery, new Object[]{nome.toLowerCase(), geoname_id}, true);
+            return rs.next() && rs.getInt("id_area_interesse") > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Catch 1");
+            ex.printStackTrace();
         }
         return false;
     }
 
     @Override
     public boolean AddPrevisione(Integer id_area, Integer id_centro, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
-        String baseQuery = "INSERT INTO public.previsioni (\"data\", geoname_id, id_area_interesse, id_utente, valorevento, notavento, valoreumidita, notaumidita, valorepressione, notapressione, valoretemperatura, notatemperatura, valoreprecipitazioni, notaprecipitazioni, valorealtghiacciai, notaaltghiacciai, valoremassaghiacciai, notamassaghiacciai) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        String baseQuery = "INSERT INTO previsioni (\"data\", geoname_id, id_area_interesse, id_utente, valorevento, notavento, valoreumidita, notaumidita, valorepressione, notapressione, valoretemperatura, notatemperatura, valoreprecipitazioni, notaprecipitazioni, valorealtghiacciai, notaaltghiacciai, valoremassaghiacciai, notamassaghiacciai) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
         int rs = db.executeUpdate(baseQuery, new Object[]{id_area, id_centro, username, vVento, pUmidita, pressione, temperatura, precipitazioni, aGhiacciai, mGhiacciai, nVento, nUmidita, nPRessione, nTemperatura, nPrecipitazioni, nAGhiacciai, nMGhiacciai}, true);
         System.out.println(rs);
-        if (rs != -1) {
-            return true;
-        }else{
-            return false;
-        }
+        return rs != -1;
     }
 
     @Override

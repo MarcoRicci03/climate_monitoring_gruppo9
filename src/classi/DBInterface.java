@@ -36,7 +36,7 @@ public interface DBInterface extends Remote {
     boolean AddAreaInteresse( String nome, String geoname_id) throws RemoteException;
     
     // Controllo che il nome dell'area di interesse sia presente nella tabella
-    boolean checkAreaInteresse( String nome ) throws RemoteException;
+    boolean checkAreaInteresse( String nome, String geoname_id ) throws RemoteException;
     //in add previsione manca la data dopo id_centro, non so se devo importare la classe date di java.util o altre
     boolean AddPrevisione(Integer id_area, Integer id_centro, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
 

@@ -376,6 +376,7 @@ public class ParserCSV {
 //            }
 //        }
 //        return l;
+        return null;
     }
 
     //
@@ -403,6 +404,7 @@ public class ParserCSV {
 //            }
 //        }
 //        return l;
+        return null;
     }
 
     //
@@ -431,6 +433,7 @@ public class ParserCSV {
 //            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
 //            return -1;
 //        }
+        return null;
     }
 
     //
