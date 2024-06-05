@@ -672,7 +672,7 @@ public class admin_panel extends javax.swing.JFrame {
 
             listaPrev = new ArrayList<>();
             for (JPrevisioni prev : list) {
-                String[] elements = prev.toString().split(",");
+                String[] elements = prev.toString().split(",",-1);
                 listaPrev.add(elements);
             }
 
