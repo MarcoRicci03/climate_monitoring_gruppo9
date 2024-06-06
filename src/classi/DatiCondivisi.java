@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 /**
  * Classe singleton che contiene i dati condivisi utilizzati dall'applicazione.
+ *
+ * @autor marco_ricci
+ * @autor edoardo_rizzi
+ * @autor alberto_stagno
+ * @autor denis_di_napoli
  */
 public class DatiCondivisi {
     private static DatiCondivisi instance = null;
