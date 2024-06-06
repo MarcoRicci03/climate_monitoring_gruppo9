@@ -399,7 +399,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     @Override
-    public String AddUser(String nome, String cognome, String password, Integer geoname_id, String codiceOperatore) throws RemoteException {
+    public String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
         try {
             boolean checkCodiceOperatoreUsato = checkCodiceOperatoreUsed(codiceOperatore);
             if (!checkCodiceOperatoreUsato) {
@@ -407,7 +407,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
                 String idNuovoUtente = checkUserAlreadyExistsByUsername(username + "%");
                 username += idNuovoUtente;
                 String email = username + "@mail.com";
-                String cf = "CF" + idNuovoUtente;
+
                 String baseQuery = "INSERT INTO utenti (nome,cognome,username,email,codice_operatore,codice_fiscale,geoname_id,password) VALUES (?,?,?,?,?,?,?,?)";
                 int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email, codiceOperatore, cf, geoname_id, password}, true);
                 return rs == 1 ? username : null;

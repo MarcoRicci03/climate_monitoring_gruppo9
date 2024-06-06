@@ -130,7 +130,7 @@ public interface DBInterface extends Remote {
      * @return lo username del nuovo utente se l'inserimento è avvenuto con successo, null altrimenti.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
-    String AddUser(String nome, String cognome, String password, Integer geoname_id, String codiceOperatore) throws RemoteException;
+    String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException;
 
 
     /**
@@ -141,13 +141,15 @@ public interface DBInterface extends Remote {
      * @return true se l'area di interesse è stata aggiunta con successo, false altrimenti.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
-    boolean AddAreaInteresse( String nome, String geoname_id) throws RemoteException;
-  
-    boolean checkAreaInteresse( String nome, String geoname_id ) throws RemoteException;
+    boolean AddAreaInteresse(String nome, String geoname_id) throws RemoteException;
+
+    boolean checkAreaInteresse(String nome, String geoname_id) throws RemoteException;
 
     boolean AddPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
 
     boolean editPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
+
     boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException;
-    JUser getUser(String user, String pass) throws  RemoteException; //metodo per il log in
+
+    JUser getUser(String user, String pass) throws RemoteException; //metodo per il log in
 }

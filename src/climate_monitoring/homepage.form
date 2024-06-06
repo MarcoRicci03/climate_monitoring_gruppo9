@@ -229,6 +229,10 @@
                       <Color blue="e0" green="d4" red="b1" type="rgb"/>
                     </Property>
                     <Property name="rowHeight" type="int" value="25"/>
+                    <Property name="selectionMode" type="int" value="0"/>
+                    <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
+                      <JTableSelectionModel selectionMode="0"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableRisultatiMouseClicked"/>

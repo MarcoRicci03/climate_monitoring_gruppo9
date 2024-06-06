@@ -319,10 +319,13 @@ public class registrazione extends javax.swing.JFrame {
                         p.setDay(String.valueOf(ld.getDayOfMonth()));
                         p.setMonth(String.valueOf(ld.getMonthValue()));
                         p.setYear(String.valueOf(ld.getYear()));
-                        String normalized = Normalizer.normalize(txtLuogoNascita.getText().toUpperCase(), Normalizer.Form.NFD);
-                        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-                        String luogo = pattern.matcher(normalized).replaceAll("");
-                        System.out.println(luogo);
+
+                        String luogo = txtLuogoNascita.getText().toUpperCase();
+                        if ("ÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝ".indexOf(luogo.charAt(luogo.length() - 1)) != -1) {
+                            String normalized = Normalizer.normalize(luogo, Normalizer.Form.NFD);
+                            Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+                            luogo = pattern.matcher(normalized).replaceAll("") + "'";
+                        }
                         p.setBornCity(luogo);
 
                         p.setSex(cmbSesso.getItemAt(cmbSesso.getSelectedIndex()));
@@ -336,7 +339,7 @@ public class registrazione extends javax.swing.JFrame {
 
 
                         //registrazione dell'utente solamente se non esiste altro utente con codice operatore uguali
-                        if ((username = dc.gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), JUser.getMD5(txtPass.getText()), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) == null) {
+                        if ((username = dc.gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), JUser.getMD5(txtPass.getText()), e.getCode(), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) == null) {
                             //finestra di errore in caso di un utente già registrato
                             JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
                         } else {

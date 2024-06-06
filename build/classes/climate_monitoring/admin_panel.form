@@ -494,6 +494,7 @@
                               <Component id="cmbPressione" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="notePressione" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
+
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="cmbTemperatura" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -533,6 +534,7 @@
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
+
               </Group>
           </Group>
         </DimensionLayout>
@@ -914,6 +916,7 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnModificaPrevisioni">
+
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="e0" green="d4" red="b1" type="rgb"/>
@@ -939,6 +942,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancellaPrevisioniActionPerformed"/>
+
           </Events>
         </Component>
       </SubComponents>
