@@ -341,25 +341,31 @@
                           </Group>
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="cmbGhiacciai" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="noteAGhiacciai" min="-2" pref="408" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="cmbMassaGhiacciai" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="noteMGhiacciai" min="-2" pref="408" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="cmbPrecipitazioni" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="notePrecipitazioni" min="-2" pref="408" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="cmbTemperatura" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="noteTemperatura" min="-2" pref="408" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="cmbGhiacciai" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="noteAGhiacciai" min="-2" pref="408" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="cmbMassaGhiacciai" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="noteMGhiacciai" min="-2" pref="408" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="336" max="-2" attributes="0"/>
+                                  <Component id="btnIndietro" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -428,14 +434,13 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="330" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelAreaPrevisioneSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -449,16 +454,39 @@
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
+
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cmbVento" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="noteVento" alignment="1" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="labelVento" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="labelAreaPrevisioneSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtAreaPrevisioneSelezionata" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelIdCentro" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtIdCentro" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="labelData" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="datePickerData" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="cmbVento" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="noteVento" alignment="1" min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Component id="labelVento" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="labelUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmbUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="noteUmidita" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="btnAggiungiPrevisioni" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbUmidita" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="noteUmidita" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="labelPressione" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbPressione" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="notePressione" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -481,6 +509,7 @@
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
+
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="labelAltitudine" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">

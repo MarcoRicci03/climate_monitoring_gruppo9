@@ -80,7 +80,6 @@ public class DatabaseConnection {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                             String strData = sdf.format((Date) p);
                             java.sql.Date data = java.sql.Date.valueOf(strData);
-                            System.out.println(data);
                             stmt.setDate(i + 1, data);
                             break;
                         default:

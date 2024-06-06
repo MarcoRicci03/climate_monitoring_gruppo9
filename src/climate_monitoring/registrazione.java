@@ -52,7 +52,11 @@ public class registrazione extends javax.swing.JFrame {
         //creazione della lista di tutte le stazioni metereologiche salvate sul file stazioni.csv, inserite poi
         //nel combobox per la selezione
         //al = ParserCSV.creaListaStazioni();
-        arrayStazioni = dc.stazioni;
+        try {
+            arrayStazioni = dc.gestore_db.loadStazioni(null);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < arrayStazioni.size(); i++) {
             cmbStazione.addItem(arrayStazioni.get(i).getNome());
         }
@@ -325,12 +329,11 @@ public class registrazione extends javax.swing.JFrame {
                         Integer i = arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id();
 
 
-
                         //registrazione dell'utente solamente se non esiste altro utente con codice operatore uguali
-                        if ((username=dc.gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), JUser.getMD5(txtPass.getText()) , e.getCode(), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) ==null) {
+                        if ((username = dc.gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), JUser.getMD5(txtPass.getText()), e.getCode(), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) == null) {
                             //finestra di errore in caso di un utente già registrato
                             JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, "Registrazione effettuata.\nEcco il tuo username: " + username + " per accedere assieme alla password.", "Registrazione effettuata", JOptionPane.INFORMATION_MESSAGE);
                         }
                     } else {
@@ -357,7 +360,7 @@ public class registrazione extends javax.swing.JFrame {
         //controllo esistenza codice operatore
         if (dc.gestore_db.checkCodiceOperatore(txtIdOperatore.getText().trim())) {
             //apro la finestra per la creazione di una nuova stazione
-            creaStazione cS = new creaStazione();
+            creaStazione cS = new creaStazione(this);
             cS.show();
         } else {
             JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
@@ -386,40 +389,6 @@ public class registrazione extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(registrazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(registrazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(registrazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(registrazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new registrazione().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrea;

@@ -4,9 +4,8 @@
  */
 package climate_monitoring;
 
-import classi.JCoordinate;
-import classi.JStazione;
-import classi.ParserCSV;
+import classi.*;
+
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -14,10 +13,14 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Classe che crea e gestisce la finestra creaStazione, da cui si può aggiungere
@@ -30,28 +33,46 @@ import javax.swing.JOptionPane;
  */
 public class creaStazione extends javax.swing.JFrame {
 
-    private ArrayList<String[]> ar;
+    private ArrayList<JNazione> arrayNazioni;
+    private DatiCondivisi dc;
+    private String[] columns = {"Geoname id", "Città", "Codice Naz.", "Nazione", "Latitudine", "Longitudine"};
+    List<String[]> listStazioni;
+    private Object paginaPrec;
 
     /**
      * Crea la pagina "creaStazione" mettendo la finestra al centro dello
      * schermo e inserendo il combobox con tutte le nazioni inserite nel file
      * apposito.
+     * @param paginaPrec
      */
-    public creaStazione() {
-        try {
-            initComponents();
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Dimension screenSize = toolkit.getScreenSize();
-            int x = (screenSize.width - this.getWidth()) / 2;
-            int y = (screenSize.height - this.getHeight()) / 2;
-            this.setLocation(x, y);
-            ar = ParserCSV.getNazioni();
-            for (String[] s : ar) {
-                cmbCodNazione.addItem(s[1]);
+    public creaStazione(Object paginaPrec) {
+        this.paginaPrec = paginaPrec;
+        DefaultTableModel model = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
             }
-        } catch (IOException ex) {
-            Logger.getLogger(creaStazione.class.getName()).log(Level.SEVERE, null, ex);
+        };
+        StazioneTable = new JTable(model);
+
+        this.dc = DatiCondivisi.getInstance();
+        initComponents();
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        int x = (screenSize.width - this.getWidth()) / 2;
+        int y = (screenSize.height - this.getHeight()) / 2;
+        this.setLocation(x, y);
+        try {
+            arrayNazioni = dc.gestore_db.loadNazioni();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
+        for (JNazione nazione : arrayNazioni) {
+            cmbCodNazione.addItem(nazione.getNome_nazione());
+        }
+        StazioneTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        StazioneTable.getTableHeader().setReorderingAllowed(false);
+        this.setResizable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -71,6 +92,9 @@ public class creaStazione extends javax.swing.JFrame {
         txtCoordinate = new javax.swing.JTextField();
         labelCordinate = new javax.swing.JLabel();
         cmbCodNazione = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        StazioneTable = new javax.swing.JTable();
+        btnIndietro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -110,6 +134,11 @@ public class creaStazione extends javax.swing.JFrame {
 
         txtCitta.setBackground(new java.awt.Color(177, 212, 224));
         txtCitta.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        txtCitta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCittaKeyReleased(evt);
+            }
+        });
 
         labelCodiceNazione.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCodiceNazione.setText("Codice nazione:");
@@ -155,6 +184,32 @@ public class creaStazione extends javax.swing.JFrame {
             }
         });
 
+        StazioneTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Geoname id", "Città", "Codice Nazione", "Nazione", "Latitudine", "Longitudine"
+            }
+        ));
+        StazioneTable.setColumnSelectionAllowed(true);
+        StazioneTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                StazioneTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(StazioneTable);
+        StazioneTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        btnIndietro.setBackground(new java.awt.Color(177, 212, 224));
+        btnIndietro.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnIndietro.setText("Indietro");
+        btnIndietro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIndietroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -162,74 +217,73 @@ public class creaStazione extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAggiungi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelCodiceNazione, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                            .addComponent(labelId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelCordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(labelCodiceNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(labelCordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(labelNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(labelCitta, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtGeoname_id, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCercaGeonameId, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCoordinate, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmbCodNazione, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCitta, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtCodNazione, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(txtCoordinate)
+                            .addComponent(txtCodNazione)
+                            .addComponent(txtGeoname_id)
+                            .addComponent(cmbCodNazione, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelCitta, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                        .addComponent(txtCitta, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCercaGeonameId, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnIndietro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAggiungi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(labelId, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCercaGeonameId, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtGeoname_id, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCitta, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(btnCercaGeonameId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCitta, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelCitta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelId, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtGeoname_id, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCodNazione, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCodiceNazione, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCodNazione, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                    .addComponent(labelCodiceNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbCodNazione, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                    .addComponent(labelNazione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCoordinate, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(labelCordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cmbCodNazione)
+                    .addComponent(labelNazione, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCoordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAggiungi, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+            .addGap(0, 589, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addGap(0, 513, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -244,7 +298,6 @@ public class creaStazione extends javax.swing.JFrame {
      */
     private void btnCercaGeonameIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCercaGeonameIdActionPerformed
         try {
-            // TODO add your handling code here:
             Desktop.getDesktop().browse(new URI("https://www.geonames.org/"));
         } catch (URISyntaxException ex) {
             Logger.getLogger(creaStazione.class.getName()).log(Level.SEVERE, null, ex);
@@ -259,16 +312,15 @@ public class creaStazione extends javax.swing.JFrame {
      * metereologica.
      */
     private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
-        // TODO add your handling code here:
         if (JCoordinate.sonoCoordinate(txtCoordinate.getText())) {
             try {
                 if (!txtCoordinate.getText().isBlank() && !txtGeoname_id.getText().isBlank() && !txtCitta.getText().isBlank() && !txtCodNazione.getText().isBlank() && cmbCodNazione.getSelectedIndex() > 0) {
-                    JStazione l = new JStazione(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
-                    if (ParserCSV.creaStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), ar.get(cmbCodNazione.getSelectedIndex() - 1)[0], txtCoordinate.getText())) {
+                    JStazione l = new JStazione(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), arrayNazioni.get(cmbCodNazione.getSelectedIndex() - 1).getNome_nazione(), new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
+                    if (dc.gestore_db.AddStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), new JCoordinate(txtCoordinate.getText()))) {
                         registrazione.luogoNuovo = l;
                         JOptionPane.showMessageDialog(null, "Stazione: " + txtCitta.getText() + " aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "La stazione "+ txtCitta.getText() +", con Geoname_id:" + txtGeoname_id.getText() + " è gia stata creata", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "La stazione " + txtCitta.getText() + ", con Geoname_id:" + txtGeoname_id.getText() + " è gia stata creata", "Errore", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Compila tutti i valori.", "Errore", JOptionPane.INFORMATION_MESSAGE);
@@ -286,9 +338,8 @@ public class creaStazione extends javax.swing.JFrame {
      * nazione nella casella di testo apposita.
      */
     private void cmbCodNazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCodNazioneActionPerformed
-        // TODO add your handling code here:
         if (cmbCodNazione.getSelectedIndex() > 0) {
-            txtCodNazione.setText(ar.get(cmbCodNazione.getSelectedIndex() - 1)[0]);
+            txtCodNazione.setText(arrayNazioni.get(cmbCodNazione.getSelectedIndex() - 1).getCountry_code());
         }
     }//GEN-LAST:event_cmbCodNazioneActionPerformed
 
@@ -302,7 +353,6 @@ public class creaStazione extends javax.swing.JFrame {
      * il watermark (filigrana).
      */
     private void txtCoordinateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordinateKeyPressed
-        // TODO add your handling code here:
         if (txtCoordinate.getForeground() != Color.BLACK && txtCoordinate.getText().equals("Latitudine, Longitudine")) {
             txtCoordinate.setText("");
         }
@@ -310,7 +360,6 @@ public class creaStazione extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCoordinateKeyPressed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        // TODO add your handling code here:
         txtCoordinate.setCaretPosition(0);
     }//GEN-LAST:event_formWindowGainedFocus
 
@@ -320,7 +369,6 @@ public class creaStazione extends javax.swing.JFrame {
      * il watermark (filigrana).
      */
     private void txtCoordinateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordinateKeyReleased
-        // TODO add your handling code here:
         if (txtCoordinate.getText().isEmpty()) {
             txtCoordinate.setText("Latitudine, Longitudine");
             txtCoordinate.setCaretPosition(0);
@@ -328,46 +376,80 @@ public class creaStazione extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtCoordinateKeyReleased
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private void txtCittaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCittaKeyReleased
+        if (txtCitta.getText().matches(".*[a-zA-Z0-9].*")) {
+            //se è stato inserito un carattere o un numero allora fai la chiamata al servizio web per i suggeriment
+            String testo = txtCitta.getText().toLowerCase();
+            if (!testo.isEmpty()) {
+                new Thread(() -> {
+                    synchronized (this) {
+                        try {
+                            ArrayList<JStazione> arraySuggerimenti = dc.gestore_db.getStationGeonameIdfromWS(testo);
+                            if (arraySuggerimenti.size() > 0) {
+                                drawTable(arraySuggerimenti);
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }).start();
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(creaStazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(creaStazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(creaStazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(creaStazione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_txtCittaKeyReleased
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new creaStazione().setVisible(true);
+    private void btnIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIndietroActionPerformed
+        // TODO add your handling code here:
+        ((JFrame) paginaPrec).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnIndietroActionPerformed
+
+    private synchronized void drawTable(ArrayList<JStazione> arraySuggerimenti) {
+        StazioneTable.getTableHeader().setReorderingAllowed(false);
+        listStazioni = new ArrayList<>();
+        Vector v = new Vector();
+
+        for (JStazione stazione : arraySuggerimenti) {
+            String toParse = stazione.toStringCsv();
+            String[] elements = toParse.split(",");
+            listStazioni.add(elements);
+        }
+
+        DefaultTableModel model = (DefaultTableModel) StazioneTable.getModel();
+        model.setRowCount(0);
+        if (!listStazioni.isEmpty()) {
+            for (int i = 0; i < arraySuggerimenti.size(); i++) {
+                model.addRow(listStazioni.get(i));
             }
-        });
+        }
+        StazioneTable.setModel(model);
+    }
+
+    private void StazioneTableMouseClicked(java.awt.event.MouseEvent evt) {
+        try {
+            if (StazioneTable.getModel().getRowCount() > 0 && StazioneTable.getSelectedColumn() >= 0) {
+                txtGeoname_id.setText(listStazioni.get(StazioneTable.getSelectedRow())[0]);
+                txtCitta.setText(listStazioni.get(StazioneTable.getSelectedRow())[1]);
+                txtCodNazione.setText(listStazioni.get(StazioneTable.getSelectedRow())[2]);
+                cmbCodNazione.getModel().setSelectedItem(listStazioni.get(StazioneTable.getSelectedRow())[3]);
+                String lat = listStazioni.get(StazioneTable.getSelectedRow())[4];
+                String lon = listStazioni.get(StazioneTable.getSelectedRow())[5];
+                txtCoordinate.setText(lat + ", " + lon);
+            }
+        } catch (NullPointerException e) {
+
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable StazioneTable;
     private javax.swing.JButton btnAggiungi;
     private javax.swing.JButton btnCercaGeonameId;
+    private javax.swing.JButton btnIndietro;
     private javax.swing.JComboBox<String> cmbCodNazione;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelCitta;
     private javax.swing.JLabel labelCodiceNazione;
     private javax.swing.JLabel labelCordinate;

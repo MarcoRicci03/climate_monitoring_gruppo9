@@ -10,7 +10,6 @@ import java.io.Serializable;
  * Classe per la creazione e gestione di aree d'interesse, collegate a una
  * stazione metereologica.
  *
- *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno
