@@ -125,7 +125,6 @@ public interface DBInterface extends Remote {
      * @param nome            il nome dell'utente.
      * @param cognome         il cognome dell'utente.
      * @param password        la password dell'utente.
-     * @param cf              il codice fiscale dell'utente.
      * @param geoname_id      l'ID Geoname associato all'utente.
      * @param codiceOperatore il codice operatore dell'utente.
      * @return lo username del nuovo utente se l'inserimento è avvenuto con successo, null altrimenti.

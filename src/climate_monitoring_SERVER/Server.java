@@ -407,7 +407,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
                 String idNuovoUtente = checkUserAlreadyExistsByUsername(username + "%");
                 username += idNuovoUtente;
                 String email = username + "@mail.com";
-
+                String cf = "CF" + idNuovoUtente;
                 String baseQuery = "INSERT INTO utenti (nome,cognome,username,email,codice_operatore,codice_fiscale,geoname_id,password) VALUES (?,?,?,?,?,?,?,?)";
                 int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email, codiceOperatore, cf, geoname_id, password}, true);
                 return rs == 1 ? username : null;
