@@ -7,15 +7,12 @@ package climate_monitoring;
 import classi.DatiCondivisi;
 import classi.JAreaInteresse;
 import classi.JPrevisioni;
-import classi.ParserCSV;
-import com.sun.tools.jconsole.JConsoleContext;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

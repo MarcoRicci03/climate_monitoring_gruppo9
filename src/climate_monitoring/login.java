@@ -6,7 +6,6 @@ package climate_monitoring;
 
 import classi.DatiCondivisi;
 import classi.JUser;
-import classi.ParserCSV;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

@@ -166,7 +166,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     @Override
-    public ArrayList<JStazione> loadStazioni(String filtro_id) throws RemoteException {
+    public ArrayList<JStazione> loadStazioni(String filtro_id, String filtro_nome, JCoordinate coordinate, int raggio) throws RemoteException {
         try {
             String baseQuery = "SELECT stazioni.*, nome_nazione FROM stazioni INNER JOIN nazioni ON stazioni.country_code = nazioni.country_code";
             String whereClause = "";
@@ -174,7 +174,17 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             if (filtro_id != null) {
                 whereClause += " WHERE geoname_id = ?";
                 parameters.add(filtro_id);
+            } else if (filtro_nome != null) {
+                whereClause += " WHERE LOWER(nome) LIKE LOWER(?)";
+                parameters.add("%" + filtro_nome.toLowerCase() + "%");
+            } else if (coordinate != null && raggio > 0) {
+                whereClause += " WHERE ACOS(SIN(RADIANS(?)) * SIN(RADIANS(latitudine)) + COS(RADIANS(?)) * COS(RADIANS(latitudine)) * COS(RADIANS(? - longitudine))) * 6371 <= ?";
+                parameters.add(coordinate.getLat());
+                parameters.add(coordinate.getLat());
+                parameters.add(coordinate.getLon());
+                parameters.add(raggio);
             }
+
             ResultSet rs = db.executeQuery(baseQuery + whereClause, parameters.toArray(), parameters.size() > 0);
             if (rs != null) {
                 ArrayList<JStazione> stazioni = new ArrayList<>();
@@ -389,11 +399,11 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * Aggiunge un nuovo utente al database.
      * Verifica se il codice operatore è già stato utilizzato prima di inserire il nuovo utente.
      *
-     * @param nome il nome dell'utente.
-     * @param cognome il cognome dell'utente.
-     * @param password la password dell'utente.
-     * @param cf il codice fiscale dell'utente.
-     * @param geoname_id l'ID Geoname associato all'utente.
+     * @param nome            il nome dell'utente.
+     * @param cognome         il cognome dell'utente.
+     * @param password        la password dell'utente.
+     * @param cf              il codice fiscale dell'utente.
+     * @param geoname_id      l'ID Geoname associato all'utente.
      * @param codiceOperatore il codice operatore dell'utente.
      * @return lo username del nuovo utente se l'inserimento è avvenuto con successo, null altrimenti.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
@@ -448,68 +458,68 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     @Override
     public boolean AddPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
         String baseQuery = "INSERT INTO public.previsioni (" +
-            "data, geoname_id, id_area_interesse, id_utente, valorevento, notavento, " +
-            "valoreumidita, notaumidita, valorepressione, notapressione, " +
-            "valoretemperatura, notatemperatura, valoreprecipitazioni, notaprecipitazioni, " +
-            "valorealtghiacciai, notaaltghiacciai, valoremassaghiacciai, notamassaghiacciai) " +
-            "VALUES(?, ?, ?, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?);";
+                "data, geoname_id, id_area_interesse, id_utente, valorevento, notavento, " +
+                "valoreumidita, notaumidita, valorepressione, notapressione, " +
+                "valoretemperatura, notatemperatura, valoreprecipitazioni, notaprecipitazioni, " +
+                "valorealtghiacciai, notaaltghiacciai, valoremassaghiacciai, notamassaghiacciai) " +
+                "VALUES(?, ?, ?, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?);";
 
         int rs = db.executeUpdate(baseQuery, new Object[]{
-            data, 
-            id_centro, 
-            id_area, 
-            username, 
-            vVento, 
-            nVento, 
-            pUmidita, 
-            nUmidita, 
-            pressione, 
-            nPRessione, 
-            temperatura, 
-            nTemperatura, 
-            precipitazioni, 
-            nPrecipitazioni, 
-            aGhiacciai, 
-            nAGhiacciai, 
-            mGhiacciai, 
-            nMGhiacciai
+                data,
+                id_centro,
+                id_area,
+                username,
+                vVento,
+                nVento,
+                pUmidita,
+                nUmidita,
+                pressione,
+                nPRessione,
+                temperatura,
+                nTemperatura,
+                precipitazioni,
+                nPrecipitazioni,
+                aGhiacciai,
+                nAGhiacciai,
+                mGhiacciai,
+                nMGhiacciai
         }, true);
         return rs != -1;
     }
-    
+
     @Override
     public boolean editPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
-        
-        String baseQuery = "UPDATE public.previsioni SET " +
-                            "valorevento = ?::enum_valore, notavento = ?, " +
-                            "valoreumidita = ?::enum_valore, notaumidita = ?, " +
-                            "valorepressione = ?::enum_valore, notapressione = ?, " +
-                            "valoretemperatura = ?::enum_valore, notatemperatura = ?, " +
-                            "valoreprecipitazioni = ?::enum_valore, notaprecipitazioni = ?, " +
-                            "valorealtghiacciai = ?::enum_valore, notaaltghiacciai = ?, " +
-                            "valoremassaghiacciai = ?::enum_valore, notamassaghiacciai = ? " +
-                            "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ? AND id_utente = ?;";
 
-        
+        String baseQuery = "UPDATE public.previsioni SET " +
+                "valorevento = ?::enum_valore, notavento = ?, " +
+                "valoreumidita = ?::enum_valore, notaumidita = ?, " +
+                "valorepressione = ?::enum_valore, notapressione = ?, " +
+                "valoretemperatura = ?::enum_valore, notatemperatura = ?, " +
+                "valoreprecipitazioni = ?::enum_valore, notaprecipitazioni = ?, " +
+                "valorealtghiacciai = ?::enum_valore, notaaltghiacciai = ?, " +
+                "valoremassaghiacciai = ?::enum_valore, notamassaghiacciai = ? " +
+                "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ? AND id_utente = ?;";
+
+
         int rs = db.executeUpdate(baseQuery, new Object[]{
-            vVento,              // valorevento
-            nVento,              // notavento
-            pUmidita,            // valoreumidita
-            nUmidita,            // notaumidita
-            pressione,           // valorepressione
-            nPRessione,          // notapressione
-            temperatura,         // valoretemperatura
-            nTemperatura,        // notatemperatura
-            precipitazioni,      // valoreprecipitazioni
-            nPrecipitazioni,     // notaprecipitazioni
-            aGhiacciai,          // valorealtghiacciai
-            nAGhiacciai,         // notaaltghiacciai
-            mGhiacciai,          // valoremassaghiacciai
-            nMGhiacciai,         // notamassaghiacciai
-            data,                // data
-            id_centro,           // geoname_id
-            id_area,             // id_area_interesse
-            username             // id_utente
+                vVento,              // valorevento
+                nVento,              // notavento
+                pUmidita,            // valoreumidita
+                nUmidita,            // notaumidita
+                pressione,           // valorepressione
+                nPRessione,          // notapressione
+                temperatura,         // valoretemperatura
+                nTemperatura,        // notatemperatura
+                precipitazioni,      // valoreprecipitazioni
+                nPrecipitazioni,     // notaprecipitazioni
+                aGhiacciai,          // valorealtghiacciai
+                nAGhiacciai,         // notaaltghiacciai
+                mGhiacciai,          // valoremassaghiacciai
+                nMGhiacciai,         // notamassaghiacciai
+                data,                // data
+                id_centro,           // geoname_id
+                id_area,             // id_area_interesse
+                username             // id_utente
         }, true);
         return rs != -1;
     }
@@ -533,14 +543,14 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
     @Override
     public boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException {
-         String baseQuery = "DELETE FROM public.previsioni " +
-                            "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ?;";
+        String baseQuery = "DELETE FROM public.previsioni " +
+                "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ?;";
 
-        
+
         int rs = db.executeUpdate(baseQuery, new Object[]{
-            data,                // data
-            id_centro,           // geoname_id
-            id_area,             // id_area_interesse
+                data,                // data
+                id_centro,           // geoname_id
+                id_area,             // id_area_interesse
         }, true);
         return rs != -1;
     }

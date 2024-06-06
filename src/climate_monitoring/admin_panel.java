@@ -8,7 +8,6 @@ import classi.DatiCondivisi;
 import classi.JAreaInteresse;
 import classi.JPrevisioni;
 import classi.JUser;
-import classi.ParserCSV;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -18,7 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,7 +24,6 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

@@ -9,11 +9,21 @@ import java.io.Serializable;
 /**
  * Classe per la creazione e gestione di aree d'interesse, collegate a una
  * stazione metereologica.
+ * <p>
+ * Questa classe rappresenta un'area di interesse che è associata a una stazione
+ * meteorologica. Ogni area ha un identificativo univoco, un codice Geoname della
+ * stazione meteorologica e un nome.
+ * </p>
  *
- * @author marco_ricci
- * @author edoardo_rizzi
- * @author alberto_stagno
- * @author denis_di_napoli
+ * <p>Esempio di utilizzo:</p>
+ * <pre>
+ *     JAreaInteresse area = new JAreaInteresse(1, "IT123", "Centro");
+ * </pre>
+ *
+ * @autor marco_ricci
+ * @autor edoardo_rizzi
+ * @autor alberto_stagno
+ * @autor denis_di_napoli
  */
 public class JAreaInteresse implements Serializable {
 
@@ -30,14 +40,6 @@ public class JAreaInteresse implements Serializable {
      * Nome dell'area d'interesse.
      */
     private String nome;
-
-    /**
-     * Costruttore che imposta a zero gli attributi della classe.
-     */
-    public JAreaInteresse() {
-        geoname_id = "";
-        nome = "";
-    }
 
     /**
      * Costruttore che assegna agli attributi della classe i parametri passati.
@@ -72,6 +74,11 @@ public class JAreaInteresse implements Serializable {
         return nome;
     }
 
+    /**
+     * Metodo che permette di ottenere il geoname_id della stazione metereologica.
+     *
+     * @return Una stringa che rappresenta il geoname_id della stazione metereologica.
+     */
     public String getGeoname_id() {
         return geoname_id;
     }

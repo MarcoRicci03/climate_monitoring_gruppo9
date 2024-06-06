@@ -45,11 +45,14 @@ public interface DBInterface extends Remote {
     /**
      * Carica le stazioni dal database in base al filtro fornito.
      *
-     * @param filtro_id l'ID della stazione da filtrare (può essere null).
+     * @param filtro_id   l'ID della stazione da filtrare (può essere null).
+     * @param filtro_nome il nome della stazione da filtrare (può essere null).
+     * @param coordinate  le coordinate della stazione da filtrare (può essere null).
+     * @param raggio      il raggio per la ricerca basata su coordinate (deve essere maggiore di 0 se utilizzato).
      * @return una lista di stazioni che soddisfano i criteri di filtro.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
-    ArrayList<JStazione> loadStazioni(String filtro_id) throws RemoteException;
+    ArrayList<JStazione> loadStazioni(String filtro_id, String filtro_nome, JCoordinate coordinate, int raggio) throws RemoteException;
 
     /**
      * Carica tutte le nazioni dal database.
@@ -125,6 +128,7 @@ public interface DBInterface extends Remote {
      * @param nome            il nome dell'utente.
      * @param cognome         il cognome dell'utente.
      * @param password        la password dell'utente.
+     * @param cf              il codice fiscale dell'utente.
      * @param geoname_id      l'ID Geoname associato all'utente.
      * @param codiceOperatore il codice operatore dell'utente.
      * @return lo username del nuovo utente se l'inserimento è avvenuto con successo, null altrimenti.
@@ -143,13 +147,87 @@ public interface DBInterface extends Remote {
      */
     boolean AddAreaInteresse(String nome, String geoname_id) throws RemoteException;
 
+    /**
+     * Controlla se un'area di interesse esiste già nel database.
+     *
+     * @param nome       il nome dell'area di interesse.
+     * @param geoname_id l'ID Geoname dell'area di interesse.
+     * @return true se l'area di interesse esiste già, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     boolean checkAreaInteresse(String nome, String geoname_id) throws RemoteException;
 
+    /**
+     * Aggiunge una nuova previsione al database.
+     *
+     * @param data            la data della previsione.
+     * @param id_area         l'ID dell'area di interesse.
+     * @param id_centro       l'ID del centro di previsione.
+     * @param username        lo username dell'utente che aggiunge la previsione.
+     * @param vVento          velocità del vento.
+     * @param pUmidita        percentuale di umidità.
+     * @param pressione       valore della pressione atmosferica.
+     * @param temperatura     valore della temperatura.
+     * @param precipitazioni  quantità di precipitazioni.
+     * @param aGhiacciai      attività dei ghiacciai.
+     * @param mGhiacciai      movimento dei ghiacciai.
+     * @param nVento          nuova velocità del vento.
+     * @param nUmidita        nuova percentuale di umidità.
+     * @param nPRessione      nuova pressione atmosferica.
+     * @param nTemperatura    nuova temperatura.
+     * @param nPrecipitazioni nuove precipitazioni.
+     * @param nAGhiacciai     nuova attività dei ghiacciai.
+     * @param nMGhiacciai     nuovo movimento dei ghiacciai.
+     * @return true se la previsione è stata aggiunta con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     boolean AddPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
 
+    /**
+     * Modifica una previsione esistente nel database.
+     *
+     * @param data            la data della previsione.
+     * @param id_area         l'ID dell'area di interesse.
+     * @param id_centro       l'ID del centro di previsione.
+     * @param username        lo username dell'utente che modifica la previsione.
+     * @param vVento          velocità del vento.
+     * @param pUmidita        percentuale di umidità.
+     * @param pressione       valore della pressione atmosferica.
+     * @param temperatura     valore della temperatura.
+     * @param precipitazioni  quantità di precipitazioni.
+     * @param aGhiacciai      attività dei ghiacciai.
+     * @param mGhiacciai      movimento dei ghiacciai.
+     * @param nVento          nuova velocità del vento.
+     * @param nUmidita        nuova percentuale di umidità.
+     * @param nPRessione      nuova pressione atmosferica.
+     * @param nTemperatura    nuova temperatura.
+     * @param nPrecipitazioni nuove precipitazioni.
+     * @param nAGhiacciai     nuova attività dei ghiacciai.
+     * @param nMGhiacciai     nuovo movimento dei ghiacciai.
+     * @return true se la previsione è stata modificata con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     boolean editPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
 
+    /**
+     * Rimuove una previsione dal database.
+     *
+     * @param data      la data della previsione.
+     * @param id_area   l'ID dell'area di interesse.
+     * @param id_centro l'ID del centro di previsione.
+     * @return true se la previsione è stata rimossa con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException;
 
+    /**
+     * Ottiene le informazioni di un utente dal database.
+     * Questo metodo è utilizzato per il login.
+     *
+     * @param user il nome utente.
+     * @param pass la password dell'utente.
+     * @return un oggetto JUser contenente le informazioni dell'utente.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     JUser getUser(String user, String pass) throws RemoteException; //metodo per il log in
 }

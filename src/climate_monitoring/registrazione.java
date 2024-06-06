@@ -55,7 +55,7 @@ public class registrazione extends javax.swing.JFrame {
         //nel combobox per la selezione
         //al = ParserCSV.creaListaStazioni();
         try {
-            arrayStazioni = dc.gestore_db.loadStazioni(null);
+            arrayStazioni = dc.gestore_db.loadStazioni(null, null, null, -1);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

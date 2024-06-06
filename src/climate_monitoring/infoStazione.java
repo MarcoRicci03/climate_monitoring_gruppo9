@@ -52,7 +52,7 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
             this.setLocation(x, y);
 
             ArrayList<JAreaInteresse> listaAree = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, id, -1);
-            JStazione stazione = DatiCondivisi.getInstance().gestore_db.loadStazioni(id).get(0);
+            JStazione stazione = DatiCondivisi.getInstance().gestore_db.loadStazioni(id, null, null, -1).get(0);
             lblStazione.setText(stazione.getNome());
             txtGeoname.setText(stazione.getGeoname_id().toString());
             txtCodiceNazione.setText(stazione.getCountry_code());
@@ -266,7 +266,7 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
     }//GEN-LAST:event_InfoTableMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if(prevPage instanceof homepage){
+        if (prevPage instanceof homepage) {
             ((homepage) prevPage).setVisible(true);
         }
     }//GEN-LAST:event_formWindowClosing
