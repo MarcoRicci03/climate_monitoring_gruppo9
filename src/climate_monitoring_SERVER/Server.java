@@ -316,6 +316,43 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         }, true);
         return rs != -1;
     }
+    
+    @Override
+    public boolean editPrevisione(Date data, Integer id_area, Integer id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
+        
+        String baseQuery = "UPDATE public.previsioni SET " +
+                            "valorevento = ?::enum_valore, notavento = ?, " +
+                            "valoreumidita = ?::enum_valore, notaumidita = ?, " +
+                            "valorepressione = ?::enum_valore, notapressione = ?, " +
+                            "valoretemperatura = ?::enum_valore, notatemperatura = ?, " +
+                            "valoreprecipitazioni = ?::enum_valore, notaprecipitazioni = ?, " +
+                            "valorealtghiacciai = ?::enum_valore, notaaltghiacciai = ?, " +
+                            "valoremassaghiacciai = ?::enum_valore, notamassaghiacciai = ? " +
+                            "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ? AND id_utente = ?;";
+
+        
+        int rs = db.executeUpdate(baseQuery, new Object[]{
+            vVento,              // valorevento
+            nVento,              // notavento
+            pUmidita,            // valoreumidita
+            nUmidita,            // notaumidita
+            pressione,           // valorepressione
+            nPRessione,          // notapressione
+            temperatura,         // valoretemperatura
+            nTemperatura,        // notatemperatura
+            precipitazioni,      // valoreprecipitazioni
+            nPrecipitazioni,     // notaprecipitazioni
+            aGhiacciai,          // valorealtghiacciai
+            nAGhiacciai,         // notaaltghiacciai
+            mGhiacciai,          // valoremassaghiacciai
+            nMGhiacciai,         // notamassaghiacciai
+            data,                // data
+            id_centro,           // geoname_id
+            id_area,             // id_area_interesse
+            username             // id_utente
+        }, true);
+        return rs != -1;
+    }
 
     @Override
     public JUser getUser(String user, String pass) throws RemoteException {
