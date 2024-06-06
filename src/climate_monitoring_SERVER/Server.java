@@ -286,7 +286,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public boolean AddPrevisione(Date data, Integer id_area, Integer id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
+    public boolean AddPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
         String baseQuery = "INSERT INTO public.previsioni (" +
             "data, geoname_id, id_area_interesse, id_utente, valorevento, notavento, " +
             "valoreumidita, notaumidita, valorepressione, notapressione, " +
@@ -318,7 +318,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
     
     @Override
-    public boolean editPrevisione(Date data, Integer id_area, Integer id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
+    public boolean editPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
         
         String baseQuery = "UPDATE public.previsioni SET " +
                             "valorevento = ?::enum_valore, notavento = ?, " +
@@ -386,4 +386,18 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         String user = "postgres";
         String password = "root";
      */
+
+    @Override
+    public boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException {
+         String baseQuery = "DELETE FROM public.previsioni" +
+                            "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ? AND id_utente = ?;";
+
+        
+        int rs = db.executeUpdate(baseQuery, new Object[]{
+            data,                // data
+            id_centro,           // geoname_id
+            id_area,             // id_area_interesse
+        }, true);
+        return rs != -1;
+    }
 }

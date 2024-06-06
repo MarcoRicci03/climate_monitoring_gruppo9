@@ -54,7 +54,7 @@ public class admin_panel extends javax.swing.JFrame {
      * riferita all'utente.
      *
      * @param userLoggato Oggetto che contiene l'utente che ha compiuto
-     *                    l'accesso
+     * l'accesso
      */
     public admin_panel(JUser userLoggato) throws RemoteException {
         initComponents();
@@ -130,6 +130,7 @@ public class admin_panel extends javax.swing.JFrame {
         notePrecipitazioni = new javax.swing.JTextField();
         noteAGhiacciai = new javax.swing.JTextField();
         btnModificaPrevisioni = new javax.swing.JButton();
+        btnCancellaPrevisioni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -395,6 +396,15 @@ public class admin_panel extends javax.swing.JFrame {
             }
         });
 
+        btnCancellaPrevisioni.setBackground(new java.awt.Color(177, 212, 224));
+        btnCancellaPrevisioni.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCancellaPrevisioni.setText("Cancella previsioni");
+        btnCancellaPrevisioni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancellaPrevisioniActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout AreaParametriLayout = new javax.swing.GroupLayout(AreaParametri);
         AreaParametri.setLayout(AreaParametriLayout);
         AreaParametriLayout.setHorizontalGroup(
@@ -469,7 +479,9 @@ public class admin_panel extends javax.swing.JFrame {
                                 .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnAggiungiPrevisioni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(AreaParametriLayout.createSequentialGroup()
-                                        .addComponent(btnModificaPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnModificaPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnCancellaPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addContainerGap(330, Short.MAX_VALUE))
         );
@@ -527,7 +539,9 @@ public class admin_panel extends javax.swing.JFrame {
                     .addGroup(AreaParametriLayout.createSequentialGroup()
                         .addComponent(btnAggiungiPrevisioni)
                         .addGap(26, 26, 26)
-                        .addComponent(btnModificaPrevisioni)))
+                        .addComponent(btnModificaPrevisioni)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnCancellaPrevisioni)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -605,24 +619,7 @@ public class admin_panel extends javax.swing.JFrame {
      */
     private void listAreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listAreeMouseClicked
         aggiornaTabella();
-
-        datePickerData.setDate( new Date() );
-        
-        cmbVento.setSelectedIndex(0);
-        cmbUmidita.setSelectedIndex(0);
-        cmbPressione.setSelectedIndex(0);
-        cmbTemperatura.setSelectedIndex(0);
-        cmbPrecipitazioni.setSelectedIndex(0);
-        cmbGhiacciai.setSelectedIndex(0);
-        cmbMassaGhiacciai.setSelectedIndex(0);
-
-        noteVento.setText("");
-        noteUmidita.setText("");
-        notePressione.setText("");
-        noteTemperatura.setText("");
-        notePrecipitazioni.setText("");
-        noteAGhiacciai.setText("");
-        noteMGhiacciai.setText("");
+        svuotaElementi();
     }//GEN-LAST:event_listAreeMouseClicked
 
     /**
@@ -637,7 +634,7 @@ public class admin_panel extends javax.swing.JFrame {
         if (!txtAreaSelezionata.getText().isEmpty()) {
             Date date = datePickerData.getDate();
 
-            int id = Integer.parseInt(txtIdCentro.getText());
+            String id = txtIdCentro.getText();
             String vVento = cmbVento.getItemAt(cmbVento.getSelectedIndex());
             String pUmidita = cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex());
             String pressione = cmbPressione.getItemAt(cmbPressione.getSelectedIndex());
@@ -667,21 +664,7 @@ public class admin_panel extends javax.swing.JFrame {
                 return;
             }
             aggiornaTabella();
-            cmbVento.setSelectedIndex(0);
-            cmbUmidita.setSelectedIndex(0);
-            cmbPressione.setSelectedIndex(0);
-            cmbTemperatura.setSelectedIndex(0);
-            cmbPrecipitazioni.setSelectedIndex(0);
-            cmbGhiacciai.setSelectedIndex(0);
-            cmbMassaGhiacciai.setSelectedIndex(0);
-
-            noteVento.setText("");
-            noteUmidita.setText("");
-            notePressione.setText("");
-            noteTemperatura.setText("");
-            notePrecipitazioni.setText("");
-            noteAGhiacciai.setText("");
-            noteMGhiacciai.setText("");
+            svuotaElementi();
         } else {
             JOptionPane.showMessageDialog(null, "Seleziona un'area d'interesse.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -695,11 +678,12 @@ public class admin_panel extends javax.swing.JFrame {
      */
     private void jTabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabellaPrevisioniMouseClicked
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        if (jTabellaPrevisioni.getSelectedColumn() >= 2)
+        if (jTabellaPrevisioni.getSelectedColumn() >= 2) {
             txtAreaNoteLettura.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[jTabellaPrevisioni.getSelectedColumn() + 7]);
-        else
+        } else {
             txtAreaNoteLettura.setText("");
-        if(jTabellaPrevisioni.getSelectedRow()>=0){
+        }
+        if (jTabellaPrevisioni.getSelectedRow() >= 0) {
             try {
                 datePickerData.setDate(formatter.parse(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[0]));
                 txtIdCentro.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[1]);
@@ -710,29 +694,37 @@ public class admin_panel extends javax.swing.JFrame {
                 notePrecipitazioni.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[13]);
                 noteAGhiacciai.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[14]);
                 noteMGhiacciai.setText(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[15]);
-                
-                cmbVento.setSelectedIndex( Integer.parseInt( listaPrev.get(jTabellaPrevisioni.getSelectedRow())[2] ) -1 );
-                cmbUmidita.setSelectedIndex( Integer.parseInt( listaPrev.get(jTabellaPrevisioni.getSelectedRow())[3] ) -1 );
-                cmbPressione.setSelectedIndex( Integer.parseInt( listaPrev.get(jTabellaPrevisioni.getSelectedRow())[4] ) -1 );
-                cmbTemperatura.setSelectedIndex( Integer.parseInt( listaPrev.get(jTabellaPrevisioni.getSelectedRow())[5] ) -1 );
-                cmbPrecipitazioni.setSelectedIndex( Integer.parseInt( listaPrev.get(jTabellaPrevisioni.getSelectedRow())[6] ) -1 );
-                cmbGhiacciai.setSelectedIndex( Integer.parseInt( listaPrev.get(jTabellaPrevisioni.getSelectedRow())[7] ) -1 );
-                cmbMassaGhiacciai.setSelectedIndex( Integer.parseInt( listaPrev.get(jTabellaPrevisioni.getSelectedRow())[8] ) -1 );
+
+                cmbVento.setSelectedIndex(Integer.parseInt(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[2]) - 1);
+                cmbUmidita.setSelectedIndex(Integer.parseInt(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[3]) - 1);
+                cmbPressione.setSelectedIndex(Integer.parseInt(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[4]) - 1);
+                cmbTemperatura.setSelectedIndex(Integer.parseInt(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[5]) - 1);
+                cmbPrecipitazioni.setSelectedIndex(Integer.parseInt(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[6]) - 1);
+                cmbGhiacciai.setSelectedIndex(Integer.parseInt(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[7]) - 1);
+                cmbMassaGhiacciai.setSelectedIndex(Integer.parseInt(listaPrev.get(jTabellaPrevisioni.getSelectedRow())[8]) - 1);
             } catch (ParseException ex) {
                 Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
             }
-                    
+
         }
     }//GEN-LAST:event_jTabellaPrevisioniMouseClicked
 
     private void btnModificaPrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaPrevisioniActionPerformed
         // TODO add your handling code here:
-        
+        if (jTabellaPrevisioni.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Errore! Seleziona una previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         if (!txtAreaSelezionata.getText().isEmpty()) {
             Date date = datePickerData.getDate();
+            Date vecchiaData = new Date((String) jTabellaPrevisioni.getValueAt(jTabellaPrevisioni.getSelectedRow(),0));
+            if(!date.equals(vecchiaData)){
+                JOptionPane.showMessageDialog(null, "Errore! Non può modificare la data", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
-            int id = Integer.parseInt(txtIdCentro.getText());
-            
+            String id = txtIdCentro.getText();
+
             String vVento = cmbVento.getItemAt(cmbVento.getSelectedIndex());
             String pUmidita = cmbUmidita.getItemAt(cmbUmidita.getSelectedIndex());
             String pressione = cmbPressione.getItemAt(cmbPressione.getSelectedIndex());
@@ -758,32 +750,45 @@ public class admin_panel extends javax.swing.JFrame {
                 Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (!result) {
-                JOptionPane.showMessageDialog(null, "Errore durante l'aggiunta della previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Errore durante la modifica della previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            
-            
-            
-            aggiornaTabella();
-            cmbVento.setSelectedIndex(0);
-            cmbUmidita.setSelectedIndex(0);
-            cmbPressione.setSelectedIndex(0);
-            cmbTemperatura.setSelectedIndex(0);
-            cmbPrecipitazioni.setSelectedIndex(0);
-            cmbGhiacciai.setSelectedIndex(0);
-            cmbMassaGhiacciai.setSelectedIndex(0);
 
-            noteVento.setText("");
-            noteUmidita.setText("");
-            notePressione.setText("");
-            noteTemperatura.setText("");
-            notePrecipitazioni.setText("");
-            noteAGhiacciai.setText("");
-            noteMGhiacciai.setText("");
+            aggiornaTabella();
+            svuotaElementi();
         } else {
             JOptionPane.showMessageDialog(null, "Seleziona un'area d'interesse.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnModificaPrevisioniActionPerformed
+
+    private void btnCancellaPrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancellaPrevisioniActionPerformed
+        if (jTabellaPrevisioni.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Errore! Seleziona una previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (!txtAreaSelezionata.getText().isEmpty()) {
+            Date date = datePickerData.getDate();
+            String id = txtIdCentro.getText();
+            var id_area = user.getId_areaSelezionata();
+            Integer username = Integer.valueOf(user.getId());
+            
+            var result = false;
+            try {
+                result = DatiCondivisi.getInstance().gestore_db.removePrevisione(date, id_area, id);
+            } catch (RemoteException ex) {
+                Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (!result) {
+                JOptionPane.showMessageDialog(null, "Errore durante la modifica della previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            aggiornaTabella();
+            svuotaElementi();
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleziona un'area d'interesse.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCancellaPrevisioniActionPerformed
 
     /**
      * Tramite questo metodo andiamo ad aggiornare la tabella delle previsioni
@@ -835,6 +840,7 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JPanel AreaParametri;
     private javax.swing.JButton btnAggiungiArea;
     private javax.swing.JButton btnAggiungiPrevisioni;
+    private javax.swing.JButton btnCancellaPrevisioni;
     private javax.swing.JButton btnModificaPrevisioni;
     private javax.swing.JComboBox<String> cmbGhiacciai;
     private javax.swing.JComboBox<String> cmbMassaGhiacciai;
@@ -880,7 +886,7 @@ public class admin_panel extends javax.swing.JFrame {
 
     private void loadAreeInteresse() throws RemoteException {
         Vector v = new Vector();
-        
+
         ArrayList<JAreaInteresse> list = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, user.getGeoname_id(), -1);
         if (list != null && !list.isEmpty()) {
             for (JAreaInteresse a : list) {
@@ -888,5 +894,25 @@ public class admin_panel extends javax.swing.JFrame {
             }
             listAree.setListData(v);
         }
+    }
+
+    private void svuotaElementi() {
+        datePickerData.setDate(new Date());
+        
+        cmbVento.setSelectedIndex(0);
+        cmbUmidita.setSelectedIndex(0);
+        cmbPressione.setSelectedIndex(0);
+        cmbTemperatura.setSelectedIndex(0);
+        cmbPrecipitazioni.setSelectedIndex(0);
+        cmbGhiacciai.setSelectedIndex(0);
+        cmbMassaGhiacciai.setSelectedIndex(0);
+
+        noteVento.setText("");
+        noteUmidita.setText("");
+        notePressione.setText("");
+        noteTemperatura.setText("");
+        notePrecipitazioni.setText("");
+        noteAGhiacciai.setText("");
+        noteMGhiacciai.setText("");
     }
 }
