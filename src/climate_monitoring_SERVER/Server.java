@@ -533,8 +533,8 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
     @Override
     public boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException {
-         String baseQuery = "DELETE FROM public.previsioni" +
-                            "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ? AND id_utente = ?;";
+         String baseQuery = "DELETE FROM public.previsioni " +
+                            "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ?;";
 
         
         int rs = db.executeUpdate(baseQuery, new Object[]{
