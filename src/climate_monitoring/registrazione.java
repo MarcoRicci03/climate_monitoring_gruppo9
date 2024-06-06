@@ -12,11 +12,13 @@ import engine.Person;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.text.Normalizer;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -303,7 +305,6 @@ public class registrazione extends javax.swing.JFrame {
      * @param evt
      */
     private void btnRegistrazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrazioneActionPerformed
-        // TODO add your handling code here:
         try {
             //controlli per verificare che tutti i campi siano stati compilati
             if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !datePickerDataNascita.getDate().toString().isEmpty()
@@ -318,7 +319,12 @@ public class registrazione extends javax.swing.JFrame {
                         p.setDay(String.valueOf(ld.getDayOfMonth()));
                         p.setMonth(String.valueOf(ld.getMonthValue()));
                         p.setYear(String.valueOf(ld.getYear()));
-                        p.setBornCity(txtLuogoNascita.getText().toUpperCase());
+                        String normalized = Normalizer.normalize(txtLuogoNascita.getText().toUpperCase(), Normalizer.Form.NFD);
+                        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+                        String luogo = pattern.matcher(normalized).replaceAll("");
+                        System.out.println(luogo);
+                        p.setBornCity(luogo);
+
                         p.setSex(cmbSesso.getItemAt(cmbSesso.getSelectedIndex()));
                         Engine e = null;
                         try {
@@ -330,7 +336,7 @@ public class registrazione extends javax.swing.JFrame {
 
 
                         //registrazione dell'utente solamente se non esiste altro utente con codice operatore uguali
-                        if ((username = dc.gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), JUser.getMD5(txtPass.getText()), e.getCode(), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) == null) {
+                        if ((username = dc.gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), JUser.getMD5(txtPass.getText()), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) == null) {
                             //finestra di errore in caso di un utente già registrato
                             JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
                         } else {

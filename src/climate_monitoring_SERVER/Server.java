@@ -142,6 +142,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             String baseQuery = "SELECT previsioni.*, utenti.username FROM previsioni INNER JOIN utenti ON utenti.id_utente = previsioni.id_utente WHERE previsioni.geoname_id = ? AND previsioni.id_area_interesse = ?";
             baseQuery += dateFromFilter ? " AND previsioni.data >= CURRENT_DATE" : "";
             baseQuery += dateFilter != null ? " AND previsioni.data = ?" : "";
+            baseQuery += " ORDER BY previsioni.data DESC";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{geoname_id, id_area_interesse, dateFilter != null ? dateFilter : null}, true);
             if (rs != null) {
                 ArrayList<JPrevisioni> previsioni = new ArrayList<>();
@@ -398,19 +399,18 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     @Override
-    public String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
+    public String AddUser(String nome, String cognome, String password, Integer geoname_id, String codiceOperatore) throws RemoteException {
         try {
             boolean checkCodiceOperatoreUsato = checkCodiceOperatoreUsed(codiceOperatore);
             if (!checkCodiceOperatoreUsato) {
                 String username = nome.substring(0, 1) + "_" + cognome;
                 String idNuovoUtente = checkUserAlreadyExistsByUsername(username + "%");
-
                 username += idNuovoUtente;
                 String email = username + "@mail.com";
 
                 String baseQuery = "INSERT INTO utenti (nome,cognome,username,email,codice_operatore,codice_fiscale,geoname_id,password) VALUES (?,?,?,?,?,?,?,?)";
                 int rs = db.executeUpdate(baseQuery, new Object[]{nome, cognome, username, email, codiceOperatore, cf, geoname_id, password}, true);
-                return rs != -1 && rs == 1 ? username : null;
+                return rs == 1 ? username : null;
             }
         } catch (Exception ex) {
             System.err.println("Errore nell'aggiunta dell'utente: " + ex.getMessage());

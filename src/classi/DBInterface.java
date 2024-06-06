@@ -131,7 +131,7 @@ public interface DBInterface extends Remote {
      * @return lo username del nuovo utente se l'inserimento è avvenuto con successo, null altrimenti.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
-    String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException;
+    String AddUser(String nome, String cognome, String password, Integer geoname_id, String codiceOperatore) throws RemoteException;
 
 
     /**
