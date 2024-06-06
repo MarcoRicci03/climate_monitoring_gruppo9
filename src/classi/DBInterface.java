@@ -133,49 +133,22 @@ public interface DBInterface extends Remote {
      */
     String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException;
 
+
     /**
      * Aggiunge una nuova area di interesse al database.
      *
-     * @param id_area    l'ID dell'area di interesse.
      * @param geoname_id l'ID Geoname dell'area di interesse.
      * @param nome       il nome dell'area di interesse.
      * @return true se l'area di interesse è stata aggiunta con successo, false altrimenti.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
-    boolean AddAreaInteresse(Integer id_area, String geoname_id, String nome) throws RemoteException;
+    boolean AddAreaInteresse( String nome, String geoname_id) throws RemoteException;
+  
+    boolean checkAreaInteresse( String nome, String geoname_id ) throws RemoteException;
 
-    /**
-     * Aggiunge una nuova previsione al database.
-     *
-     * @param id_area         l'ID dell'area di interesse.
-     * @param id_centro       l'ID del centro.
-     * @param username        lo username dell'utente che aggiunge la previsione.
-     * @param vVento          il valore del vento.
-     * @param pUmidita        il valore dell'umidità.
-     * @param pressione       il valore della pressione.
-     * @param temperatura     il valore della temperatura.
-     * @param precipitazioni  il valore delle precipitazioni.
-     * @param aGhiacciai      il valore dell'altitudine dei ghiacciai.
-     * @param mGhiacciai      il valore della massa dei ghiacciai.
-     * @param nVento          la nota del vento.
-     * @param nUmidita        la nota dell'umidità.
-     * @param nPRessione      la nota della pressione.
-     * @param nTemperatura    la nota della temperatura.
-     * @param nPrecipitazioni la nota delle precipitazioni.
-     * @param nAGhiacciai     la nota dell'altitudine dei ghiacciai.
-     * @param nMGhiacciai     la nota della massa dei ghiacciai.
-     * @return true se la previsione è stata aggiunta con successo, false altrimenti.
-     * @throws RemoteException se si verifica un problema di comunicazione remota.
-     */
-    boolean AddPrevisione(Integer id_area, Integer id_centro, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
+    boolean AddPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
 
-    /**
-     * Recupera un utente dal database in base allo username e alla password forniti.
-     *
-     * @param user lo username dell'utente.
-     * @param pass la password dell'utente.
-     * @return un oggetto JUser che rappresenta l'utente se le credenziali sono corrette, null altrimenti.
-     * @throws RemoteException se si verifica un problema di comunicazione remota.
-     */
-    JUser getUser(String user, String pass) throws RemoteException;
+    boolean editPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException;
+    boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException;
+    JUser getUser(String user, String pass) throws  RemoteException; //metodo per il log in
 }

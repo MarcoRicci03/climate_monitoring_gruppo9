@@ -19,9 +19,12 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Server extends UnicastRemoteObject implements DBInterface {
@@ -416,12 +419,21 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     @Override
-    public boolean AddAreaInteresse(Integer id_area, String geoname_id, String nome) throws RemoteException {
-        return false;
+    public boolean AddAreaInteresse(String nome, String geoname_id) throws RemoteException {
+        String baseQuery = "INSERT INTO public.aree_interesse (nome, geoname_id) VALUES(?,?);";
+        int rs = db.executeUpdate(baseQuery, new Object[]{nome, geoname_id}, true);
+        return rs > 0;
     }
 
     @Override
-    public boolean AddPrevisione(Integer id_area, Integer id_centro, String username, Integer vVento, Integer pUmidita, Integer pressione, Integer temperatura, Integer precipitazioni, Integer aGhiacciai, Integer mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
+    public boolean checkAreaInteresse(String nome, String geoname_id) throws RemoteException {
+        String baseQuery = "SELECT id_area_interesse FROM aree_interesse WHERE LOWER(nome)=? AND geoname_id = ?";
+        try {
+            ResultSet rs = db.executeQuery(baseQuery, new Object[]{nome.toLowerCase(), geoname_id}, true);
+            return rs.next() && rs.getInt("id_area_interesse") > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return false;
     }
 
@@ -433,6 +445,75 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @return un oggetto JUser che rappresenta l'utente se le credenziali sono corrette, null altrimenti.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
+    @Override
+    public boolean AddPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
+        String baseQuery = "INSERT INTO public.previsioni (" +
+            "data, geoname_id, id_area_interesse, id_utente, valorevento, notavento, " +
+            "valoreumidita, notaumidita, valorepressione, notapressione, " +
+            "valoretemperatura, notatemperatura, valoreprecipitazioni, notaprecipitazioni, " +
+            "valorealtghiacciai, notaaltghiacciai, valoremassaghiacciai, notamassaghiacciai) " +
+            "VALUES(?, ?, ?, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?, ?::enum_valore, ?);";
+
+        int rs = db.executeUpdate(baseQuery, new Object[]{
+            data, 
+            id_centro, 
+            id_area, 
+            username, 
+            vVento, 
+            nVento, 
+            pUmidita, 
+            nUmidita, 
+            pressione, 
+            nPRessione, 
+            temperatura, 
+            nTemperatura, 
+            precipitazioni, 
+            nPrecipitazioni, 
+            aGhiacciai, 
+            nAGhiacciai, 
+            mGhiacciai, 
+            nMGhiacciai
+        }, true);
+        return rs != -1;
+    }
+    
+    @Override
+    public boolean editPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
+        
+        String baseQuery = "UPDATE public.previsioni SET " +
+                            "valorevento = ?::enum_valore, notavento = ?, " +
+                            "valoreumidita = ?::enum_valore, notaumidita = ?, " +
+                            "valorepressione = ?::enum_valore, notapressione = ?, " +
+                            "valoretemperatura = ?::enum_valore, notatemperatura = ?, " +
+                            "valoreprecipitazioni = ?::enum_valore, notaprecipitazioni = ?, " +
+                            "valorealtghiacciai = ?::enum_valore, notaaltghiacciai = ?, " +
+                            "valoremassaghiacciai = ?::enum_valore, notamassaghiacciai = ? " +
+                            "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ? AND id_utente = ?;";
+
+        
+        int rs = db.executeUpdate(baseQuery, new Object[]{
+            vVento,              // valorevento
+            nVento,              // notavento
+            pUmidita,            // valoreumidita
+            nUmidita,            // notaumidita
+            pressione,           // valorepressione
+            nPRessione,          // notapressione
+            temperatura,         // valoretemperatura
+            nTemperatura,        // notatemperatura
+            precipitazioni,      // valoreprecipitazioni
+            nPrecipitazioni,     // notaprecipitazioni
+            aGhiacciai,          // valorealtghiacciai
+            nAGhiacciai,         // notaaltghiacciai
+            mGhiacciai,          // valoremassaghiacciai
+            nMGhiacciai,         // notamassaghiacciai
+            data,                // data
+            id_centro,           // geoname_id
+            id_area,             // id_area_interesse
+            username             // id_utente
+        }, true);
+        return rs != -1;
+    }
+
     @Override
     public JUser getUser(String user, String pass) throws RemoteException {
         String baseQuery = "SELECT * FROM utenti WHERE username = ? AND password = ?";
@@ -447,5 +528,20 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             }
         }
         return null;
+    }
+
+
+    @Override
+    public boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException {
+         String baseQuery = "DELETE FROM public.previsioni" +
+                            "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ? AND id_utente = ?;";
+
+        
+        int rs = db.executeUpdate(baseQuery, new Object[]{
+            data,                // data
+            id_centro,           // geoname_id
+            id_area,             // id_area_interesse
+        }, true);
+        return rs != -1;
     }
 }

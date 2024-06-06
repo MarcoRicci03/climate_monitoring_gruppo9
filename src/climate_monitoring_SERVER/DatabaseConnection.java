@@ -44,7 +44,6 @@ public class DatabaseConnection {
     }
 
     public ResultSet executeQuery(String query, Object[] params, boolean hasParams) {
-        ResultSet rs = null;
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             if (hasParams && (params != null && params.length > 0)) {
@@ -128,7 +127,12 @@ public class DatabaseConnection {
                             }
                             break;
                         case "Date":
-                            stmt.setDate(i + 1, (java.sql.Date) p);
+                            //formato yyyy-mm-dd
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            String strData = sdf.format((Date) p);
+                            java.sql.Date data = java.sql.Date.valueOf(strData);
+                            System.out.println(data);
+                            stmt.setDate(i + 1, data);
                             break;
                         default:
                             throw new IllegalArgumentException("Tipo non riconosciuto: " + p.getClass().getSimpleName());
