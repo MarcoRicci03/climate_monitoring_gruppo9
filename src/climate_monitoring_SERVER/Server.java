@@ -1,14 +1,11 @@
 package climate_monitoring_SERVER;
 
 import classi.*;
-
 import com.google.gson.Gson;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -23,10 +20,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-
+/**
+ * Classe Server che implementa l'interfaccia remota DBInterface per gestire le operazioni sul database
+ * e fornire servizi remoti.
+ *
+ * @autor marco_ricci
+ * @autor edoardo_rizzi
+ * @autor alberto_stagno
+ * @autor denis_di_napoli
+ */
 public class Server extends UnicastRemoteObject implements DBInterface {
     /**
      * Connessione al database utilizzata per le operazioni di accesso ai dati.
@@ -266,7 +269,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     @Override
-    public boolean checkCodiceOperatore(String codice_operatore) throws RemoteException {
+    public synchronized boolean checkCodiceOperatore(String codice_operatore) throws RemoteException {
         try {
             String baseQuery = "SELECT codice FROM codici_operatori WHERE codice = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
@@ -289,7 +292,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @return true se il codice operatore è già stato utilizzato, false altrimenti.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
-    public boolean checkCodiceOperatoreUsed(String codice_operatore) throws RemoteException {
+    public synchronized boolean checkCodiceOperatoreUsed(String codice_operatore) throws RemoteException {
         try {
             String baseQuery = "SELECT codice_operatore FROM utenti WHERE codice_operatore = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{codice_operatore}, true);
@@ -313,7 +316,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @return una stringa rappresentante il numero più alto trovato nell'username, o "1" se nessun numero è trovato o in caso di errore.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
-    public String checkUserAlreadyExistsByUsername(String username) throws RemoteException {
+    public synchronized String checkUserAlreadyExistsByUsername(String username) throws RemoteException {
         try {
             String baseQuery = "SELECT max(username) as max_username FROM utenti WHERE username LIKE ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{username}, true);
@@ -349,7 +352,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     @Override
-    public boolean checkExistStazione(String geoname_id, String nome) throws RemoteException {
+    public synchronized boolean checkExistStazione(String geoname_id, String nome) throws RemoteException {
         try {
             String baseQuery = "SELECT geoname_id, nome FROM stazioni WHERE geoname_id = ? OR nome = ?";
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{geoname_id, nome}, true);
@@ -377,7 +380,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     @Override
-    public boolean AddStazione(String geoname_id, String nome, String country_code, JCoordinate coordinate) throws RemoteException {
+    public synchronized boolean AddStazione(String geoname_id, String nome, String country_code, JCoordinate coordinate) throws RemoteException {
         try {
             //controllo l'esistenza di una stazione con lo stesso geoname_id - nome
             boolean isStazioneUsata = checkExistStazione(geoname_id, nome);
@@ -409,7 +412,7 @@ public class Server extends UnicastRemoteObject implements DBInterface {
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     @Override
-    public String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
+    public synchronized String AddUser(String nome, String cognome, String password, String cf, Integer geoname_id, String codiceOperatore) throws RemoteException {
         try {
             boolean checkCodiceOperatoreUsato = checkCodiceOperatoreUsed(codiceOperatore);
             if (!checkCodiceOperatoreUsato) {
@@ -428,15 +431,31 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return null;
     }
 
+    /**
+     * Aggiunge una nuova area di interesse al database.
+     *
+     * @param nome       il nome dell'area di interesse.
+     * @param geoname_id l'ID Geoname dell'area di interesse.
+     * @return true se l'area di interesse è stata aggiunta con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
-    public boolean AddAreaInteresse(String nome, String geoname_id) throws RemoteException {
+    public synchronized boolean AddAreaInteresse(String nome, String geoname_id) throws RemoteException {
         String baseQuery = "INSERT INTO public.aree_interesse (nome, geoname_id) VALUES(?,?);";
         int rs = db.executeUpdate(baseQuery, new Object[]{nome, geoname_id}, true);
         return rs > 0;
     }
 
+    /**
+     * Verifica se esiste già un'area di interesse con lo stesso nome e geoname_id nel database.
+     *
+     * @param nome       il nome dell'area di interesse da verificare.
+     * @param geoname_id l'ID Geoname dell'area di interesse da verificare.
+     * @return true se esiste già un'area di interesse con lo stesso nome e geoname_id, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
-    public boolean checkAreaInteresse(String nome, String geoname_id) throws RemoteException {
+    public synchronized boolean checkAreaInteresse(String nome, String geoname_id) throws RemoteException {
         String baseQuery = "SELECT id_area_interesse FROM aree_interesse WHERE LOWER(nome)=? AND geoname_id = ?";
         try {
             ResultSet rs = db.executeQuery(baseQuery, new Object[]{nome.toLowerCase(), geoname_id}, true);
@@ -448,15 +467,31 @@ public class Server extends UnicastRemoteObject implements DBInterface {
     }
 
     /**
-     * Recupera un utente dal database in base allo username e alla password forniti.
+     * Aggiunge una nuova previsione al database.
      *
-     * @param user lo username dell'utente.
-     * @param pass la password dell'utente.
-     * @return un oggetto JUser che rappresenta l'utente se le credenziali sono corrette, null altrimenti.
+     * @param data            la data della previsione.
+     * @param id_area         l'ID dell'area di interesse.
+     * @param id_centro       l'ID del centro di monitoraggio.
+     * @param username        l'ID dell'utente che ha inserito la previsione.
+     * @param vVento          il valore del vento.
+     * @param pUmidita        il valore dell'umidità.
+     * @param pressione       il valore della pressione.
+     * @param temperatura     il valore della temperatura.
+     * @param precipitazioni  il valore delle precipitazioni.
+     * @param aGhiacciai      il valore dell'altitudine dei ghiacciai.
+     * @param mGhiacciai      il valore della massa dei ghiacciai.
+     * @param nVento          la nota relativa al vento.
+     * @param nUmidita        la nota relativa all'umidità.
+     * @param nPRessione      la nota relativa alla pressione.
+     * @param nTemperatura    la nota relativa alla temperatura.
+     * @param nPrecipitazioni la nota relativa alle precipitazioni.
+     * @param nAGhiacciai     la nota relativa all'altitudine dei ghiacciai.
+     * @param nMGhiacciai     la nota relativa alla massa dei ghiacciai.
+     * @return true se la previsione è stata aggiunta con successo, false altrimenti.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     @Override
-    public boolean AddPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
+    public synchronized boolean AddPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
         String baseQuery = "INSERT INTO public.previsioni (" +
                 "data, geoname_id, id_area_interesse, id_utente, valorevento, notavento, " +
                 "valoreumidita, notaumidita, valorepressione, notapressione, " +
@@ -487,8 +522,32 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return rs != -1;
     }
 
+    /**
+     * Modifica una previsione esistente nel database.
+     *
+     * @param data            la data della previsione.
+     * @param id_area         l'ID dell'area di interesse.
+     * @param id_centro       l'ID del centro di monitoraggio.
+     * @param username        l'ID dell'utente che ha inserito la previsione.
+     * @param vVento          il valore del vento.
+     * @param pUmidita        il valore dell'umidità.
+     * @param pressione       il valore della pressione.
+     * @param temperatura     il valore della temperatura.
+     * @param precipitazioni  il valore delle precipitazioni.
+     * @param aGhiacciai      il valore dell'altitudine dei ghiacciai.
+     * @param mGhiacciai      il valore della massa dei ghiacciai.
+     * @param nVento          la nota relativa al vento.
+     * @param nUmidita        la nota relativa all'umidità.
+     * @param nPRessione      la nota relativa alla pressione.
+     * @param nTemperatura    la nota relativa alla temperatura.
+     * @param nPrecipitazioni la nota relativa alle precipitazioni.
+     * @param nAGhiacciai     la nota relativa all'altitudine dei ghiacciai.
+     * @param nMGhiacciai     la nota relativa alla massa dei ghiacciai.
+     * @return true se la previsione è stata modificata con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
-    public boolean editPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
+    public synchronized boolean editPrevisione(Date data, Integer id_area, String id_centro, Integer username, String vVento, String pUmidita, String pressione, String temperatura, String precipitazioni, String aGhiacciai, String mGhiacciai, String nVento, String nUmidita, String nPRessione, String nTemperatura, String nPrecipitazioni, String nAGhiacciai, String nMGhiacciai) throws RemoteException {
 
         String baseQuery = "UPDATE public.previsioni SET " +
                 "valorevento = ?::enum_valore, notavento = ?, " +
@@ -524,6 +583,14 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return rs != -1;
     }
 
+    /**
+     * Recupera un utente dal database in base allo username e alla password forniti.
+     *
+     * @param user lo username dell'utente.
+     * @param pass la password dell'utente.
+     * @return un oggetto JUser che rappresenta l'utente se le credenziali sono corrette, null altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
     public JUser getUser(String user, String pass) throws RemoteException {
         String baseQuery = "SELECT * FROM utenti WHERE username = ? AND password = ?";
@@ -540,9 +607,17 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         return null;
     }
 
-
+    /**
+     * Rimuove una previsione dal database.
+     *
+     * @param data      la data della previsione.
+     * @param id_area   l'ID dell'area di interesse.
+     * @param id_centro l'ID del centro di monitoraggio.
+     * @return true se la previsione è stata rimossa con successo, false altrimenti.
+     * @throws RemoteException se si verifica un problema di comunicazione remota.
+     */
     @Override
-    public boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException {
+    public synchronized boolean removePrevisione(Date data, Integer id_area, String id_centro) throws RemoteException {
         String baseQuery = "DELETE FROM public.previsioni " +
                 "WHERE data = ? AND geoname_id = ? AND id_area_interesse = ?;";
 

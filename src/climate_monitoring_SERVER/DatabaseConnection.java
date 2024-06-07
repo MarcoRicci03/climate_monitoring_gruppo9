@@ -1,7 +1,5 @@
 package climate_monitoring_SERVER;
 
-import com.sun.tools.jconsole.JConsoleContext;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,9 +8,27 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Classe che gestisce la connessione al database e l'esecuzione di query e aggiornamenti.
+ *
+ * @autor marco_ricci
+ * @autor edoardo_rizzi
+ * @autor alberto_stagno
+ * @autor denis_di_napoli
+ */
 public class DatabaseConnection {
+
+    /**
+     * Connessione al database.
+     */
     private Connection conn = null;
 
+    /**
+     * Costruttore della classe DatabaseConnection.
+     * Stabilisce una connessione al database utilizzando l'URL fornito.
+     *
+     * @param url l'URL per la connessione al database.
+     */
     public DatabaseConnection(String url) {
         try {
             conn = DriverManager.getConnection(url);
@@ -21,6 +37,9 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Chiude la connessione al database.
+     */
     public void closeConnection() {
         try {
             conn.close();
@@ -29,10 +48,21 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Verifica se la connessione al database è attiva.
+     *
+     * @return true se la connessione è attiva, false altrimenti.
+     */
     public boolean isConnected() {
         return conn != null;
     }
 
+    /**
+     * Riconnette al database utilizzando l'URL fornito.
+     *
+     * @param url l'URL per la riconnessione al database.
+     * @return true se la riconnessione è avvenuta con successo, false altrimenti.
+     */
     public boolean reconnect(String url) {
         try {
             conn = DriverManager.getConnection(url);
@@ -43,6 +73,14 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Esegue una query sul database.
+     *
+     * @param query     la query da eseguire.
+     * @param params    i parametri da utilizzare nella query.
+     * @param hasParams indica se la query ha parametri.
+     * @return il ResultSet contenente i risultati della query, o null se si verifica un errore.
+     */
     public ResultSet executeQuery(String query, Object[] params, boolean hasParams) {
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -94,7 +132,15 @@ public class DatabaseConnection {
         return null;
     }
 
-    public int executeUpdate(String query,Object[] params, boolean hasParams) {
+    /**
+     * Esegue un aggiornamento sul database.
+     *
+     * @param query     la query di aggiornamento da eseguire.
+     * @param params    i parametri da utilizzare nella query.
+     * @param hasParams indica se la query ha parametri.
+     * @return il numero di righe affette dall'aggiornamento, o -1 se si verifica un errore.
+     */
+    public int executeUpdate(String query, Object[] params, boolean hasParams) {
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             if (hasParams && (params != null && params.length > 0)) {
@@ -146,6 +192,12 @@ public class DatabaseConnection {
         return -1;
     }
 
+    /**
+     * Prepara una dichiarazione SQL da eseguire sul database.
+     *
+     * @param query la query da preparare.
+     * @return un PreparedStatement per la query fornita.
+     */
     public PreparedStatement prepareStatement(String query) {
         try {
             return conn.prepareStatement(query);
