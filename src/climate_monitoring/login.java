@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -277,7 +278,13 @@ public class login extends javax.swing.JFrame implements WindowListener {
      * @param evt
      */
     private void btnGestionePrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionePrevisioniActionPerformed
-        admin_panel ap = new admin_panel(utenteLoggato,this);
+        admin_panel ap = null;
+        try {
+            ap = new admin_panel(utenteLoggato);
+        } catch (RemoteException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         ap.addWindowListener(this);
         ap.setVisible(true);
         setVisible(false);

@@ -50,7 +50,7 @@ public class ParserCSV {
     //    /**
 //     * file che presenta tutte le previsioni inserite
 //     */
-    private static final String fPrevisioni = "dati/previsioni.csv"; //file che presenta tutte le previsioni inserite
+    private static final String fPrevisioni = "dati/.csv"; //file che presenta tutte le previsioni inserite
 
     //
 //    /**
@@ -366,16 +366,17 @@ public class ParserCSV {
 //     * @throws IOException
 //     */
     public static ArrayList<JPrevisioni> creaListaPrevisioni(Integer id_area) throws FileNotFoundException, IOException {
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
-        ArrayList<JPrevisioni> l = new ArrayList<>();
-        for (String s : list) {
-            String[] elements = s.split(";");
-            if (Integer.parseInt(elements[2]) == id_area) {
-                String data = elements[0];
-                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[6]), Integer.parseInt(elements[8]), Integer.parseInt(elements[10]), Integer.parseInt(elements[12]), Integer.parseInt(elements[14]), Integer.parseInt(elements[16]), elements[5], elements[7], elements[9], elements[11], elements[13], elements[15], elements[17]));
-            }
-        }
-        return l;
+//        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
+//        ArrayList<JPrevisioni> l = new ArrayList<>();
+//        for (String s : list) {
+//            String[] elements = s.split(";");
+//            if (Integer.parseInt(elements[2]) == id_area) {
+//                String data = elements[0];
+//                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[6]), Integer.parseInt(elements[8]), Integer.parseInt(elements[10]), Integer.parseInt(elements[12]), Integer.parseInt(elements[14]), Integer.parseInt(elements[16]), elements[5], elements[7], elements[9], elements[11], elements[13], elements[15], elements[17]));
+//            }
+//        }
+//        return l;
+        return null;
     }
 
     //
@@ -392,17 +393,18 @@ public class ParserCSV {
 //     * @throws IOException
 //     */
     public static ArrayList<JPrevisioni> creaListaPrevisioniByDate(Integer id_area, String strData) throws FileNotFoundException, IOException {
-        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
-        ArrayList<JPrevisioni> l = new ArrayList<>();
-        for (String s : list) {
-            String[] elements = s.split(";");
-
-            if (Integer.parseInt(elements[2]) == id_area && strData.equals(elements[0])) {
-                String data = elements[0];
-                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[6]), Integer.parseInt(elements[8]), Integer.parseInt(elements[10]), Integer.parseInt(elements[12]), Integer.parseInt(elements[14]), Integer.parseInt(elements[16]), elements[5], elements[7], elements[9], elements[11], elements[13], elements[15], elements[17]));
-            }
-        }
-        return l;
+//        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
+//        ArrayList<JPrevisioni> l = new ArrayList<>();
+//        for (String s : list) {
+//            String[] elements = s.split(";");
+//
+//            if (Integer.parseInt(elements[2]) == id_area && strData.equals(elements[0])) {
+//                String data = elements[0];
+//                l.add(new JPrevisioni(data, Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), elements[3], Integer.parseInt(elements[4]), Integer.parseInt(elements[6]), Integer.parseInt(elements[8]), Integer.parseInt(elements[10]), Integer.parseInt(elements[12]), Integer.parseInt(elements[14]), Integer.parseInt(elements[16]), elements[5], elements[7], elements[9], elements[11], elements[13], elements[15], elements[17]));
+//            }
+//        }
+//        return l;
+        return null;
     }
 
     //
@@ -414,23 +416,24 @@ public class ParserCSV {
 //     * l'operazione venga effettuata con successo, altrimenti restituisce -1
 //     */
     public static Integer aggiungiPrevisione(JPrevisioni previsione) {
-        try {
-            Integer id = 1;
-            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
-            for (String s : list) {
-                id++;
-            }
-
-            FileWriter fileWriter = new FileWriter(new File(fPrevisioni), true);
-            String line = previsione.toCSV() + "\n";
-            fileWriter.append(line);
-            fileWriter.close();
-            return id;
-
-        } catch (IOException ex) {
-            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
-        }
+//        try {
+//            Integer id = 1;
+//            ArrayList<String> list = (ArrayList<String>) Files.readAllLines(Paths.get(fPrevisioni), StandardCharsets.UTF_8);
+//            for (String s : list) {
+//                id++;
+//            }
+//
+//            FileWriter fileWriter = new FileWriter(new File(fPrevisioni), true);
+//            String line = previsione.toCSV() + "\n";
+//            fileWriter.append(line);
+//            fileWriter.close();
+//            return id;
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(ParserCSV.class.getName()).log(Level.SEVERE, null, ex);
+//            return -1;
+//        }
+        return null;
     }
 
     //
