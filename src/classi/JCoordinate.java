@@ -4,22 +4,12 @@ import java.io.Serializable;
 
 /**
  * Classe per la creazione e gestione delle coordinate geografiche.
- * <p>
- * Questa classe fornisce variabili e metodi per gestire latitudine e longitudine
- * di una posizione geografica, inclusi costruttori per diverse modalità di input
- * e metodi per calcolare distanze e verificare validità delle coordinate.
- * </p>
  *
- * <p>Esempio di utilizzo:</p>
- * <pre>
- *     JCoordinate coord = new JCoordinate(45.4642f, 9.1900f);
- *     System.out.println(coord.toString());
- * </pre>
  *
- * @autor marco_ricci
- * @autor edoardo_rizzi
- * @autor alberto_stagno
- * @autor denis_di_napoli
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class JCoordinate implements Serializable {
 
@@ -92,6 +82,34 @@ public class JCoordinate implements Serializable {
     @Override
     public String toString() {
         return "lat=" + lat + ", lon=" + lon;
+    }
+    
+    public void setLon(Float lon) {
+        this.lon = lon;
+    }
+
+    public void setLat(Float lat) {
+        this.lat = lat;
+    }
+
+    /**
+     * Metodo che permette tramite formula matematica di calcolare la distanza
+     * in chilometri tra due coordinate, richiede come parametro le coordinate
+     * con le quali calcolare la distanza.
+     *
+     * @param altro Un secondo oggetto JCoordinate, dal quale viene misurata la
+     * distanza in chilometri.
+     * @return Distanza in chilometri in formato Double.
+     */
+    public double distanzaDa(JCoordinate altro) {
+        double dLat = Math.toRadians(altro.lat - lat);
+        double dLon = Math.toRadians(altro.lon - lon);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat)) * Math.cos(Math.toRadians(altro.lat))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = 6371 * c;
+        return distance;
     }
 
     /**
