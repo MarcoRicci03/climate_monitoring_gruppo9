@@ -55,7 +55,7 @@ public class admin_panel extends javax.swing.JFrame {
      * @param userLoggato Oggetto che contiene l'utente che ha compiuto
      * l'accesso
      */
-    public admin_panel(JUser userLoggato,JFrame paginaPrec) throws RemoteException {
+    public admin_panel(JUser userLoggato,Object paginaPrec) throws RemoteException {
         this.paginaPrec = paginaPrec;
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -549,10 +549,10 @@ public class admin_panel extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelAltitudine)
+                    .addComponent(btnCancellaPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cmbGhiacciai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(noteAGhiacciai, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnCancellaPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(noteAGhiacciai, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMassa)
@@ -726,7 +726,7 @@ public class admin_panel extends javax.swing.JFrame {
 
     private void btnModificaPrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaPrevisioniActionPerformed
         // TODO add your handling code here:
-        if (jTabellaPrevisioni.getSelectedRow() == -1) {
+       if (jTabellaPrevisioni.getSelectedRow() == -1){
             JOptionPane.showMessageDialog(null, "Errore! Seleziona una previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -734,11 +734,11 @@ public class admin_panel extends javax.swing.JFrame {
             Date date = datePickerData.getDate();
             Date vecchiaData = null;
             try {
-                vecchiaData = new SimpleDateFormat("dd/MM/yyyy").parse((String) jTabellaPrevisioni.getValueAt(jTabellaPrevisioni.getSelectedRow(), 0));
+                vecchiaData = new SimpleDateFormat("dd/MM/yyyy").parse((String) jTabellaPrevisioni.getValueAt(jTabellaPrevisioni.getSelectedRow(),0));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if (!date.equals(vecchiaData)) {
+            if(!date.equals(vecchiaData)){
                 JOptionPane.showMessageDialog(null, "Errore! Non può modificare la data", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 datePickerData.setDate(vecchiaData);
                 return;
@@ -924,7 +924,11 @@ public class admin_panel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new admin_panel(user).setVisible(true);
+                try {
+                    new admin_panel(user,this).setVisible(true);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
