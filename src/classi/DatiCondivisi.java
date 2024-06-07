@@ -1,20 +1,8 @@
 package classi;
 
-import java.util.ArrayList;
-
 /**
- * Classe singleton che contiene i dati condivisi utilizzati dall'applicazione.
- * <p>
- * Questa classe implementa il pattern Singleton per assicurare che esista solo una
- * istanza di `DatiCondivisi`. Contiene i dati e i metodi necessari per gestire
- * le informazioni condivise, come la gestione del database.
- * </p>
- *
- * <p>Esempio di utilizzo:</p>
- * <pre>
- *     DatiCondivisi dati = DatiCondivisi.getInstance();
- *     dati.gestore_db = new DBInterfaceImplementation();
- * </pre>
+ * Classe Singleton che fornisce un'istanza condivisa per la gestione delle interazioni con il database.
+ * Questa classe garantisce che esista una sola istanza di DatiCondivisi nell'intera applicazione.
  *
  * @autor marco_ricci
  * @autor edoardo_rizzi
@@ -22,28 +10,25 @@ import java.util.ArrayList;
  * @autor denis_di_napoli
  */
 public class DatiCondivisi {
-    /**
-     * L'unica istanza della classe DatiCondivisi.
-     */
     private static DatiCondivisi instance = null;
 
     /**
-     * Interfaccia per la gestione del database.
+     * Interfaccia del gestore del database per gestire le operazioni sul database.
      */
     public DBInterface gestore_db;
 
     /**
-     * Costruttore privato per il pattern singleton.
-     * Inizializza la lista di nazioni.
+     * Costruttore privato per prevenire l'istanza della classe.
      */
     private DatiCondivisi() {
 
     }
 
     /**
-     * Restituisce l'istanza singleton di DatiCondivisi.
+     * Restituisce l'istanza Singleton di DatiCondivisi.
+     * Se l'istanza non esiste, ne crea una.
      *
-     * @return l'istanza di DatiCondivisi.
+     * @return L'istanza Singleton di DatiCondivisi.
      */
     public static DatiCondivisi getInstance() {
         if (instance == null) {

@@ -9,50 +9,66 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ * Classe che rappresenta un utente con varie informazioni personali e metodi per la gestione dell'utente.
+ * Implementa Serializable per consentire la serializzazione dell'oggetto.
  *
- * Classe per la creazione e la gestione degli operatori autorizzati
- *
- * @author marco_ricci
- * @author edoardo_rizzi
- * @author alberto_stagno
- * @author denis_di_napoli
+ * @autor marco_ricci
+ * @autor edoardo_rizzi
+ * @autor alberto_stagno
+ * @autor denis_di_napoli
  */
 public class JUser implements Serializable {
 
     /**
-     * username utente , nome utente, cognome utente, id utente, password utente,  cf utente, mail utente, stazione meterologica a cui è associato l'operatore
+     * Username dell'utente.
      */
-    private String username, nome, cognome, id, cf, mail, geoname_id;
+    private String username;
 
     /**
-     * Indica l'ultima area di interesse di cui l'operatore ha aggiunto una previsione 
+     * Nome dell'utente.
      */
-    private int id_areaSelezionata; //Indica l'ultima area di interesse di cui l'operatore ha aggiunto una previsione 
+    private String nome;
 
     /**
-     * Costruttore senza parametri, genera un oggetto JUser impostando a zero tutti
-     * gli attributi della classe.
+     * Cognome dell'utente.
      */
-    public JUser() {
-        this.id = "";
-        this.nome = "";
-        this.cognome = "";
-        this.username = "";
-        this.mail = "";
-        this.cf = "";
-        this.geoname_id = "";
-    }
+    private String cognome;
 
     /**
-     * Costruttore con parametri, genera un oggetto JUser.
+     * ID dell'utente.
+     */
+    private String id;
+
+    /**
+     * Codice fiscale dell'utente.
+     */
+    private String cf;
+
+    /**
+     * Email dell'utente.
+     */
+    private String mail;
+
+    /**
+     * ID del geoname associato all'utente.
+     */
+    private String geoname_id;
+
+    /**
+     * Indica l'ultima area di interesse di cui l'operatore ha aggiunto una previsione.
+     */
+    private int id_areaSelezionata;
+
+    /**
+     * Costruttore della classe JUser con parametri.
      *
-     * @param username indica il nome con cui accedere nell'area riservata agli
-     * operatori.
-     * @param nome indica il nome dell'operatore.
-     * @param cognome indica il cognome dell'operatore.
-     * @param id codice univoco che indica l'operatore.
-     * @param cf indica il codice fiscale dell'operatore.
-     * @param mail indica l'email dell'operatore.
+     * @param username Username dell'utente
+     * @param nome Nome dell'utente
+     * @param cognome Cognome dell'utente
+     * @param id ID dell'utente
+     * @param cf Codice fiscale dell'utente
+     * @param mail Email dell'utente
+     * @param geoname_id ID del geoname associato all'utente
      */
     public JUser(String username, String nome, String cognome, String id, String cf, String mail, String geoname_id) {
         this.username = username;
@@ -65,89 +81,94 @@ public class JUser implements Serializable {
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} username 
+     * Restituisce l'username dell'utente.
      *
-     * @return username
+     * @return Username dell'utente
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} nome 
+     * Restituisce il nome dell'utente.
      *
-     * @return nome
+     * @return Nome dell'utente
      */
     public String getNome() {
         return nome;
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} cognome 
+     * Restituisce il cognome dell'utente.
      *
-     * @return cognome
+     * @return Cognome dell'utente
      */
     public String getCognome() {
         return cognome;
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} id 
+     * Restituisce l'ID dell'utente.
      *
-     * @return id
+     * @return ID dell'utente
      */
     public String getId() {
         return id;
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} cf (codice fiscale) 
+     * Restituisce il codice fiscale dell'utente.
      *
-     * @return cf (codice fiscale)
+     * @return Codice fiscale dell'utente
      */
     public String getCf() {
         return cf;
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} mail 
+     * Restituisce l'email dell'utente.
      *
-     * @return mail
+     * @return Email dell'utente
      */
     public String getMail() {
         return mail;
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} Geonema_id
+     * Restituisce l'ID del geoname associato all'utente.
      *
-     * @return Geonema_id
+     * @return ID del geoname associato all'utente
      */
     public String getGeoname_id() {
         return geoname_id;
     }
 
     /**
-     * Metodo che restituisce l'attributo {@code} Id_areaSelezionata 
+     * Restituisce l'ID dell'ultima area selezionata dall'utente.
      *
-     * @return Id_areaSelezionata
+     * @return ID dell'ultima area selezionata
      */
     public int getId_areaSelezionata() {
         return id_areaSelezionata;
     }
 
     /**
-     * Metodo che imposta un nuovo valore  all'attributo {@code} Id_areaSelezionata
-     * 
-     * @param id_areaSelezionata codice identificativo dell'area
+     * Imposta l'ID dell'ultima area selezionata dall'utente.
      *
+     * @param id_areaSelezionata Nuovo ID dell'ultima area selezionata
      */
     public void setId_areaSelezionata(int id_areaSelezionata) {
         this.id_areaSelezionata = id_areaSelezionata;
     }
 
+    /**
+     * Restituisce l'hash MD5 della stringa di input.
+     *
+     * @param input La stringa di cui calcolare l'hash MD5
+     * @return L'hash MD5 della stringa di input
+     */
     public static String getMD5(String input){
-        MessageDigest md= null;
+        MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");
             md.update(input.getBytes());
@@ -160,6 +181,5 @@ public class JUser implements Serializable {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

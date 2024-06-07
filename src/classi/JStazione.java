@@ -8,44 +8,47 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
- * Classe per la creazione e gestione di stazioni metereologiche.
+ * Classe che rappresenta una stazione con informazioni geografiche e coordinate.
+ * Implementa Serializable per consentire la serializzazione dell'oggetto.
  *
- * @author marco_ricci
- * @author edoardo_rizzi
- * @author alberto_stagno
- * @author denis_di_napoli
+ * @autor marco_ricci
+ * @autor edoardo_rizzi
+ * @autor alberto_stagno
+ * @autor denis_di_napoli
  */
 public class JStazione implements Serializable {
 
     /**
-     * Codice identificativo della cittá dove si trova la stazione
-     * metereologica.
+     * ID del geoname della stazione.
      */
     @SerializedName("geonameId")
     private Integer geoname_id;
+
     /**
-     * Nome della cittá dove si trova la stazione metereologica.
+     * Nome della stazione.
      */
     @SerializedName("name")
     private String nome;
+
     /**
-     * Codice della nazione dove si trova la stazione metereologica.
+     * Codice del paese della stazione.
      */
     @SerializedName("countryCode")
     private String country_code;
+
     /**
-     * Nome della nazione dove si trova la stazione metereologica.
+     * Nome del paese della stazione.
      */
     @SerializedName("countryName")
     private String country;
+
     /**
-     * Coordinate dove si trova la stazione metereologica.
+     * Coordinate geografiche della stazione.
      */
     private JCoordinate coordinate;
 
     /**
-     * Costruttore senza parametri che imposta a zero (valore predefinito) tutti
-     * i valori dell'oggetto.
+     * Costruttore di default che inizializza i campi con valori predefiniti.
      */
     public JStazione() {
         geoname_id = 0;
@@ -55,18 +58,13 @@ public class JStazione implements Serializable {
     }
 
     /**
-     * Costruttore con parametri che assegna agli attributi della classe i
-     * valori passati tramite parametro.
+     * Costruttore con parametri per inizializzare i campi con valori specifici.
      *
-     * @param geoname_id Codice identificativo della cittá dove si trova la
-     * stazione metereologica.
-     * @param nome Nome della città dove si trova la stazione metereologica.
-     * @param country_code Codice della nazione dove si trova la stazione
-     * metereologica.
-     * @param country Nome della nazione dove si trova la stazione
-     * metereologica.
-     * @param coordinate Coordinate dove si trova la città della stazione
-     * metereologica.
+     * @param geoname_id ID del geoname della stazione
+     * @param nome Nome della stazione
+     * @param country_code Codice del paese della stazione
+     * @param country Nome del paese della stazione
+     * @param coordinate Coordinate geografiche della stazione
      */
     public JStazione(Integer geoname_id, String nome, String country_code, String country, JCoordinate coordinate) {
         this.geoname_id = geoname_id;
@@ -77,72 +75,75 @@ public class JStazione implements Serializable {
     }
 
     /**
-     * Metodo per ottenere tutte le informazioni dell'oggetto tramite stringa.
+     * Restituisce una rappresentazione in formato stringa dell'oggetto JStazione.
      *
-     * @return Ritorna una stringa contentente i valori degli attributi separati
-     * da una ','.
+     * @return Stringa che rappresenta l'oggetto JStazione
      */
     @Override
     public String toString() {
         return "geoname_id=" + geoname_id + ", nome=" + nome + ", country_code=" + country_code + ", coordinate=" + coordinate;
     }
 
+    /**
+     * Restituisce una rappresentazione in formato CSV dell'oggetto JStazione.
+     *
+     * @return Stringa in formato CSV che rappresenta l'oggetto JStazione
+     */
     public String toStringCsv() {
-        return geoname_id + "," + nome + "," + country_code + "," + country + "," + coordinate.getLat()+","+coordinate.getLon();
-
+        return geoname_id + "," + nome + "," + country_code + "," + country + "," + coordinate.getLat() + "," + coordinate.getLon();
     }
 
     /**
-     * Metodo per ottenere il codice identificativo della cittá dove si trova la
-     * stazione metereologica.
+     * Restituisce l'ID del geoname della stazione.
      *
-     * @return Restituisce il valore in formato Integer del geoname_id.
+     * @return ID del geoname della stazione
      */
     public Integer getGeoname_id() {
         return geoname_id;
     }
 
     /**
-     * Metodo per ottenere il codice identificativo della cittá dove si trova la
-     * stazione metereologica.
+     * Restituisce il nome della stazione.
      *
-     * @return Restituisce in formato stringa il valore del nome.
+     * @return Nome della stazione
      */
     public String getNome() {
         return nome;
     }
 
     /**
-     * Metodo per ottenere il codice identificativo della cittá dove si trova la
-     * stazione metereologica.
+     * Restituisce il codice del paese della stazione.
      *
-     * @return Restituisce in formato stringa il valore del country_code.
+     * @return Codice del paese della stazione
      */
     public String getCountry_code() {
         return country_code;
     }
 
     /**
-     * Metodo per ottenere le coordinate della stazione metereologica.
+     * Restituisce le coordinate geografiche della stazione.
      *
-     * @return Restituisce l'oggetto {@link JCoordinate#JCoordinate()} delle
-     * coordinate.
+     * @return Coordinate geografiche della stazione
      */
     public JCoordinate getCoordinate() {
         return coordinate;
     }
 
     /**
-     * Metodo per la nazione della stazione metereologica.
+     * Restituisce il nome del paese della stazione.
      *
-     * @return Restituisce in formato stringa il nome della nazione.
+     * @return Nome del paese della stazione
      */
     public String getNazione() {
         return country;
     }
 
+    /**
+     * Imposta le coordinate geografiche della stazione.
+     *
+     * @param jCoordinate Nuove coordinate geografiche della stazione
+     */
     public void setCoordinate(JCoordinate jCoordinate) {
         this.coordinate = jCoordinate;
     }
-
 }
