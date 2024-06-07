@@ -14,15 +14,6 @@ import java.util.logging.Logger;
 
 /**
  * Classe per la creazione e la gestione delle previsioni.
- * <p>
- * Questa classe rappresenta una previsione meteorologica con vari attributi
- * come data, velocità del vento, umidità, pressione, temperatura, ecc.
- * </p>
- *
- * <p>Esempio di utilizzo:</p>
- * <pre>
- *     JPrevisioni previsione = new JPrevisioni("12/06/2024", 1, 1, "username", 20, 80, 1013, 25, 5, 2000, 5000, "Note vento", "Note umidità", "Note pressione", "Note temperatura", "Note precipitazioni", "Note altitudine ghiacciai", "Note massa ghiacciai");
- * </pre>
  *
  * @autor marco_ricci
  * @autor edoardo_rizzi

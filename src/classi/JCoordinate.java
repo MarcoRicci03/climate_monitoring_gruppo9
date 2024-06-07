@@ -4,18 +4,7 @@ import java.io.Serializable;
 
 /**
  * Classe per la creazione e gestione delle coordinate geografiche.
- * <p>
- * Questa classe fornisce variabili e metodi per gestire latitudine e longitudine
- * di una posizione geografica, inclusi costruttori per diverse modalità di input
- * e metodi per calcolare distanze e verificare validità delle coordinate.
- * </p>
- *
- * <p>Esempio di utilizzo:</p>
- * <pre>
- *     JCoordinate coord = new JCoordinate(45.4642f, 9.1900f);
- *     System.out.println(coord.toString());
- * </pre>
- *
+
  * @autor marco_ricci
  * @autor edoardo_rizzi
  * @autor alberto_stagno

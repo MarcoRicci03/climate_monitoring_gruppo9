@@ -271,6 +271,12 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
         }
     }//GEN-LAST:event_InfoTableMouseClicked
 
+    /**
+     * Azione eseguita quando la finestra viene chiusa.
+     * Se la pagina precedente è un'istanza della classe homepage, la rende visibile.
+     *
+     * @param evt l'evento di chiusura della finestra.
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (prevPage instanceof homepage) {
             ((homepage) prevPage).setVisible(true);

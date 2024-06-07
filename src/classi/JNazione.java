@@ -13,11 +13,6 @@ import java.io.Serializable;
  * Utilizza annotazioni Gson per la serializzazione/deserializzazione JSON.
  * Implementa l'interfaccia Serializable per permettere la serializzazione degli oggetti.
  *
- * <p>Esempio di utilizzo:</p>
- * <pre>
- *     JNazione nazione = new JNazione("IT", "Italia");
- * </pre>
- *
  * @author marco_ricci
  * @author edoardo_rizzi
  * @author alberto_stagno
