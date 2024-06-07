@@ -297,7 +297,7 @@ public class login extends javax.swing.JFrame implements WindowListener {
     private void btnGestionePrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionePrevisioniActionPerformed
         admin_panel ap = null;
         try {
-            ap = new admin_panel(utenteLoggato);
+            ap = new admin_panel(utenteLoggato,this);
         } catch (RemoteException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }

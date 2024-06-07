@@ -55,8 +55,8 @@ public class admin_panel extends javax.swing.JFrame {
      * @param userLoggato Oggetto che contiene l'utente che ha compiuto
      * l'accesso
      */
-    public admin_panel(JUser userLoggato) throws RemoteException {
-
+    public admin_panel(JUser userLoggato,JFrame paginaPrec) throws RemoteException {
+        this.paginaPrec = paginaPrec;
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -131,7 +131,7 @@ public class admin_panel extends javax.swing.JFrame {
         noteAGhiacciai = new javax.swing.JTextField();
         btnModificaPrevisioni = new javax.swing.JButton();
         btnCancellaPrevisioni = new javax.swing.JButton();
-        btnCancellaPrevisioni1 = new javax.swing.JButton();
+        btnIndietro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -406,12 +406,12 @@ public class admin_panel extends javax.swing.JFrame {
             }
         });
 
-        btnCancellaPrevisioni1.setBackground(new java.awt.Color(177, 212, 224));
-        btnCancellaPrevisioni1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCancellaPrevisioni1.setText("Indietro");
-        btnCancellaPrevisioni1.addActionListener(new java.awt.event.ActionListener() {
+        btnIndietro.setBackground(new java.awt.Color(177, 212, 224));
+        btnIndietro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnIndietro.setText("Indietro");
+        btnIndietro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancellaPrevisioni1ActionPerformed(evt);
+                btnIndietroActionPerformed(evt);
             }
         });
 
@@ -464,7 +464,7 @@ public class admin_panel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAggiungiPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(89, 89, 89)
-                                .addComponent(btnCancellaPrevisioni1))))
+                                .addComponent(btnIndietro))))
                     .addGroup(AreaParametriLayout.createSequentialGroup()
                         .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelAltitudine)
@@ -495,7 +495,7 @@ public class admin_panel extends javax.swing.JFrame {
                                         .addComponent(noteTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addComponent(btnModificaPrevisioni, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         AreaParametriLayout.setVerticalGroup(
             AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,7 +523,7 @@ public class admin_panel extends javax.swing.JFrame {
                             .addComponent(noteUmidita, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAggiungiPrevisioni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancellaPrevisioni1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(AreaParametriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AreaParametriLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -594,10 +594,10 @@ public class admin_panel extends javax.swing.JFrame {
      * Questo metodo viene richiamato quando premuto il bottone "Aggiungi" nella
      * sezione per aggiungere una nuova area d'interesse, viene preso il nome
      * inserito, aggiunto al file e poi aggiunto alla lista.
-
+     *
      */
     private void btnAggiungiAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiAreaActionPerformed
-       String areaDiInteresse = txtNomeArea.getText();
+        String areaDiInteresse = txtNomeArea.getText();
 
         if (!areaDiInteresse.isBlank()) {
             // Controllo se è già stata inserita la seguente area di interesse
@@ -726,7 +726,7 @@ public class admin_panel extends javax.swing.JFrame {
 
     private void btnModificaPrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaPrevisioniActionPerformed
         // TODO add your handling code here:
-              if (jTabellaPrevisioni.getSelectedRow() == -1){
+        if (jTabellaPrevisioni.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Errore! Seleziona una previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -734,11 +734,11 @@ public class admin_panel extends javax.swing.JFrame {
             Date date = datePickerData.getDate();
             Date vecchiaData = null;
             try {
-                vecchiaData = new SimpleDateFormat("dd/MM/yyyy").parse((String) jTabellaPrevisioni.getValueAt(jTabellaPrevisioni.getSelectedRow(),0));
+                vecchiaData = new SimpleDateFormat("dd/MM/yyyy").parse((String) jTabellaPrevisioni.getValueAt(jTabellaPrevisioni.getSelectedRow(), 0));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if(!date.equals(vecchiaData)){
+            if (!date.equals(vecchiaData)) {
                 JOptionPane.showMessageDialog(null, "Errore! Non può modificare la data", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 datePickerData.setDate(vecchiaData);
                 return;
@@ -784,7 +784,7 @@ public class admin_panel extends javax.swing.JFrame {
 
     private void btnCancellaPrevisioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancellaPrevisioniActionPerformed
         // TODO add your handling code here:
-                if (jTabellaPrevisioni.getSelectedRow() == -1){
+        if (jTabellaPrevisioni.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Errore! Seleziona una previsione", "Errore", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -793,7 +793,7 @@ public class admin_panel extends javax.swing.JFrame {
             String id = txtIdCentro.getText();
             var id_area = user.getId_areaSelezionata();
             Integer username = Integer.valueOf(user.getId());
-            
+
             var result = false;
             try {
                 result = DatiCondivisi.getInstance().gestore_db.removePrevisione(date, id_area, id);
@@ -810,12 +810,14 @@ public class admin_panel extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Seleziona un'area d'interesse.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_btnCancellaPrevisioniActionPerformed
 
-    private void btnCancellaPrevisioni1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancellaPrevisioni1ActionPerformed
+    private void btnIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIndietroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancellaPrevisioni1ActionPerformed
+        ((JFrame) paginaPrec).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnIndietroActionPerformed
     /**
      * Tramite questo metodo andiamo ad aggiornare la tabella delle previsioni
      * in base all'area d'interesse selezionata.
@@ -859,8 +861,8 @@ public class admin_panel extends javax.swing.JFrame {
             Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-        private void loadAreeInteresse() throws RemoteException {
+
+    private void loadAreeInteresse() throws RemoteException {
         Vector v = new Vector();
 
         ArrayList<JAreaInteresse> list = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, user.getGeoname_id(), -1);
@@ -874,7 +876,7 @@ public class admin_panel extends javax.swing.JFrame {
 
     private void svuotaElementi() {
         datePickerData.setDate(new Date());
-        
+
         cmbVento.setSelectedIndex(0);
         cmbUmidita.setSelectedIndex(0);
         cmbPressione.setSelectedIndex(0);
@@ -922,11 +924,7 @@ public class admin_panel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new admin_panel(user).setVisible(true);
-                } catch (RemoteException ex) {
-                    Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new admin_panel(user).setVisible(true);
             }
         });
     }
@@ -937,7 +935,7 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JButton btnAggiungiArea;
     private javax.swing.JButton btnAggiungiPrevisioni;
     private javax.swing.JButton btnCancellaPrevisioni;
-    private javax.swing.JButton btnCancellaPrevisioni1;
+    private javax.swing.JButton btnIndietro;
     private javax.swing.JButton btnModificaPrevisioni;
     private javax.swing.JComboBox<String> cmbGhiacciai;
     private javax.swing.JComboBox<String> cmbMassaGhiacciai;
