@@ -2,6 +2,11 @@ package classi;
 
 import java.util.ArrayList;
 
+
+/**
+ * Classe singleton che contiene i dati condivisi utilizzati dall'applicazione.
+ */
+
 public class DatiCondivisi {
     private static DatiCondivisi instance = null;
 
