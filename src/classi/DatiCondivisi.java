@@ -10,10 +10,18 @@ package classi;
  * @autor denis_di_napoli
  */
 public class DatiCondivisi {
+
+    /**
+     * L'unica istanza della classe DatiCondivisi.
+     *
+     * @see DatiCondivisi
+     */
     private static DatiCondivisi instance = null;
 
     /**
      * Interfaccia del gestore del database per gestire le operazioni sul database.
+     *
+     * @see DBInterface
      */
     public DBInterface gestore_db;
 

@@ -35,47 +35,54 @@ import javax.swing.table.TableModel;
  */
 public class mostraPrevisioni extends javax.swing.JFrame implements WindowListener {
 
+    /**
+     * Area di interesse per cui mostrare le previsioni.
+     */
     private JAreaInteresse area;
+
+    /**
+     * Lista delle previsioni per l'area di interesse.
+     */
     private ArrayList<JPrevisioni> list;
+
+    /**
+     * Indica se la finestra è stata aperta dalla finestra infoStazione.
+     */
     private boolean fromStazione;
+
+    /**
+     * La finestra precedente che ha aperto questa finestra.
+     */
     private Object paginaPrec;
+
+    /**
+     * Colonne della tabella delle previsioni.
+     */
     private String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
 
     /**
      * Crea una nuova pagina mostraPrevisioni
      *
-     * @param idArea     id dell'area d'interesse.
+     * @param idArea id dell'area d'interesse.
      * @param idStazione id della stazione metereologica.
-     * @throws java.io.IOException
+     * @param fromStazione indica se la finestra è stata aperta dalla finestra infoStazione.
+     * @param paginaPrec la finestra precedente che ha aperto questa finestra.
+     * @throws java.io.IOException se si verifica un errore di input/output.
      */
     public mostraPrevisioni(int idArea, String idStazione, boolean fromStazione, Object paginaPrec) throws IOException {
         initComponents();
-        //trova area d'interesse con idArea e idStazione
-
         this.area = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, idStazione, idArea).get(0);
         this.fromStazione = fromStazione;
         this.paginaPrec = paginaPrec;
-
         lblTitle.setText("Previsioni: " + this.area.getNome());
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-        // convert date to calendar
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
-
-        // manipulate date
         c.add(Calendar.DATE, 14);
-
-        // convert calendar to date
         Date dateTwoWeekAfter = c.getTime();
-
         jCalendar.setTodayButtonVisible(true);
         jCalendar.setSelectableDateRange(new Date(), dateTwoWeekAfter);
-
         list = DatiCondivisi.getInstance().gestore_db.loadPrevisioni(area.getGeoname_id(), area.getId_area(), false, new Date());
-        String[] columns = {"Vento", "Umidità", "Pressione", "Temperatura", "Precipitazione", "Altitudine Ghiacciai", "Massa Ghiacciai"};
         drawTable(list);
-
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
@@ -246,9 +253,9 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Metodo che capisce la data selezionata e richiama il metodo drawTable
+     * Metodo che gestisce il cambiamento della data selezionata e richiama il metodo drawTable
      *
-     * @param evt
+     * @param evt evento di cambiamento della proprietà.
      * @see drawTable
      */
     private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
@@ -265,11 +272,11 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
     }//GEN-LAST:event_jCalendarPropertyChange
 
     /**
-     * Metodo che capisce se il mostra previsioni è stato aperto dall'info
-     * stazione o dalla homepage e ritorna alla finestra da cui mostra
-     * previsioni è stata aperta
+     * Metodo che gestisce l'evento di clic sul pulsante Indietro.
+     * Capisce se mostraPrevisioni è stato aperto da infoStazione o da homepage
+     * e ritorna alla finestra precedente.
      *
-     * @param evt
+     * @param evt l'evento generato dal clic sul pulsante.
      */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         if (fromStazione) {
@@ -281,14 +288,20 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
         }
     }//GEN-LAST:event_btnBackActionPerformed
 
+    /**
+     * Metodo che gestisce l'evento di chiusura della finestra.
+     * Richiama il metodo btnBackActionPerformed per tornare alla finestra precedente.
+     *
+     * @param evt l'evento generato dalla chiusura della finestra.
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         btnBackActionPerformed(null);
     }//GEN-LAST:event_formWindowClosing
 
     /**
-     * Imposta le note della variabile della previsione sul txtNota
+     * Metodo che imposta le note della previsione selezionata sul campo txtNota.
      *
-     * @param evt
+     * @param evt l'evento generato dal clic sulla tabella.
      */
     private void tabellaPrevisioniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabellaPrevisioniMouseClicked
         txtNota.setText(list.get(tabellaPrevisioni.getSelectedRow()).toString().split(",")[tabellaPrevisioni.getSelectedColumn() + 9]);
@@ -309,11 +322,11 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Metodo che mostra le previsioni nella tabella giustamente incolonnata
+     * Metodo che mostra le previsioni nella tabella in modo corretto.
      *
-     * @param list delle previsioni creara in base alla data precedentemente
-     *             passata
-     * @throws IOException
+     * @param list lista delle previsioni create in base alla data precedentemente
+     *             passata.
+     * @throws IOException se si verifica un errore di input/output.
      */
     private void drawTable(ArrayList<JPrevisioni> list) throws IOException {
         tabellaPrevisioni.getTableHeader().setReorderingAllowed(false);
@@ -352,7 +365,6 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
 
     @Override
     public void windowOpened(WindowEvent e) {
-
     }
 
     @Override

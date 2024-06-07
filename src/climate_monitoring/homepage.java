@@ -8,7 +8,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,27 +57,18 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             }
         };
         if (!al.isEmpty()) {
-
             for (int i = 0; i < al.size(); i++) {
                 model.addRow(al.get(i));
             }
             tableRisultati.setModel((TableModel) model);
-            //    TableColumn col = tableRisultati.getColumnModel().getColumn(0);
-            //    col.setMinWidth(0);
-            //    col.setMaxWidth(0);
-            //    col.setPreferredWidth(0);
-
             tableRisultati.removeColumn(tableRisultati.getColumnModel().getColumn(0));
-
             return true;
-
         } else {
             String[] p = {"", ""};
             model.addRow(p);
             tableRisultati.setModel((TableModel) model);
             return false;
         }
-
     }
 
     /**
@@ -89,17 +79,15 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             List<String[]> al = new ArrayList<>();
             ArrayList<JAreaInteresse> aree = dc.gestore_db.loadAree_interesse(null, null, -1, null, -1);
             for (JAreaInteresse area : aree) {
-                String[] elements = {String.valueOf(area.getId_area()) + ";" + area.getGeoname_id(), area.toString().split(",")[1], "Area Interesse"};
-                al.add(elements);
+                al.add(new String[]{area.getId_area() + ";" + area.getGeoname_id(), area.toString().split(",")[1], "Area Interesse"});
             }
             ArrayList<JStazione> stazioni = dc.gestore_db.loadStazioni(null, null, null, -1);
             for (JStazione stazione : stazioni) {
-                String[] elements = {String.valueOf(stazione.getGeoname_id()), stazione.getNome(), "Stazione"};
-                al.add(elements);
+                al.add(new String[]{String.valueOf(stazione.getGeoname_id()), stazione.getNome(), "Stazione"});
             }
             drawTable(al);
         } catch (RemoteException ex) {
-            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -113,7 +101,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         this.dc = DatiCondivisi.getInstance();
         this.remoteObject = new RemoteObjectImpl();
         initComponents();
-        initTable();    // inizializzo la tabella
+        initTable();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width - this.getWidth()) / 2;
@@ -314,18 +302,18 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         String testoDaCercare = "";
         List<String[]> al = new ArrayList<>();
         if (!txtCerca.getText().equals("") && (txtCercaLat.getText().equals("") && txtCercaLon.getText().equals(""))) {
-            //cerco per nome
+            //Ricerca per nome
             al = searchName(txtCerca.getText());
         } else if (!txtCerca.getText().equals("") && (!txtCercaLat.getText().equals("") || !txtCercaLon.getText().equals(""))) {
-            //errore
+            //Sono stati compilati entrambi i campi
             JOptionPane.showMessageDialog(null, "Compilare solo un campo tra la ricerca per nome e ricerca per coordinate.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         } else if (txtCercaLat.getText().equals("") || txtCercaLon.getText().equals("")) {
-            //errore
+            //È stato compilato solo un campo tra latitudine e longitudine
             JOptionPane.showMessageDialog(null, "Inserire entrambe le coordinate per la ricerca.", "Errore", JOptionPane.INFORMATION_MESSAGE);
         } else {
+            //Ricerca per coordinate
             try {
                 testoDaCercare = txtCercaLat.getText() + "," + txtCercaLon.getText();
-                //cerco per coordinate
                 if (JCoordinate.sonoCoordinate(testoDaCercare)) {
                     List<JAreaInteresse> list_aree_interesse = dc.gestore_db.loadAree_interesse(null, new JCoordinate(testoDaCercare), 20, null, -1);
                     for (JAreaInteresse area : list_aree_interesse) {
@@ -333,10 +321,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                     }
                     List<JStazione> list_stazioni = dc.gestore_db.loadStazioni(null, null, new JCoordinate(testoDaCercare), 20);
                     for (JStazione stazione : list_stazioni) {
-                        al.add(new String[] {stazione.getGeoname_id().toString(), stazione.getNome(), "Stazione"});
+                        al.add(new String[]{stazione.getGeoname_id().toString(), stazione.getNome(), "Stazione"});
                     }
                 } else {
-                    //errore
+                    //Sono state inserite coordinate non valide
                     JOptionPane.showMessageDialog(null, "Inserire delle coordinate valide.", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (RemoteException e) {
@@ -356,13 +344,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         if (!tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString().equals("")) {
             String tipo = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 2).toString();
             String id = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 0).toString();
-            String nome = tableRisultati.getModel().getValueAt(tableRisultati.getSelectedRow(), 1).toString();
             if (tipo.equals("Stazione")) {
                 infoStazione infoStaz = new infoStazione(id, this);
                 infoStaz.addWindowListener(this);
                 infoStaz.setVisible(true);
                 setVisible(false);
-
             } else if (tipo.equals("Area Interesse")) {
                 try {
                     mostraPrevisioni mpFinestra = new mostraPrevisioni(Integer.parseInt(id.split(";")[0]), id.split(";")[1], false, this);
@@ -397,7 +383,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      */
     private void txtCercaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCercaKeyReleased
         if (txtCerca.getText().matches(".*[a-zA-Z0-9].*")) {
-            //se è stato inserito un carattere o un numero allora fai la chiamata al servizio web per i suggeriment
             String testo = txtCerca.getText().toLowerCase();
             if (!testo.isEmpty()) {
                 new Thread(() -> {
@@ -525,7 +510,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         ArrayList<JAreaInteresse> listaAree = null;
         ArrayList<JStazione> listaStazioni = null;
         List<String[]> al = new ArrayList<>();
-        //cerco per nome
         try {
             listaAree = dc.gestore_db.loadAree_interesse(testoDaCercare, null, -1, null, -1);
             listaStazioni = dc.gestore_db.loadStazioni(null, testoDaCercare, null, -1);

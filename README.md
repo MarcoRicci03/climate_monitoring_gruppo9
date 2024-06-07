@@ -1,4 +1,10 @@
 # climate_monitoring_gruppo9
 
-TODO list:
+Commenti:
+- package classi finito
+- package client:
+    - homepage finita
+    - mostra previsioni finita
+    - info stazione finita
+- package server:
 

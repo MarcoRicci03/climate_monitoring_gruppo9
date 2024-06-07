@@ -42,7 +42,6 @@ import javax.swing.table.TableModel;
 public class admin_panel extends javax.swing.JFrame {
 
     private static JUser user;
-    //private Vector v = new Vector();
     private List<String[]> listaPrev;
     private Object paginaPrec;
 
