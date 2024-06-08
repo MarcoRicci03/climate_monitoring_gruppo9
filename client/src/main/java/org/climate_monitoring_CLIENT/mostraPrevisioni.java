@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -68,25 +70,32 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
      * @param paginaPrec   la finestra precedente che ha aperto questa finestra.
      * @throws java.io.IOException se si verifica un errore di input/output.
      */
-    public mostraPrevisioni(int idArea, String idStazione, boolean fromStazione, Object paginaPrec) throws IOException {
+    public mostraPrevisioni(int idArea, String idStazione, boolean fromStazione, Object paginaPrec) {
         initComponents();
-        this.area = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, idStazione, idArea).get(0);
-        this.fromStazione = fromStazione;
-        this.paginaPrec = paginaPrec;
-        lblTitle.setText("Previsioni: " + this.area.getNome());
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.DATE, 14);
-        Date dateTwoWeekAfter = c.getTime();
-        jCalendar.setTodayButtonVisible(true);
-        jCalendar.setSelectableDateRange(new Date(), dateTwoWeekAfter);
-        list = DatiCondivisi.getInstance().gestore_db.loadPrevisioni(area.getGeoname_id(), area.getId_area(), false, new Date());
-        drawTable(list);
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int x = (screenSize.width - this.getWidth()) / 2;
-        int y = (screenSize.height - this.getHeight()) / 2;
-        this.setLocation(x, y);
+        try {
+            this.area = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, idStazione, idArea).get(0);
+            this.fromStazione = fromStazione;
+            this.paginaPrec = paginaPrec;
+            lblTitle.setText("Previsioni: " + this.area.getNome());
+            Calendar c = Calendar.getInstance();
+            c.setTime(new Date());
+            c.add(Calendar.DATE, 14);
+            Date dateTwoWeekAfter = c.getTime();
+            jCalendar.setTodayButtonVisible(true);
+            jCalendar.setSelectableDateRange(new Date(), dateTwoWeekAfter);
+            list = DatiCondivisi.getInstance().gestore_db.loadPrevisioni(area.getGeoname_id(), area.getId_area(), false, new Date());
+            drawTable(list);
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Dimension screenSize = toolkit.getScreenSize();
+            int x = (screenSize.width - this.getWidth()) / 2;
+            int y = (screenSize.height - this.getHeight()) / 2;
+            this.setLocation(x, y);
+        } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -263,8 +272,11 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
                 if (list != null)
                     drawTable(list);
                 txtNota.setText("");
-            } catch (IOException ex) {
-                Logger.getLogger(mostraPrevisioni.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }//GEN-LAST:event_jCalendarPropertyChange

@@ -11,9 +11,11 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,14 +40,13 @@ public class Server extends UnicastRemoteObject implements DBInterface {
 
     /**
      * Costruttore della classe Server.
-     * Inizializza la connessione al database e segnala che il server è pronto.
+     * Inizializza la connessione al database.
      *
      * @param db la connessione al database da utilizzare per le operazioni di accesso ai dati.
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
     public Server(DatabaseConnection db) throws RemoteException {
         this.db = db;
-        System.err.println("Server ready");
     }
 
     /**
@@ -59,8 +60,6 @@ public class Server extends UnicastRemoteObject implements DBInterface {
         Scanner s = new Scanner(System.in);
         String url = "jdbc:postgresql://", user, password;
         if (args.length == 5) {
-            //System.out.println("Usage: java -jar <jarfile> <url> <user> <password>");
-            //System.exit(1);
             url += args[0] + ":" + args[1] + "/" + args[2] + "?user=" + args[3] + "&password=" + args[4];
         } else {
             System.out.println("Inserire indirizzo del database: ");
@@ -72,12 +71,32 @@ public class Server extends UnicastRemoteObject implements DBInterface {
             System.out.println("Inserire username del database: ");
             url += "?user=" + s.nextLine();
             System.out.println("Inserire password del database: ");
-            url += "&password=" + new String(s.nextLine());
+            url += "&password=" + s.nextLine();
         }
         DatabaseConnection db = new DatabaseConnection(url);
         DBInterface server = new Server(db);
-        Registry r = LocateRegistry.createRegistry(1234);
-        r.rebind("GestoreClimateMonitoring", server);
+        Registry r = null;
+        try {
+            r = LocateRegistry.createRegistry(1234);
+            r.bind("GestoreClimateMonitoring", server);
+        } catch (AlreadyBoundException | ExportException e) {
+            System.err.println(e.getMessage());
+            System.exit(1);
+        }
+        System.err.println("Server ready");
+        while (true) {
+            System.out.println("Premere 'q' per terminare il server");
+            if (s.nextLine().equals("q")) {
+                try {
+                    r.unbind("GestoreClimateMonitoring");
+                    UnicastRemoteObject.unexportObject(server, true);
+                    System.exit(0);
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                    System.exit(1);
+                }
+            }
+        }
     }
 
     /**

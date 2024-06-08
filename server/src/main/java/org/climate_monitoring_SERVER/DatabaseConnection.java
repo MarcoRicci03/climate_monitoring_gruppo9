@@ -1,9 +1,6 @@
 package org.climate_monitoring_SERVER;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,8 +29,9 @@ public class DatabaseConnection {
     public DatabaseConnection(String url) {
         try {
             conn = DriverManager.getConnection(url);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            System.err.println("Impossible to connect to the database: " + ex.getMessage());
+            System.exit(1);
         }
     }
 

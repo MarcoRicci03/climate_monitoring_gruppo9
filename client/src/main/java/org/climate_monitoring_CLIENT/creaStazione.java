@@ -39,11 +39,6 @@ public class creaStazione extends javax.swing.JFrame {
     private ArrayList<JNazione> arrayNazioni;
 
     /**
-     * Oggetto DatiCondivisi per gestire i dati condivisi tra le varie componenti dell'applicazione.
-     */
-    private DatiCondivisi dc;
-
-    /**
      * Le colonne della tabella delle stazioni.
      */
     private String[] columns = {"Geoname id", "Città", "Codice Naz.", "Nazione", "Latitudine", "Longitudine"};
@@ -73,7 +68,6 @@ public class creaStazione extends javax.swing.JFrame {
         };
         StazioneTable = new JTable(model);
 
-        this.dc = DatiCondivisi.getInstance();
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -81,9 +75,10 @@ public class creaStazione extends javax.swing.JFrame {
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
         try {
-            arrayNazioni = dc.gestore_db.loadNazioni();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            arrayNazioni = DatiCondivisi.getInstance().gestore_db.loadNazioni();
+        } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
         for (JNazione nazione : arrayNazioni) {
             cmbCodNazione.addItem(nazione.getNome_nazione());
@@ -343,7 +338,7 @@ public class creaStazione extends javax.swing.JFrame {
             try {
                 if (!txtCoordinate.getText().isEmpty() && !txtGeoname_id.getText().isEmpty() && !txtCitta.getText().isEmpty() && !txtCodNazione.getText().isEmpty() && cmbCodNazione.getSelectedIndex() > 0) {
                     JStazione l = new JStazione(Integer.parseInt(txtGeoname_id.getText()), txtCitta.getText(), txtCodNazione.getText(), arrayNazioni.get(cmbCodNazione.getSelectedIndex() - 1).getNome_nazione(), new JCoordinate(Float.parseFloat(txtCoordinate.getText().split(",")[0]), Float.parseFloat(txtCoordinate.getText().split(",")[1])));
-                    if (dc.gestore_db.AddStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), new JCoordinate(txtCoordinate.getText()))) {
+                    if (DatiCondivisi.getInstance().gestore_db.AddStazione(txtGeoname_id.getText(), txtCitta.getText(), txtCodNazione.getText(), new JCoordinate(txtCoordinate.getText()))) {
                         registrazione.luogoNuovo = l;
                         JOptionPane.showMessageDialog(null, "Stazione: " + txtCitta.getText() + " aggiunta", "Info", JOptionPane.INFORMATION_MESSAGE);
                     } else {
@@ -352,7 +347,7 @@ public class creaStazione extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Compila tutti i valori.", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (Exception ex) {
+            } catch (RemoteException ex) {
                 JOptionPane.showMessageDialog(null, "Controllare di aver inserito correttamente il geoname_id e le coordinate. (latitudine, longitudine)", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
@@ -427,7 +422,7 @@ public class creaStazione extends javax.swing.JFrame {
                 new Thread(() -> {
                     synchronized (this) {
                         try {
-                            ArrayList<JStazione> arraySuggerimenti = dc.gestore_db.getStationGeonameIdfromWS(testo);
+                            ArrayList<JStazione> arraySuggerimenti = DatiCondivisi.getInstance().gestore_db.getStationGeonameIdfromWS(testo);
                             if (arraySuggerimenti.size() > 0) {
                                 drawTable(arraySuggerimenti);
                             }

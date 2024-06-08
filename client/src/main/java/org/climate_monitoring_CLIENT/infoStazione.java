@@ -11,11 +11,13 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -56,8 +58,15 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
             int x = (screenSize.width - this.getWidth()) / 2;
             int y = (screenSize.height - this.getHeight()) / 2;
             this.setLocation(x, y);
-            ArrayList<JAreaInteresse> listaAree = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, id, -1);
-            JStazione stazione = DatiCondivisi.getInstance().gestore_db.loadStazioni(id, null, null, -1).get(0);
+            ArrayList<JAreaInteresse> listaAree = null;
+            JStazione stazione = null;
+            try {
+                listaAree = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, id, -1);
+                stazione = DatiCondivisi.getInstance().gestore_db.loadStazioni(id, null, null, -1).get(0);
+            } catch (RemoteException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
+            }
             lblStazione.setText(stazione.getNome());
             txtGeoname.setText(stazione.getGeoname_id().toString());
             txtCodiceNazione.setText(stazione.getCountry_code());
@@ -262,13 +271,9 @@ public class infoStazione extends javax.swing.JFrame implements WindowListener {
      */
     private void InfoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoTableMouseClicked
         int idArea = Integer.parseInt(InfoTable.getModel().getValueAt(InfoTable.getSelectedRow(), 0).toString());
-        try {
-            mostraPrevisioni mpFinestra = new mostraPrevisioni(idArea, id, true, this);
-            mpFinestra.setVisible(true);
-            setVisible(false);
-        } catch (IOException ex) {
-            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        mostraPrevisioni mpFinestra = new mostraPrevisioni(idArea, id, true, this);
+        mpFinestra.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_InfoTableMouseClicked
 
     /**

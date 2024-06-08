@@ -1,6 +1,7 @@
 package org.climate_monitoring_CLIENT;
 
 import classi.*;
+
 /**
  * Classe Singleton che fornisce un'istanza condivisa per la gestione delle interazioni con il database.
  * Questa classe garantisce che esista una sola istanza di DatiCondivisi nell'intera applicazione.

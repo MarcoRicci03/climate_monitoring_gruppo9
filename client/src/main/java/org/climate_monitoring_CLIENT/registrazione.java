@@ -31,11 +31,6 @@ import javax.swing.JOptionPane;
 public class registrazione extends javax.swing.JFrame {
 
     /**
-     * Oggetto DatiCondivisi per gestire i dati condivisi tra le varie componenti dell'applicazione.
-     */
-    private DatiCondivisi dc;
-
-    /**
      * Lista di stazioni meteo disponibili.
      */
     private ArrayList<JStazione> arrayStazioni;
@@ -55,7 +50,6 @@ public class registrazione extends javax.swing.JFrame {
      * Inizializza i componenti dell'interfaccia grafica e carica le stazioni meteo.
      */
     public registrazione() {
-        this.dc = DatiCondivisi.getInstance();
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -63,9 +57,10 @@ public class registrazione extends javax.swing.JFrame {
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
         try {
-            arrayStazioni = dc.gestore_db.loadStazioni(null, null, null, -1);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+            arrayStazioni = DatiCondivisi.getInstance().gestore_db.loadStazioni(null, null, null, -1);
+        } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
         for (int i = 0; i < arrayStazioni.size(); i++) {
             cmbStazione.addItem(arrayStazioni.get(i).getNome());
@@ -190,11 +185,7 @@ public class registrazione extends javax.swing.JFrame {
         btnCrea.setText("Crea stazione");
         btnCrea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
                     btnCreaActionPerformed(evt);
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
             }
         });
 
@@ -316,7 +307,14 @@ public class registrazione extends javax.swing.JFrame {
         try {
             if (!txtNome.getText().isEmpty() && !txtCognome.getText().isEmpty() && !datePickerDataNascita.getDate().toString().isEmpty()
                     && !txtLuogoNascita.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPassConferma.getText().isEmpty() && !txtIdOperatore.getText().isEmpty()) {
-                if (dc.gestore_db.checkCodiceOperatore(txtIdOperatore.getText().trim())) { //controllo esistenza e correttezza del codice operatore
+                Boolean ris = false;
+                try {
+                    ris = DatiCondivisi.getInstance().gestore_db.checkCodiceOperatore(txtIdOperatore.getText().trim());
+                } catch (RemoteException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+                    System.exit(1);
+                }
+                if (ris) { //controllo esistenza e correttezza del codice operatore
                     if (txtPass.getText().equals(txtPassConferma.getText())) {
                         Person p = new Person();
                         p.setName(txtNome.getText());
@@ -340,11 +338,17 @@ public class registrazione extends javax.swing.JFrame {
                             return;
                         }
                         Integer i = arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id();
-                        if ((username = dc.gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), JUser.getMD5(txtPass.getText()), e.getCode(), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) == null) {
-                            JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Registrazione effettuata.\nEcco il tuo username: " + username + " per accedere assieme alla password.", "Registrazione effettuata", JOptionPane.INFORMATION_MESSAGE);
+                        try {
+                            if ((username = DatiCondivisi.getInstance().gestore_db.AddUser(p.getName().toLowerCase(), p.getSurname().toLowerCase(), JUser.getMD5(txtPass.getText()), e.getCode(), arrayStazioni.get(cmbStazione.getSelectedIndex() - 1).getGeoname_id(), txtIdOperatore.getText())) == null) {
+                                JOptionPane.showMessageDialog(null, "Questo operatore ha già un account.", "Errore", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Registrazione effettuata.\nEcco il tuo username: " + username + " per accedere assieme alla password.", "Registrazione effettuata", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        } catch (RemoteException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+                            System.exit(1);
                         }
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Le password devono corrispondere", "Errore", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -365,12 +369,19 @@ public class registrazione extends javax.swing.JFrame {
      *
      * @param evt l'evento di azione.
      */
-    private void btnCreaActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnCreaActionPerformed
-        if (dc.gestore_db.checkCodiceOperatore(txtIdOperatore.getText().trim())) {
-            creaStazione cS = new creaStazione(this);
-            cS.show();
-        } else {
-            JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
+    private void btnCreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreaActionPerformed
+        try {
+
+
+            if (DatiCondivisi.getInstance().gestore_db.checkCodiceOperatore(txtIdOperatore.getText().trim())) {
+                creaStazione cS = new creaStazione(this);
+                cS.show();
+            } else {
+                JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
     }//GEN-LAST:event_btnCreaActionPerformed
 

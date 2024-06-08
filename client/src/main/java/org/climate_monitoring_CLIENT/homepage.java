@@ -32,11 +32,6 @@ import java.rmi.registry.Registry;
 public class homepage extends javax.swing.JFrame implements WindowListener {
 
     /**
-     * Oggetto condiviso contenente i dati utilizzati dall'applicazione.
-     */
-    private DatiCondivisi dc;
-
-    /**
      * Disegna la tabella utilizzando i dati forniti nella lista.
      *
      * @param al lista di array di stringhe contenente i dati da inserire nella tabella.
@@ -72,17 +67,18 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
     public void initTable() {
         try {
             List<String[]> al = new ArrayList<>();
-            ArrayList<JAreaInteresse> aree = dc.gestore_db.loadAree_interesse(null, null, -1, null, -1);
+            ArrayList<JAreaInteresse> aree = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, null, -1, null, -1);
             for (JAreaInteresse area : aree) {
                 al.add(new String[]{area.getId_area() + ";" + area.getGeoname_id(), area.toString().split(",")[1], "Area Interesse"});
             }
-            ArrayList<JStazione> stazioni = dc.gestore_db.loadStazioni(null, null, null, -1);
+            ArrayList<JStazione> stazioni = DatiCondivisi.getInstance().gestore_db.loadStazioni(null, null, null, -1);
             for (JStazione stazione : stazioni) {
                 al.add(new String[]{String.valueOf(stazione.getGeoname_id()), stazione.getNome(), "Stazione"});
             }
             drawTable(al);
         } catch (RemoteException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
     }
 
@@ -94,8 +90,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      */
     public homepage(DBInterface db) throws RemoteException {
         DatiCondivisi.getInstance().gestore_db = db;
-        this.dc = DatiCondivisi.getInstance();
-        //this.remoteObject = new RemoteObjectImpl();
         initComponents();
         initTable();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -311,11 +305,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             try {
                 testoDaCercare = txtCercaLat.getText() + "," + txtCercaLon.getText();
                 if (JCoordinate.sonoCoordinate(testoDaCercare)) {
-                    List<JAreaInteresse> list_aree_interesse = dc.gestore_db.loadAree_interesse(null, new JCoordinate(testoDaCercare), 20, null, -1);
+                    List<JAreaInteresse> list_aree_interesse = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(null, new JCoordinate(testoDaCercare), 20, null, -1);
                     for (JAreaInteresse area : list_aree_interesse) {
                         al.add(new String[]{area.getId_area() + ";" + area.getGeoname_id(), area.getNome(), "Area Interesse"});
                     }
-                    List<JStazione> list_stazioni = dc.gestore_db.loadStazioni(null, null, new JCoordinate(testoDaCercare), 20);
+                    List<JStazione> list_stazioni = DatiCondivisi.getInstance().gestore_db.loadStazioni(null, null, new JCoordinate(testoDaCercare), 20);
                     for (JStazione stazione : list_stazioni) {
                         al.add(new String[]{stazione.getGeoname_id().toString(), stazione.getNome(), "Stazione"});
                     }
@@ -323,8 +317,9 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                     //Sono state inserite coordinate non valide
                     JOptionPane.showMessageDialog(null, "Inserire delle coordinate valide.", "Errore", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
+            } catch (RemoteException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
             }
         }
         drawTable(al);
@@ -346,14 +341,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
                 infoStaz.setVisible(true);
                 setVisible(false);
             } else if (tipo.equals("Area Interesse")) {
-                try {
-                    mostraPrevisioni mpFinestra = new mostraPrevisioni(Integer.parseInt(id.split(";")[0]), id.split(";")[1], false, this);
-                    mpFinestra.addWindowListener(this);
-                    mpFinestra.setVisible(true);
-                    setVisible(false);
-                } catch (IOException ex) {
-                    Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                mostraPrevisioni mpFinestra = new mostraPrevisioni(Integer.parseInt(id.split(";")[0]), id.split(";")[1], false, this);
+                mpFinestra.addWindowListener(this);
+                mpFinestra.setVisible(true);
+                setVisible(false);
             }
         }
     }//GEN-LAST:event_tableRisultatiMouseClicked
@@ -396,17 +387,14 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        DBInterface db = null;
         Registry r = null;
         try {
             r = LocateRegistry.getRegistry("localhost", 1234);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        DBInterface db = null;
-        try {
             db = (DBInterface) r.lookup("GestoreClimateMonitoring");
         } catch (Exception ex) {
-            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
         final DBInterface dbb = db;
         /* Set the Nimbus look and feel */
@@ -499,10 +487,11 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
         ArrayList<JStazione> listaStazioni = null;
         List<String[]> al = new ArrayList<>();
         try {
-            listaAree = dc.gestore_db.loadAree_interesse(testoDaCercare, null, -1, null, -1);
-            listaStazioni = dc.gestore_db.loadStazioni(null, testoDaCercare, null, -1);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+            listaAree = DatiCondivisi.getInstance().gestore_db.loadAree_interesse(testoDaCercare, null, -1, null, -1);
+            listaStazioni = DatiCondivisi.getInstance().gestore_db.loadStazioni(null, testoDaCercare, null, -1);
+        } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Server non raggiungibile", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
         for (JAreaInteresse area : listaAree) {
             al.add(new String[]{area.getId_area() + ";" + area.getGeoname_id(), area.getNome(), "Area Interesse"});
