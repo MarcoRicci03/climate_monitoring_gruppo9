@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="codice-fiscale-java-master">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/codice-fiscale-java-master.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
