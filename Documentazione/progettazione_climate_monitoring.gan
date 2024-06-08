@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="progettazione climate monitoring" company="lab-b insubria" webLink="http://" view-date="2024-05-05" view-index="0" gantt-divider-location="351" resource-divider-location="300" version="3.3.3309" locale="it_IT">
+<?xml version="1.0" encoding="UTF-8"?><project name="progettazione climate monitoring" company="lab-b insubria" webLink="http://" view-date="2024-05-16" view-index="0" gantt-divider-location="351" resource-divider-location="300" version="3.3.3309" locale="it_IT">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
         <field id="tpd3" name="Nome" width="200" order="0"/>
@@ -38,25 +38,25 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" uid="400ffb27a9e14ebdab55368ccd36e1b4" name="Progettazione del database" meeting="false" start="2024-05-01" duration="5" complete="0" priority="4" expand="true">
+        <task id="0" uid="400ffb27a9e14ebdab55368ccd36e1b4" name="Progettazione del database" meeting="false" start="2024-05-10" duration="5" complete="0" priority="4" expand="true">
             <depend id="1" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="1" uid="17b746d1e4d6457cadffd4def7bb13a6" name="Ristrutturazione del progetto" meeting="false" start="2024-05-06" duration="4" complete="0" expand="true">
+        <task id="1" uid="17b746d1e4d6457cadffd4def7bb13a6" name="Ristrutturazione del progetto" meeting="false" start="2024-05-15" duration="4" complete="0" expand="true">
             <depend id="4" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="4" uid="d467ccb058a4471b979aaf07bd749c2a" name="Modifica delle classi" meeting="false" start="2024-05-10" duration="1" complete="0" expand="true">
+        <task id="4" uid="d467ccb058a4471b979aaf07bd749c2a" name="Modifica delle classi" meeting="false" start="2024-05-19" duration="1" complete="0" expand="true">
             <depend id="2" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="2" uid="29d9e33d0b764a0cb4454bd29a850df2" name="Creazione server con relativi metodi" meeting="false" start="2024-05-11" duration="10" complete="0" expand="true">
-            <depend id="3" type="2" difference="0" hardness="Strong"/>
+        <task id="2" uid="29d9e33d0b764a0cb4454bd29a850df2" name="Creazione server con relativi metodi" meeting="false" start="2024-05-20" duration="10" complete="0" expand="true">
+            <depend id="3" type="1" difference="3" hardness="Strong"/>
         </task>
-        <task id="3" uid="e98caf126c2448759941b494b5cf0343" name="Sistemare parte client sulla base del server" meeting="false" start="2024-05-21" duration="9" complete="0" expand="true">
+        <task id="3" uid="e98caf126c2448759941b494b5cf0343" name="Sistemare parte client sulla base del server" meeting="false" start="2024-05-23" duration="9" complete="0" expand="true">
             <depend id="5" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="5" uid="cbb2847823ae442da36bd96cd1cefd17" name="Test finali" meeting="false" start="2024-05-30" duration="3" complete="0" expand="true">
+        <task id="5" uid="cbb2847823ae442da36bd96cd1cefd17" name="Test finali" meeting="false" start="2024-06-01" duration="3" complete="0" expand="true">
             <depend id="7" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="7" uid="0d0b17c596a6413ebe7b08a08098d741" name="Documentazione" meeting="false" start="2024-06-02" duration="3" complete="0" expand="true"/>
+        <task id="7" uid="0d0b17c596a6413ebe7b08a08098d741" name="Documentazione" meeting="false" start="2024-06-04" duration="3" complete="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="Marco Ricci" function="1" contacts="" phone=""/>
