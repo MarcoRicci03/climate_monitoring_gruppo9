@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="progettazione climate monitoring" company="lab-b insubria" webLink="http://" view-date="2024-05-05" view-index="0" gantt-divider-location="351" resource-divider-location="300" version="3.3.3309" locale="it_IT">
+    <description/>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Nome" width="200" order="0"/>
+        <field id="tpd4" name="Data d'inizio" width="75" order="1"/>
+        <field id="tpd5" name="Data di fine" width="75" order="2"/>
+        <field id="tpd15" name="Note" width="20" order="3"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nome" width="210" order="0"/>
+        <field id="1" name="Ruolo predefinito" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" uid="400ffb27a9e14ebdab55368ccd36e1b4" name="Progettazione del database" meeting="false" start="2024-05-01" duration="5" complete="0" priority="4" expand="true">
+            <depend id="1" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="1" uid="17b746d1e4d6457cadffd4def7bb13a6" name="Ristrutturazione del progetto" meeting="false" start="2024-05-06" duration="4" complete="0" expand="true">
+            <depend id="4" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="4" uid="d467ccb058a4471b979aaf07bd749c2a" name="Modifica delle classi" meeting="false" start="2024-05-10" duration="1" complete="0" expand="true">
+            <depend id="2" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="2" uid="29d9e33d0b764a0cb4454bd29a850df2" name="Creazione server con relativi metodi" meeting="false" start="2024-05-11" duration="10" complete="0" expand="true">
+            <depend id="3" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="3" uid="e98caf126c2448759941b494b5cf0343" name="Sistemare parte client sulla base del server" meeting="false" start="2024-05-21" duration="9" complete="0" expand="true">
+            <depend id="5" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="5" uid="cbb2847823ae442da36bd96cd1cefd17" name="Test finali" meeting="false" start="2024-05-30" duration="3" complete="0" expand="true">
+            <depend id="7" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="7" uid="0d0b17c596a6413ebe7b08a08098d741" name="Documentazione" meeting="false" start="2024-06-02" duration="3" complete="0" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="Marco Ricci" function="1" contacts="" phone=""/>
+        <resource id="1" name="Edoardo Rizzi" function="2" contacts="" phone=""/>
+        <resource id="2" name="Alberto Stagno" function="2" contacts="" phone=""/>
+        <resource id="3" name="Denis Di Napoli" function="2" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="0" resource-id="0" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="0" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="1" resource-id="0" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="4" resource-id="0" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="0" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="5" resource-id="0" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="2" resource-id="1" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="1" resource-id="1" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="1" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="1" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="2" resource-id="2" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="1" resource-id="2" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="2" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="5" resource-id="2" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="2" resource-id="3" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="1" resource-id="3" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="3" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="3" function="2" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles>
+        <role id="1" name="Project Manager"/>
+        <role id="2" name="Programmatore"/>
+    </roles>
+</project>
