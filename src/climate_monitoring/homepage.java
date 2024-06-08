@@ -36,10 +36,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * Oggetto condiviso contenente i dati utilizzati dall'applicazione.
      */
     private DatiCondivisi dc;
-    /**
-     * Oggetto remoto utilizzato per la comunicazione RMI.
-     */
-    private UnicastRemoteObject remoteObject;
 
     /**
      * Disegna la tabella utilizzando i dati forniti nella lista.
@@ -97,9 +93,10 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      *
      * @throws RemoteException se si verifica un problema di comunicazione remota.
      */
-    public homepage() throws RemoteException {
+    public homepage(DBInterface db) throws RemoteException {
+        DatiCondivisi.getInstance().gestore_db = db;
         this.dc = DatiCondivisi.getInstance();
-        this.remoteObject = new RemoteObjectImpl();
+        //this.remoteObject = new RemoteObjectImpl();
         initComponents();
         initTable();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -400,6 +397,19 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        Registry r = null;
+        try {
+            r = LocateRegistry.getRegistry("localhost", 1234);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        DBInterface db = null;
+        try {
+            db = (DBInterface) r.lookup("GestoreClimateMonitoring");
+        } catch (Exception ex) {
+            Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        final DBInterface dbb = db;
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -427,7 +437,7 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
             @Override
             public void run() {
                 try {
-                    new homepage().setVisible(true);
+                    new homepage(dbb).setVisible(true);
                 } catch (RemoteException ex) {
                     Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -477,27 +487,6 @@ public class homepage extends javax.swing.JFrame implements WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-    }
-
-    /**
-     * Implementazione dell'oggetto remoto per la comunicazione con il servizio RMI.
-     */
-    private class RemoteObjectImpl extends UnicastRemoteObject {
-        /**
-         * Costruttore dell'oggetto remoto.
-         * Configura la connessione con il registro RMI e cerca l'interfaccia del database remoto.
-         *
-         * @throws RemoteException se si verifica un problema di comunicazione remota.
-         */
-        protected RemoteObjectImpl() throws RemoteException {
-            super();
-            Registry r = LocateRegistry.getRegistry("localhost", 1234);
-            try {
-                dc.gestore_db = (DBInterface) r.lookup("GestoreClimateMonitoring");
-            } catch (Exception ex) {
-                Logger.getLogger(homepage.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     /**
