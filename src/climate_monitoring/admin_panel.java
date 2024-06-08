@@ -64,11 +64,8 @@ public class admin_panel extends javax.swing.JFrame {
     public admin_panel(JUser userLoggato, Object paginaPrec) throws RemoteException {
         this.paginaPrec = paginaPrec;
         initComponents();
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int x = (screenSize.width - this.getWidth()) / 2;
-        int y = (screenSize.height - this.getHeight()) / 2;
-        this.setLocation(x, y);
+
+        this.setExtendedState(MAXIMIZED_BOTH);
 
         user = userLoggato;
 
