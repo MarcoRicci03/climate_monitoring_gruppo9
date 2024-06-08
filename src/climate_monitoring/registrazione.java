@@ -25,10 +25,10 @@ import javax.swing.JOptionPane;
  * Classe che rappresenta l'interfaccia grafica per la registrazione di un nuovo utente.
  * Permette di registrare un nuovo utente nel sistema e di creare nuove stazioni meteo.
  *
- * @autor marco_ricci
- * @autor edoardo_rizzi
- * @autor alberto_stagno
- * @autor denis_di_napoli
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class registrazione extends javax.swing.JFrame {
 

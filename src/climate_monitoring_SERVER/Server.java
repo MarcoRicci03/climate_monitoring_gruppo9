@@ -25,10 +25,10 @@ import java.util.Scanner;
  * Classe Server che implementa l'interfaccia remota DBInterface per gestire le operazioni sul database
  * e fornire servizi remoti.
  *
- * @autor marco_ricci
- * @autor edoardo_rizzi
- * @autor alberto_stagno
- * @autor denis_di_napoli
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class Server extends UnicastRemoteObject implements DBInterface {
     /**

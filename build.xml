@@ -70,4 +70,9 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="javadoc" depends="compile">
+        <mkdir dir="${docs.dir}"/>
+        <javadoc sourcepath="${src.dir}" destdir="${docs.dir}"
+                 packagenames="classi,climate_monitoring,climate_monitoring_SERVER"/>
+    </target>
 </project>

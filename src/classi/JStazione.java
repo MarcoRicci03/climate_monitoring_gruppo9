@@ -11,10 +11,10 @@ import java.io.Serializable;
  * Classe che rappresenta una stazione con informazioni geografiche e coordinate.
  * Implementa Serializable per consentire la serializzazione dell'oggetto.
  *
- * @autor marco_ricci
- * @autor edoardo_rizzi
- * @autor alberto_stagno
- * @autor denis_di_napoli
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class JStazione implements Serializable {
 

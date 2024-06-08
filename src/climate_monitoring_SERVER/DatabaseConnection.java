@@ -11,10 +11,10 @@ import java.util.Date;
 /**
  * Classe che gestisce la connessione al database e l'esecuzione di query e aggiornamenti.
  *
- * @autor marco_ricci
- * @autor edoardo_rizzi
- * @autor alberto_stagno
- * @autor denis_di_napoli
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class DatabaseConnection {
 

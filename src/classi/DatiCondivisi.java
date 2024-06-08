@@ -4,10 +4,10 @@ package classi;
  * Classe Singleton che fornisce un'istanza condivisa per la gestione delle interazioni con il database.
  * Questa classe garantisce che esista una sola istanza di DatiCondivisi nell'intera applicazione.
  *
- * @autor marco_ricci
- * @autor edoardo_rizzi
- * @autor alberto_stagno
- * @autor denis_di_napoli
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class DatiCondivisi {
 

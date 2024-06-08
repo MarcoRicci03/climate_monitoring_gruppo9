@@ -10,10 +10,10 @@ import java.util.Date;
  * Interfaccia remota per la gestione delle operazioni del database.
  * Fornisce metodi per caricare dati e verificare esistenze nel database.
  *
- * @autor marco_ricci
- * @autor edoardo_rizzi
- * @autor alberto_stagno
- * @autor denis_di_napoli
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public interface DBInterface extends Remote {
 

@@ -12,10 +12,10 @@ import java.security.NoSuchAlgorithmException;
  * Classe che rappresenta un utente con varie informazioni personali e metodi per la gestione dell'utente.
  * Implementa Serializable per consentire la serializzazione dell'oggetto.
  *
- * @autor marco_ricci
- * @autor edoardo_rizzi
- * @autor alberto_stagno
- * @autor denis_di_napoli
+ * @author marco_ricci
+ * @author edoardo_rizzi
+ * @author alberto_stagno
+ * @author denis_di_napoli
  */
 public class JUser implements Serializable {
 
