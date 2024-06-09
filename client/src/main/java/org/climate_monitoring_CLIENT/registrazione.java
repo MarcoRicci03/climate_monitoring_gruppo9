@@ -10,6 +10,8 @@ import engine.Person;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.Normalizer;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -56,6 +58,11 @@ public class registrazione extends javax.swing.JFrame {
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
+        loadCmbStazioni();
+    }
+
+    private void loadCmbStazioni() {
+        cmbStazione.removeAllItems();
         try {
             arrayStazioni = DatiCondivisi.getInstance().gestore_db.loadStazioni(null, null, null, -1);
         } catch (RemoteException ex) {
@@ -185,7 +192,7 @@ public class registrazione extends javax.swing.JFrame {
         btnCrea.setText("Crea stazione");
         btnCrea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnCreaActionPerformed(evt);
+                btnCreaActionPerformed(evt);
             }
         });
 
@@ -371,11 +378,15 @@ public class registrazione extends javax.swing.JFrame {
      */
     private void btnCreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreaActionPerformed
         try {
-
-
             if (DatiCondivisi.getInstance().gestore_db.checkCodiceOperatore(txtIdOperatore.getText().trim())) {
                 creaStazione cS = new creaStazione(this);
-                cS.show();
+                cS.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        loadCmbStazioni();
+                    }
+                });
+                cS.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Codice operatore errato", "Errore", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -391,10 +402,7 @@ public class registrazione extends javax.swing.JFrame {
      * @param evt l'evento di pressione del mouse.
      */
     private void cmbStazioneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbStazioneMousePressed
-        if (luogoNuovo != null) {
-            arrayStazioni.add(luogoNuovo);
-            cmbStazione.addItem(luogoNuovo.getNome());
-        }
+
     }//GEN-LAST:event_cmbStazioneMousePressed
 
     private void txtLuogoNascitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLuogoNascitaActionPerformed
