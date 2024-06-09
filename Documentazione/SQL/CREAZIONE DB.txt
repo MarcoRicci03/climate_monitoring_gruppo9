@@ -1,0 +1,21 @@
+Nel file database.sql troviamo le query per creare le tabelle, il tipo enum utilizzato nella tabella previsioni e la funzione
+before_area_interesse. Importare le query manualmente (caricare parzialmente le tabelle in ordine: 
+	1- enum
+	2- codici operatori e dati
+	3- nazioni
+	4- stazioni
+	5- utenti
+	6- aree
+	7- funzione aree
+	8- previsioni
+)
+Le insert into le abbiamo messe comunque nel file .sql, si possono inserire se si vuole avere un database già popolato, altrimenti si può popolare utilizzando l'applicazione. Ovviamente dato che per creare dei nuovi utenti amministratori del servizio server un codice operatore essi vanno inseriti a mano nel db.
+
+
+ordine insert into:
+	1- codici
+	2- nazioni
+	3- stazioni
+	4- utenti
+	5- aree
+	6- previsioni
