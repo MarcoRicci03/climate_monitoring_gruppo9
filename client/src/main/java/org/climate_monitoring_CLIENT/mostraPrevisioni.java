@@ -68,7 +68,6 @@ public class mostraPrevisioni extends javax.swing.JFrame implements WindowListen
      * @param idStazione   id della stazione metereologica.
      * @param fromStazione indica se la finestra è stata aperta dalla finestra infoStazione.
      * @param paginaPrec   la finestra precedente che ha aperto questa finestra.
-     * @throws java.io.IOException se si verifica un errore di input/output.
      */
     public mostraPrevisioni(int idArea, String idStazione, boolean fromStazione, Object paginaPrec) {
         initComponents();

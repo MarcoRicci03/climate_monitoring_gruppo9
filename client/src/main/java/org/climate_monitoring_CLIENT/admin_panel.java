@@ -56,7 +56,6 @@ public class admin_panel extends javax.swing.JFrame {
      *
      * @param userLoggato l'utente attualmente loggato.
      * @param paginaPrec  riferimento alla pagina precedente.
-     * @throws RemoteException se si verifica un errore di comunicazione remota.
      */
     public admin_panel(JUser userLoggato, Object paginaPrec) {
         this.paginaPrec = paginaPrec;
